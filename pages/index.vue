@@ -2,7 +2,7 @@
   <div class="min-h-screen bg-gray-50">
     <header class="bg-white shadow-sm">
       <div class="container mx-auto py-6">
-        <h1 class="text-4xl font-bold text-center text-amber-600">
+        <h1 class="text-4xl font-bold text-center text-primary">
           Flunkyball-Turniere Dresden
         </h1>
       </div>
@@ -15,11 +15,10 @@
           Erlebe den Nervenkitzel von Flunkyball!
         </h2>
         <p class="text-xl mb-8 text-gray-600">
-          Nimm an actiongeladenen Turnieren voller Spaß, Sport und einer Prise Chaos teil.
+          Nimm an actiongeladenen Turnieren voller Spaß, Sport und einer Prise
+          Chaos teil.
         </p>
-        <Button
-          class="bg-amber-600 hover:bg-amber-700 text-white px-6 py-3 rounded-lg"
-        >
+        <Button class="px-6 py-3 rounded-lg">
           Jetzt Anmelden
         </Button>
       </section>
@@ -32,12 +31,17 @@
         <div class="grid md:grid-cols-2 gap-8 items-center">
           <div>
             <p class="text-lg mb-4 text-gray-600">
-              Flunkyball ist ein aufregender Sport, bei dem zwei Teams mit jeweils zwei Spielern gegeneinander antreten, indem sie eine Flasche auf eine Flasche in der Mitte des Spielfelds werfen.
+              Flunkyball ist ein aufregender Sport, bei dem zwei Teams mit
+              jeweils zwei Spielern gegeneinander antreten, indem sie eine
+              Flasche auf eine Flasche in der Mitte des Spielfelds werfen.
             </p>
             <ul class="list-disc list-inside space-y-2 text-gray-600">
-              <li>Wenn du die mittlere Flasche triffst, darf dein Team trinken!</li>
               <li>
-                Das andere Team muss die Flasche aufstellen und zur Grundlinie zurückkehren.
+                Wenn du die mittlere Flasche triffst, darf dein Team trinken!
+              </li>
+              <li>
+                Das andere Team muss die Flasche aufstellen und zur Grundlinie
+                zurückkehren.
               </li>
               <li>Das Team, das zuerst alle Biere geleert hat, gewinnt!</li>
             </ul>
@@ -75,7 +79,7 @@
             v-for="(tournament, index) in pastTournaments"
           >
             <CardHeader>
-              <CardTitle class="flex items-center text-amber-600">
+              <CardTitle class="flex items-center text-primary">
                 <Trophy class="mr-2" />
                 {{ tournament.name }}
               </CardTitle>
@@ -104,7 +108,7 @@
             v-for="(team, index) in teams"
           >
             <CardHeader>
-              <CardTitle class="flex items-center text-amber-600">
+              <CardTitle class="flex items-center text-primary">
                 <Users class="mr-2" />
                 {{ team.name }}
               </CardTitle>
@@ -124,10 +128,11 @@
           Bereit, dabei zu sein?
         </h2>
         <p class="text-xl mb-8 text-gray-600">
-          Melde dich jetzt für unser bevorstehendes Flunkyball-Turnier an und zeig deine Wurfkünste!
+          Melde dich jetzt für unser bevorstehendes Flunkyball-Turnier an und
+          zeig deine Wurfkünste!
         </p>
         <Button
-          class="bg-amber-600 hover:bg-amber-700 text-white px-6 py-3 rounded-lg flex items-center justify-center mx-auto"
+          class="px-6 py-3 rounded-lg flex items-center justify-center mx-auto"
         >
           <BeerIcon class="mr-2" />
           Melde dein Team an
@@ -135,7 +140,7 @@
       </section>
     </main>
 
-    <footer class="bg-amber-600 text-white py-8">
+    <footer class="bg-primary text-white py-8">
       <div class="container mx-auto text-center">
         <p>&copy; Edi Z, Ruben K. All Beers reserved.</p>
       </div>
@@ -153,7 +158,9 @@ const {
 } = useFetch("/api/upcoming-tournaments", {
   transform: (data) => ({
     ...data.map((tournament) => ({
-      tournamentDate: new Date(tournament.tournament_date).toLocaleString("de-DE"),
+      tournamentDate: new Date(tournament.tournament_date).toLocaleString(
+        "de-DE"
+      ),
       ...tournament,
     })),
   }),

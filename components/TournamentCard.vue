@@ -1,7 +1,7 @@
 <template>
   <Card class="bg-white">
     <CardHeader>
-      <CardTitle class="flex items-center text-amber-600">
+      <CardTitle class="flex items-center text-primary">
         <Calendar class="mr-2" />
         {{ tournament.title }}
       </CardTitle>
@@ -18,7 +18,7 @@
       <p class="text-lg mb-4 text-gray-600">
         <strong>Preis:</strong> {{ tournament.price }}
       </p>
-      <Button class="bg-amber-600 hover:bg-amber-700 text-white"
+      <Button class="bg-primary"
         >Learn More</Button
       >
     </CardContent>
