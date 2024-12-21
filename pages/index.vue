@@ -104,6 +104,10 @@
         </div>
       </section>
 
+      <section>
+        <HeroImageSlider />
+      </section>
+
       <!-- Registration CTA -->
       <section class="text-center py-20">
         <h2 class="text-4xl font-bold mb-4 text-gray-800">
