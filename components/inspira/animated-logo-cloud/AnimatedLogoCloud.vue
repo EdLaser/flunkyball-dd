@@ -10,7 +10,7 @@
       <div
         :class="
           cn(
-            'mask-animation group relative mt-6 flex gap-6 overflow-hidden p-2',
+            'group relative mt-6 flex gap-6 overflow-hidden p-2',
             props.class
           )
         "
