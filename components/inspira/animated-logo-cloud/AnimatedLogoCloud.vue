@@ -1,6 +1,6 @@
 <template>
   <div class="w-full py-12">
-    <div class="mx-auto w-full px-2 md:px-8">
+    <div class="mx-auto w-full">
       <div
         v-if="props.title"
         class="text-center font-medium text-muted-foreground"
@@ -18,14 +18,14 @@
         <div
           v-for="index in Array(5).fill(null)"
           :key="index"
-          class="animate-logo-cloud flex shrink-0 flex-row justify-around"
+          class="animate-logo-cloud flex shrink-0 flex-row justify-around w-fit"
         >
           <NuxtImg
             v-for="(logo, key) in props.logos"
             :key="key"
             :src="logo.path"
             :alt="logo.name"
-            class="w-full h-full px-2"
+            class="md:w-full md:h-full px-2"
           />
         </div>
       </div>

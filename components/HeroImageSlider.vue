@@ -1,6 +1,6 @@
 <template>
   <div>
-    <AnimatedLogoCloud :logos title="Impressionen" />
+    <AnimatedLogoCloud :logos title="Impressionen" class="p-0" />
   </div>
 </template>
 
