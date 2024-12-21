@@ -11,6 +11,7 @@
     </NuxtLink>
 
     <Card class="w-full max-w-md">
+      <NuxtLink to="/register" class="py-3">Join the Community</NuxtLink>
       <CardHeader>
         <CardTitle class="text-2xl font-bold text-center text-gray-800">
           Willkommen bei unseren Flunkyball Turnieren!
@@ -55,11 +56,9 @@
           </div>
         </form>
       </CardContent>
-      <CardFooter>
-        <NuxtLink to="/register" class="flex justify-center w-full">
-          <Beer class="text-primary mr-2" />
-          <span class="text-primary hover:underline animate-pulse">Join the Flunkyball community!</span>
-        </NuxtLink>
+      <CardFooter class="flex justify-center">
+        <Beer class="text-primary mr-2" />
+        <span class="text-gray-600">Join the Flunkyball community!</span>
       </CardFooter>
     </Card>
   </div>
