@@ -48,7 +48,7 @@
           </div>
           <div class="relative h-64 md:h-full">
             <NuxtImg
-              src="/placeholder.svg?height=300&width=400"
+              src="/img/start-throw.jpeg"
               alt="Flunkyball game in action"
               class="rounded-lg object-cover h-full w-full"
             />
