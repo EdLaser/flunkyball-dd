@@ -14,97 +14,105 @@
     <Card class="w-full max-w-md">
       <CardHeader>
         <CardTitle class="text-2xl font-bold text-center text-gray-800">
-          Welcome to Flunkyball Tournaments
+          Willkommen bei unseren Flunkyball Turnieren!
         </CardTitle>
         <CardDescription class="text-center text-gray-600">
-          Login or create an account to join the fun!
+          Loge dich ein oder registriere dich, um an unseren Turnieren
+          teilzunehmen.
         </CardDescription>
       </CardHeader>
       <CardContent>
         <!-- Tabs logic now within Vue. Keep same structure/naming for Tabs, etc. -->
-        <Tabs defaultValue="login" class="w-full" v-auto-animate>
+        <Tabs defaultValue="login" class="w-full">
           <TabsList class="grid w-full grid-cols-2">
             <TabsTrigger value="login">Login</TabsTrigger>
             <TabsTrigger value="register">Register</TabsTrigger>
           </TabsList>
-
-          <!-- Login Tab -->
-          <TabsContent value="login">
-            <!-- Note @submit.prevent instead of onSubmit -->
-            <form @submit.prevent="handleLogin">
-              <div class="space-y-4">
-                <div class="space-y-2">
-                  <Label for="login-email">Email</Label>
-                  <Input
-                    id="login-email"
-                    type="email"
-                    placeholder="your@email.com"
-                    required
-                    v-model="loginEmail"
-                  />
-                </div>
-                <div class="space-y-2">
-                  <Label for="login-password">Password</Label>
-                  <Input
-                    id="login-password"
-                    type="password"
-                    required
-                    v-model="loginPassword"
-                  />
-                </div>
-                <Button
-                  type="submit"
-                  class="w-full bg-primary hover:bg-primary/80 text-white"
-                >
-                  Login
-                </Button>
-              </div>
-            </form>
-          </TabsContent>
-
-          <!-- Register Tab -->
-          <TabsContent value="register">
-            <form @submit.prevent="handleRegister">
-              <div class="space-y-4">
-                <div class="space-y-2">
-                  <Label for="register-email">Email</Label>
-                  <Input
-                    id="register-email"
-                    type="email"
-                    placeholder="your@email.com"
-                    required
-                    v-model="registerEmail"
-                  />
-                </div>
-                <div class="space-y-2">
-                  <Label for="register-password">Password</Label>
-                  <Input
-                    id="register-password"
-                    type="password"
-                    required
-                    v-model="registerPassword"
-                  />
-                </div>
-                <div class="space-y-2">
-                  <Label for="register-confirm-password"
-                    >Confirm Password</Label
+          <div className="relative mt-4 h-[300px]">
+            <TabsContent value="login">
+              <!-- Note @submit.prevent instead of onSubmit -->
+              <form
+                @submit.prevent="handleLogin"
+                class="space-y-4 h-full flex flex-col"
+              >
+                <div class="space-y-4">
+                  <div class="space-y-2">
+                    <Label for="login-email">Email</Label>
+                    <Input
+                      id="login-email"
+                      type="email"
+                      placeholder="your@email.com"
+                      required
+                      v-model="loginEmail"
+                    />
+                  </div>
+                  <div class="space-y-2">
+                    <Label for="login-password">Password</Label>
+                    <Input
+                      id="login-password"
+                      type="password"
+                      required
+                      v-model="loginPassword"
+                    />
+                  </div>
+                  <Button
+                    type="submit"
+                    class="w-full bg-primary hover:bg-primary/80 text-white"
                   >
-                  <Input
-                    id="register-confirm-password"
-                    type="password"
-                    required
-                    v-model="registerConfirmPassword"
-                  />
+                    Login
+                  </Button>
                 </div>
-                <Button
-                  type="submit"
-                  class="w-full bg-primary hover:bg-primary/80 text-white"
-                >
-                  Register
-                </Button>
-              </div>
-            </form>
-          </TabsContent>
+              </form>
+            </TabsContent>
+
+            <!-- Register Tab -->
+            <TabsContent value="register">
+              <form
+                @submit.prevent="handleRegister"
+                class="space-y-4 h-full flex flex-col"
+              >
+                <div class="space-y-4">
+                  <div class="space-y-2">
+                    <Label for="register-email">Email</Label>
+                    <Input
+                      id="register-email"
+                      type="email"
+                      placeholder="your@email.com"
+                      required
+                      v-model="registerEmail"
+                    />
+                  </div>
+                  <div class="space-y-2">
+                    <Label for="register-password">Password</Label>
+                    <Input
+                      id="register-password"
+                      type="password"
+                      required
+                      v-model="registerPassword"
+                    />
+                  </div>
+                  <div class="space-y-2">
+                    <Label for="register-confirm-password"
+                      >Confirm Password</Label
+                    >
+                    <Input
+                      id="register-confirm-password"
+                      type="password"
+                      required
+                      v-model="registerConfirmPassword"
+                    />
+                  </div>
+                  <Button
+                    type="submit"
+                    class="w-full bg-primary hover:bg-primary/80 text-white"
+                  >
+                    Register
+                  </Button>
+                </div>
+              </form>
+            </TabsContent>
+          </div>
+          <!-- Login Tab -->
         </Tabs>
       </CardContent>
       <CardFooter class="flex justify-center">
@@ -117,6 +125,7 @@
 
 <script setup lang="ts">
 import { ArrowLeft, Beer } from "lucide-vue-next";
+import { vAutoAnimate } from "@formkit/auto-animate";
 
 // Local state using refs
 const loginEmail = ref("");
