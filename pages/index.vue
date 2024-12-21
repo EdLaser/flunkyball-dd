@@ -18,9 +18,7 @@
           Nimm an actiongeladenen Turnieren voller Spaß, Sport und einer Prise
           Chaos teil.
         </p>
-        <Button class="px-6 py-3 rounded-lg">
-          Jetzt Anmelden
-        </Button>
+        <Button class="px-6 py-3 rounded-lg"> Jetzt Anmelden </Button>
       </section>
 
       <!-- About the Game -->
@@ -73,26 +71,10 @@
           Ergebnisse vergangener Turniere
         </h2>
         <div class="grid md:grid-cols-3 gap-6">
-          <Card
-            :key="index"
-            class="bg-white"
-            v-for="(tournament, index) in pastTournaments"
-          >
-            <CardHeader>
-              <CardTitle class="flex items-center text-primary">
-                <Trophy class="mr-2" />
-                {{ tournament.name }}
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p class="text-gray-600">
-                <strong>Gewinner:</strong> {{ tournament.winner }}
-              </p>
-              <p class="text-gray-600">
-                <strong>Datum:</strong> {{ tournament.date }}
-              </p>
-            </CardContent>
-          </Card>
+          <PastTournamenCard
+            :tournament="tournament"
+            v-for="tournament in pastTournaments"
+          />
         </div>
       </section>
 
@@ -153,28 +135,33 @@ import { BeerIcon, Users, Trophy } from "lucide-vue-next";
 
 const {
   data: upcomingTournaments,
-  status,
-  error,
+  status: upcomingStatus,
+  error: upcomingError,
 } = useFetch("/api/upcoming-tournaments", {
-  transform: (data) => ({
-    ...data.map((tournament) => ({
+  transform: (data) =>
+    data.map((tournament) => ({
       tournamentDate: new Date(tournament.tournament_date).toLocaleString(
         "de-DE"
       ),
       ...tournament,
     })),
-  }),
 });
 
-const pastTournaments = ref([
-  { name: "Spring Fling Flunky", winner: "Bottle Rockets", date: "April 2023" },
-  {
-    name: "Winter Wonderland Flunky",
-    winner: "Ice Cold Slingers",
-    date: "Januar 2023",
-  },
-  { name: "Autumn Bottle Bash", winner: "Leaf Lobbers", date: "Oktober 2022" },
-]);
+const {
+  data: pastTournaments,
+  status: pastStatus,
+  error: pastError,
+} = useFetch("/api/past-tournaments", {
+  transform: (data) =>
+    data.map((tournament) => ({
+      tournamentDate: new Date(tournament.tournament_date).toLocaleString(
+        "de-DE"
+      ),
+      ...tournament,
+    })),
+});
+
+console.log(pastTournaments.value);
 
 const teams = ref([
   { name: "Bottle Bashers", members: ["Alice", "Bob"] },
