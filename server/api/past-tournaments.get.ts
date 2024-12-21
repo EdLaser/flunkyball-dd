@@ -1,4 +1,4 @@
-import { usePrisma } from "~/utils/prisma";
+import { usePrisma } from "~/server/utils/prisma";
 
 export default defineEventHandler(async (event) => {
   const pastTournamentWinners = await usePrisma(event).tournaments.findMany({
