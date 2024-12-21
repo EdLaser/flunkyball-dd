@@ -7,7 +7,11 @@ export default defineNuxtConfig({
     "shadcn-nuxt",
     "@nuxtjs/color-mode",
     "@nuxt/image",
+    "@nuxtjs/supabase",
   ],
+  supabase: {
+    redirect: false,
+  },
   shadcn: {
     /**
      * Prefix for all the imported component

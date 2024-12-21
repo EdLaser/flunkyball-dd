@@ -61,29 +61,10 @@
         <h2 class="text-3xl font-bold mb-6 text-center text-gray-800">
           Upcoming Tournament
         </h2>
-        <Card class="bg-white">
-          <CardHeader>
-            <CardTitle class="flex items-center text-amber-600">
-              <Calendar class="mr-2" />
-              Summer Flunkyball Showdown
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <p class="text-lg mb-2 text-gray-600">
-              <strong>Date:</strong> July 15, 2023
-            </p>
-            <p class="text-lg mb-2 text-gray-600">
-              <strong>Location:</strong> Sunny Park, Downtown
-            </p>
-            <p class="text-lg mb-4 text-gray-600">
-              <strong>Prize:</strong> Glory, bragging rights, and a golden
-              bottle trophy!
-            </p>
-            <Button class="bg-amber-600 hover:bg-amber-700 text-white"
-              >Learn More</Button
-            >
-          </CardContent>
-        </Card>
+        <TournamentCard
+          :tournament="tournament"
+          v-for="tournament in upcomingTournaments"
+        />
       </section>
 
       <!-- Past Tournament Results -->
@@ -168,7 +149,20 @@
 </template>
 
 <script setup lang="ts">
-import { BeerIcon } from 'lucide-vue-next';
+import { BeerIcon, Calendar, Users, Trophy } from "lucide-vue-next";
+
+const {
+  data: upcomingTournaments,
+  status,
+  error,
+} = useFetch("/api/upcoming-tournaments", {
+  transform: (data) => ({
+    ...data.map((tournament) => ({
+      tournamentDate: new Date(tournament.tournament_date).toLocaleString("de-DE"),
+      ...tournament,
+    })),
+  }),
+});
 
 const pastTournaments = ref([
   { name: "Spring Fling Flunky", winner: "Bottle Rockets", date: "April 2023" },

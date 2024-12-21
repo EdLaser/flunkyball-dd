@@ -12,6 +12,7 @@
   "dependencies": {
     "@nuxt/image": "1.8.1",
     "@nuxtjs/color-mode": "3.5.2",
+    "@nuxtjs/supabase": "1.4.5",
     "@nuxtjs/tailwindcss": "6.12.2",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
@@ -26,6 +27,8 @@
   },
   "packageManager": "pnpm@9.11.0+sha512.0a203ffaed5a3f63242cd064c8fb5892366c103e328079318f78062f24ea8c9d50bc6a47aa3567cabefd824d170e78fa2745ed1f16b132e16436146b7688f19b",
   "devDependencies": {
+    "@prisma/client": "^6.1.0",
+    "prisma": "6.1.0",
     "typescript": "^5.7.2"
   }
 }
