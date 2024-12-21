@@ -156,31 +156,38 @@
                 </template>
 
                 <template v-if="stepIndex === 3">
-                  <div class="my-14 mx-auto flex flex-col items-center">
-                    <Label class="text-center text-lg">OTP</Label>
-                    <PinInput
-                      id="otp"
-                      :model-value="otp"
-                      placeholder="○"
-                      class="flex gap-2 items-center mt-1 justify-between"
-                      otp
-                      type="number"
-                      @complete="handleComplete"
-                    >
-                      <PinInputGroup>
-                        <PinInputInput
-                          v-for="(id, index) in 6"
-                          :key="id"
-                          :index="index"
-                        />
-                      </PinInputGroup>
-                    </PinInput>
-                    <small class="text-center text-gray-500 max-w-md"
-                      >Du hast dein <b>O</b>ne <b>T</b>ime <b>P</b>asswort per
-                      Email erhalten. Bitte Prüfe auch deinen
-                      Spam-Ordner.</small
-                    >
-                  </div>
+                  <FormField v-slot="{ componentField, value }" name="otp">
+                    <FormItem class="my-14 mx-auto flex flex-col items-center">
+                      <Label class="text-center text-lg">OTP</Label>
+                      <PinInput
+                        id="otp"
+                        :model-value="value"
+                        placeholder="○"
+                        class="flex gap-2 items-center mt-1 justify-between"
+                        otp
+                        type="number"
+                        :name="componentField.name"
+                        @complete="handleComplete"
+                        @update:model-value="
+                            (arrStr: any) => {
+                              setFieldValue('otp', arrStr.filter(Boolean));
+                            }
+                          "
+                      >
+                        <PinInputGroup>
+                          <PinInputInput
+                            v-for="(id, index) in 6"
+                            :key="id"
+                            :index="index"
+                          /> </PinInputGroup
+                      ></PinInput>
+                      <small class="text-center text-gray-500 max-w-md"
+                        >Du hast dein <b>O</b>ne <b>T</b>ime <b>P</b>asswort per
+                        Email erhalten. Bitte Prüfe auch deinen
+                        Spam-Ordner.</small
+                      >
+                    </FormItem>
+                  </FormField>
                 </template>
               </div>
 
@@ -260,6 +267,9 @@ const registerSchema = [
         path: ["confirmPassword"],
       }
     ),
+  z.object({
+    otp: z.array(z.coerce.string()).length(6),
+  }),
 ];
 
 const { handleSubmit, setFieldValue } = useForm({
@@ -298,5 +308,4 @@ const steps = [
 ];
 
 const stepIndex = ref(1);
-const otp = ref<string[]>([] as string[]);
 </script>
