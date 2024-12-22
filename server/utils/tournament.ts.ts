@@ -41,8 +41,26 @@ export const getTournamentDetails = async (title: string, event: any) => {
           },
           matches: {
             select: {
-              away_team_id: true,
-              home_team_id: true,
+              teams_matches_away_team_idToteams: {
+                select: {
+                  name: true,
+                },
+              },
+              teams_matches_home_team_idToteams: {
+                select: {
+                  name: true,
+                },
+              },
+              teams_matches_match_winnerToteams: {
+                select: {
+                  name: true,
+                },
+              },
+              groups: {
+                select: {
+                  group_name: true,
+                },
+              },
             },
           },
         },
@@ -73,13 +91,17 @@ export const getTournamentDetails = async (title: string, event: any) => {
           }),
         };
       }) ?? [],
-    matches: tournamentDetails?.stages.map((stage) => {
+    stages: tournamentDetails?.stages.map((stage) => {
       return {
         stageName: stage.stage_name,
-        groups: stage.groups.map((group) => {
+        matches: stage.matches.map((match) => {
           return {
-            groupName: group.group_name,
-            matches: stage.matches,
+            awayTeam:
+              match.teams_matches_away_team_idToteams.name ?? "Anonymus",
+            homeTeam:
+              match.teams_matches_home_team_idToteams.name ?? "Anonymus",
+            winner: match.teams_matches_match_winnerToteams.name,
+            groupName: match.groups?.group_name,
           };
         }),
       };

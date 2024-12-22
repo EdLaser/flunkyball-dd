@@ -57,21 +57,24 @@
               <CardTitle>Spiele</CardTitle>
             </CardHeader>
             <CardContent>
-              <ul class="space-y-2">
-                <!-- Replace .map with v-for -->
-                <li
-                  v-for="(match, index) in tournament?.matches"
-                  v-if="tournament?.matches"
+              <div class="space-y-4">
+                <div
+                  v-for="(stage, index) in tournament?.stages"
+                  v-if="tournament?.stages"
                   :key="index"
-                  class="flex items-start"
+                  class="w-full"
                 >
-                  <Clock class="mr-2 h-4 w-4 text-primary mt-1" />
-                  <div>
-                    <span class="font-semibold">{{ match.time }}</span> -
-                    {{ match.title }}
-                  </div>
-                </li>
-              </ul>
+                  <MatchCard
+                    v-for="(match, index) in stage.matches"
+                    :key="`${index}-${match.awayTeam}`"
+                    :stageName="stage.stageName"
+                    :awayTeamName="match.awayTeam"
+                    :homeTeamName="match.homeTeam"
+                    :winnerTeamName="match.winner"
+                    :group="match.groupName"
+                  />
+                </div>
+              </div>
             </CardContent>
           </Card>
         </div>
@@ -91,7 +94,6 @@
                   class="flex items-center space-x-2"
                 >
                   <Avatar>
-                    <!-- Similar to team.name.slice(0,2).toUpperCase() in Vue -->
                     <AvatarFallback>
                       {{ team.name?.substring(0, 2).toUpperCase() ?? "AN" }}
                     </AvatarFallback>
