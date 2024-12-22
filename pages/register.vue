@@ -232,6 +232,25 @@ import * as z from "zod";
 import { toTypedSchema } from "@vee-validate/zod";
 import { useForm } from "vee-validate";
 
+const supabase = useSupabaseClient();
+
+const registerUser = async (email: string, password: string) => {
+  try {
+    const result = await supabase.auth.signUp({
+      email,
+      password,
+    });
+    if (result.error) {
+      throw new Error(result.error.message);
+    } else if (result.data.user) {
+      return true;
+    }
+  } catch (error) {
+    console.error(error);
+    return false;
+  }
+};
+
 const onSubmit = (values: any) => {
   toast({
     title: "You submitted the following values:",

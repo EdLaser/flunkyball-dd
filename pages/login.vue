@@ -74,9 +74,25 @@ import { toast } from "vue-sonner";
 // Local state using refs
 const loginEmail = ref("");
 const loginPassword = ref("");
-const registerEmail = ref("");
-const registerPassword = ref("");
-const registerConfirmPassword = ref("");
+
+const supabase = useSupabaseClient();
+
+const signIgnUser = async (email: string, password: string) => {
+  try {
+    const result = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    });
+    if (result.error) {
+      throw new Error(result.error.message);
+    } else if (result.data.user) {
+      return true;
+    }
+  } catch (error) {
+    console.error(error);
+    return false;
+  }
+};
 
 // Methods
 const handleLogin = async () => {

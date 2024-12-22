@@ -70,11 +70,11 @@
 <script setup lang="ts">
 definePageMeta({
   middleware: "auth",
+  layout: "dashboard",
 });
 
 import { Trophy, Users, Calendar, MapPin, BarChart } from "lucide-vue-next";
 
-// Replace these with the actual Vue paths for your UI components:
 import {
   Card,
   CardContent,
