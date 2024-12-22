@@ -41,6 +41,7 @@ model tournaments {
   price                    String
   location                 String
   created_at               DateTime                   @default(now()) @db.Timestamptz(6)
+  status                   tournament_stauts?         @default(open)
   groups                   groups[]
   pre_registrations        pre_registrations[]
   stages                   stages[]
@@ -98,16 +99,6 @@ model pre_registrations {
 }
 
 /// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
-model staff {
-  user_id    String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  created_at DateTime @default(now()) @db.Timestamptz(6)
-  first_name String
-  last_name  String
-  phone      String
-  email      String
-}
-
-/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
 model tournament_registrations {
   registration_id String      @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   created_at      DateTime    @default(now()) @db.Timestamptz(6)
@@ -115,4 +106,10 @@ model tournament_registrations {
   team_id         String      @db.Uuid
   teams           teams       @relation(fields: [team_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
   tournaments     tournaments @relation(fields: [tournament_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+}
+
+enum tournament_stauts {
+  open
+  finished
+  in_progress
 }

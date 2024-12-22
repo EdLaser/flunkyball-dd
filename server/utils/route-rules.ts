@@ -1,0 +1,1 @@
+export const protectedRoutes = ["/api/orga", "/api/private"];

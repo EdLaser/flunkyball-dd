@@ -8,7 +8,11 @@
 
     <main class="container mx-auto px-4 py-8">
       <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
-        <StatCard title="Total Tournaments" value="12" :icon="Trophy" />
+        <StatCard
+          title="Turniere"
+          :value="`${totalTournaments}`"
+          :icon="Trophy"
+        />
         <StatCard title="Active Teams" value="48" :icon="Users" />
         <StatCard title="Upcoming Events" value="3" :icon="Calendar" />
         <StatCard title="Venues" value="5" :icon="MapPin" />
@@ -86,4 +90,18 @@ import { Button } from "@/components/ui/button";
 import TournamentList from "@/components/TournamentList.vue";
 import TeamList from "@/components/TeamList.vue";
 import StatCard from "@/components/StatCard.vue";
+
+const { data: pastAndUpcomingTournaments } = await useFetch(
+  "/api/orga/total-tournaments"
+);
+const { data: recentTournaments } = await useFetch(
+  "/api/orga/recent-tournaments"
+);
+const { data: totalTeams } = await useFetch("/api/orga/total-teams");
+
+const totalTournaments = computed(
+  () =>
+    (pastAndUpcomingTournaments.value?.upcomingTournaments ?? 0) +
+    (pastAndUpcomingTournaments.value?.pastTournaments ?? 0)
+);
 </script>
