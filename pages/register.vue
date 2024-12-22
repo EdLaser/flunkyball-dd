@@ -7,7 +7,7 @@
       class="absolute top-4 left-4 text-primary hover:-translate-x-1 duration-150 flex items-center"
     >
       <ArrowLeft class="mr-2" />
-      Back to Home
+      Zurück
     </NuxtLink>
 
     <Card class="w-full max-w-2xl">
@@ -202,16 +202,13 @@
                 </Button>
                 <div class="flex items-center gap-3">
                   <Button
-                    v-if="stepIndex < 2"
+                    v-if="stepIndex <= 3"
                     :type="meta.valid ? 'button' : 'submit'"
                     :disabled="isNextDisabled"
                     size="sm"
                     @click="meta.valid && nextStep()"
                   >
-                    Weiter
-                  </Button>
-                  <Button v-if="stepIndex === 2" size="sm" type="submit">
-                    Registrieren
+                    {{ stepIndex === 2 ? "Registrieren" : "Weiter" }}
                   </Button>
                 </div>
               </div>
