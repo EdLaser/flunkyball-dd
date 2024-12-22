@@ -7,7 +7,7 @@
       class="absolute top-4 left-4 text-primary hover:-translate-x-1 duration-150 flex items-center"
     >
       <ArrowLeft class="mr-2" />
-      Back to Home
+      Zurück
     </NuxtLink>
 
     <Card class="w-full max-w-md">
@@ -58,7 +58,9 @@
       <CardFooter>
         <NuxtLink to="/register" class="flex justify-center w-full">
           <Beer class="text-primary mr-2" />
-          <span class="text-primary hover:underline animate-pulse">Join the Flunkyball community!</span>
+          <span class="text-primary hover:underline animate-pulse"
+            >Join the Flunkyball community!</span
+          >
         </NuxtLink>
       </CardFooter>
     </Card>
@@ -77,24 +79,14 @@ const registerPassword = ref("");
 const registerConfirmPassword = ref("");
 
 // Methods
-function handleLogin() {
-  // TODO: Implement login logic
-  console.log("Login:", {
-    email: loginEmail.value,
-    password: loginPassword.value,
-  });
-}
+const handleLogin = async () => {
+  const success = await signIgnUser(loginEmail.value, loginPassword.value);
 
-function handleRegister() {
-  // Check password match
-  if (registerPassword.value !== registerConfirmPassword.value) {
-    alert("Passwords do not match");
-    return;
+  if (success) {
+    toast.success("Erfolgreich eingeloggt!");
+    navigateTo("/");
+  } else {
+    toast.error("Ein Fehler ist aufgetreten!");
   }
-  // TODO: Implement registration logic
-  console.log("Register:", {
-    email: registerEmail.value,
-    password: registerPassword.value,
-  });
-}
+};
 </script>
