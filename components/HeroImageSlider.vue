@@ -1,12 +1,17 @@
 <template>
-  <div>
-    <AnimatedLogoCloud :logos title="Impressionen" class="p-0" />
-  </div>
+  <Marquee :pause-on-hover="true">
+    <NuxtImg
+      class="w-fit h-fit"
+      :src="picture.path"
+      :alt="picture.name"
+      v-for="picture in pictures"
+    />
+  </Marquee>
 </template>
 
 <script lang="ts" setup>
-import { AnimatedLogoCloud } from "@/components/inspira/animated-logo-cloud";
-const logos = [
+import Marquee from "./inspira/marquee/Marquee.vue";
+const pictures = [
   {
     name: "Catching",
     path: "/img/catching.jpeg",
