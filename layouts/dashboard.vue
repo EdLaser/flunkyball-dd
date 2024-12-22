@@ -75,7 +75,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref } from "vue";
 import { Button } from "@/components/ui/button";
 
 import {
@@ -85,11 +85,18 @@ import {
   MapPin,
   Settings,
   LogOut,
-  Menu
+  Menu,
 } from "lucide-vue-next";
 
 const supabase = useSupabaseClient();
-const isSidebarOpen = ref(false);
+const isSidebarOpen = ref(true);
+
+onMounted(() => {
+  // If on mobile (< 768px), collapse the sidebar by default
+  if (window.innerWidth < 768) {
+    isSidebarOpen.value = false;
+  }
+});
 
 function toggleSidebar() {
   isSidebarOpen.value = !isSidebarOpen.value;
@@ -109,4 +116,3 @@ async function handleLogout() {
   const result = await logoutUser();
 }
 </script>
-
