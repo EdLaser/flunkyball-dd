@@ -3,7 +3,6 @@
     <!-- Header -->
     <header class="bg-primary text-primary-foreground shadow-md">
       <div class="container mx-auto py-6 px-4">
-        <!-- Replaces <Link href="/"> with <NuxtLink to="/"> -->
         <NuxtLink
           to="/"
           class="inline-flex items-center text-primary-foreground hover:text-primary-foreground/80"
@@ -137,12 +136,21 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 
+definePageMeta({
+  title: "Turnier Details",
+  description: "Details zum Turnier",
+});
+
 const route = useRoute();
 
 const {
   data: tournament,
   status,
   error,
-} = await useFetch(`/api/tournament-details/${route.params.title}`);
-console.log(tournament.value);
+  refresh,
+} = await useFetch(() => `/api/tournament-details/${route.params.title}`);
+
+if (tournament.value == null) {
+  await refresh();
+}
 </script>

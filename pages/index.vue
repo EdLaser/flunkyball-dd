@@ -33,15 +33,20 @@
               jeweils zwei Spielern gegeneinander antreten, indem sie eine
               Flasche auf eine Flasche in der Mitte des Spielfelds werfen.
             </p>
-            <ul class="list-disc list-inside space-y-2 text-gray-600">
-              <li>
+            <ul class="space-y-2 text-gray-600">
+              <li class="flex items-center">
+                <BeerIcon class="text-primary inline-block mr-2" />
                 Wenn du die mittlere Flasche triffst, darf dein Team trinken!
               </li>
-              <li>
+              <li class="flex items-center">
+                <BeerIcon class="text-primary inline-block mr-2" />
                 Das andere Team muss die Flasche aufstellen und zur Grundlinie
                 zurückkehren.
               </li>
-              <li>Das Team, das zuerst alle Biere geleert hat, gewinnt!</li>
+              <li class="flex items-center">
+                <BeerIcon class="text-primary inline-block mr-2" />
+                Das Team, das zuerst alle Biere geleert hat, gewinnt!
+              </li>
             </ul>
           </div>
           <div class="relative h-64 md:h-full">

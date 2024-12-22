@@ -20,13 +20,13 @@
       </p>
     </CardContent>
     <CardFooter>
-      <NuxtLink
-        class="flex hover:translate-x-1 duration-200 bg-primary text-white rounded-md p-3"
-        :to="`/tournaments/${tournament.title}`"
+      <Button
+        class="flex hover:translate-x-1 duration-200 transition-all"
+        @click="navigateTo(`/tournaments/${tournament.title}`)"
       >
         <Info class="mr-2" />
         Details
-      </NuxtLink>
+      </Button>
     </CardFooter>
   </Card>
 </template>
