@@ -67,10 +67,7 @@
       </div>
 
       <div class="mt-8 flex justify-end">
-        <!-- NuxtLink replaces next/link -->
-        <NuxtLink to="/tournaments/create">
-          <Button>Create New Tournament</Button>
-        </NuxtLink>
+        <NewTournamentDialog />
       </div>
     </main>
   </div>
@@ -101,18 +98,17 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
 import TournamentList from "@/components/TournamentList.vue";
 import TeamList from "@/components/TeamList.vue";
 import StatCard from "@/components/StatCard.vue";
 
 const { data: pastAndUpcomingTournaments } = await useFetch(
-  "/api/orga/total-tournaments"
+  "/api/orga/tournaments/total-tournaments"
 );
 const { data: recentTournaments } = await useFetch(
-  "/api/orga/recent-tournaments"
+  "/api/orga/tournaments/recent-tournaments"
 );
-const { data: totalTeams } = await useFetch("/api/orga/total-teams");
+const { data: totalTeams } = await useFetch("/api/orga/teams/total-teams");
 const { data: locations } = await useFetch("/api/orga/locations");
 
 const totalTournaments = computed(
