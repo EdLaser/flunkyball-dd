@@ -8,20 +8,16 @@
 
     <main class="container mx-auto px-4 py-8">
       <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
-        <StatCard
-          title="Turniere"
-          :value="`${totalTournaments}`"
-          :icon="Trophy"
-        />
-        <StatCard title="Aktive Teams" :value="`${totalTeams}`" :icon="Users" />
+        <StatCard title="Turniere" :value="totalTournaments" :icon="Trophy" />
+        <StatCard title="Aktive Teams" :value="totalTeams ?? 0" :icon="Users" />
         <StatCard
           title="Kommende Turniere"
-          :value="`${pastAndUpcomingTournaments?.upcomingTournaments}`"
+          :value="pastAndUpcomingTournaments?.upcomingTournaments ?? 0"
           :icon="Calendar"
         />
         <StatCard
           title="Spielorte"
-          :value="`${locations?.length}`"
+          :value="locations?.length ?? 0"
           :icon="MapPin"
         />
       </div>

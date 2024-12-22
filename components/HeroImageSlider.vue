@@ -10,7 +10,7 @@
 </template>
 
 <script lang="ts" setup>
-import Marquee from "./inspira/marquee/Marquee.vue";
+import Marquee from "./inspira/Marquee.vue";
 const pictures = [
   {
     name: "Catching",

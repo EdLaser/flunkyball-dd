@@ -11,16 +11,19 @@
     </CardHeader>
     <CardContent>
       <div class="text-2xl font-bold">
-        {{ value }}
+        <InspiraNumberTicker v-if="isNumber(value)" :value="value" />
+        <span v-else>{{ value }}</span>
       </div>
     </CardContent>
   </Card>
 </template>
 
 <script setup lang="ts">
+const isNumber = (val: any) => typeof val === "number" && val === val;
+
 interface StatCardProps {
   title: string;
-  value: string;
+  value: string | number;
   icon: any;
 }
 
