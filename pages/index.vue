@@ -141,31 +141,13 @@ const {
   data: upcomingTournaments,
   status: upcomingStatus,
   error: upcomingError,
-} = useFetch("/api/upcoming-tournaments", {
-  transform: (data) =>
-    data.map((tournament) => ({
-      tournamentDate: new Date(tournament.tournament_date).toLocaleString(
-        "de-DE"
-      ),
-      ...tournament,
-    })),
-});
+} = useFetch("/api/upcoming-tournaments");
 
 const {
   data: pastTournaments,
   status: pastStatus,
   error: pastError,
-} = useFetch("/api/past-tournaments", {
-  transform: (data) =>
-    data.map((tournament) => ({
-      tournamentDate: new Date(tournament.tournament_date).toLocaleString(
-        "de-DE"
-      ),
-      ...tournament,
-    })),
-});
-
-console.log(pastTournaments.value);
+} = useFetch("/api/past-tournaments");
 
 const teams = ref([
   { name: "Bottle Bashers", members: ["Alice", "Bob"] },

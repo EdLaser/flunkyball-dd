@@ -18,15 +18,21 @@
       <p class="text-lg mb-4 text-gray-600">
         <strong>Preis:</strong> {{ tournament.price }}
       </p>
-      <Button class="bg-primary"
-        >Learn More</Button
-      >
     </CardContent>
+    <CardFooter>
+      <NuxtLink
+        class="flex hover:translate-x-1 duration-200 bg-primary text-white rounded-md p-3"
+        :to="`/tournaments/${tournament.title}`"
+      >
+        <Info class="mr-2" />
+        Details
+      </NuxtLink>
+    </CardFooter>
   </Card>
 </template>
 
 <script lang="ts" setup>
-import { Calendar } from "lucide-vue-next";
+import { Calendar, Info } from "lucide-vue-next";
 const props = defineProps<{
   tournament: {
     title: string;
