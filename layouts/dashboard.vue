@@ -24,14 +24,14 @@
         </Button>
 
         <Button variant="ghost" class="w-full justify-start">
-          <NuxtLink to="/orga/venues" class="flex items-center">
+          <NuxtLink to="/orga/locations" class="flex items-center">
             <MapPin class="mr-2 h-4 w-4" />
             Venues
           </NuxtLink>
         </Button>
 
         <Button variant="ghost" class="w-full justify-start">
-          <NuxtLink to="/roga/settings" class="flex items-center">
+          <NuxtLink to="/orga/settings" class="flex items-center">
             <Settings class="mr-2 h-4 w-4" />
             Settings
           </NuxtLink>

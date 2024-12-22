@@ -1,14 +1,23 @@
+import { transfromTournamentDate } from "~/server/utils/tournament.ts";
+
 export default defineEventHandler(async (event) => {
-  const msotRecentTournaments = await usePrisma(event).tournaments.findMany({
+  const recentTournaments = await usePrisma(event).tournaments.findMany({
     select: {
       title: true,
       tournament_date: true,
       status: true,
+      description: true,
     },
-    where: { tournament_date: { lte: new Date() } },
     orderBy: {
       tournament_date: "desc",
     },
     take: 5,
   });
+
+  return recentTournaments.map((tournament) => ({
+    title: tournament.title,
+    tournamentDate: transfromTournamentDate(tournament.tournament_date),
+    status: tournament.status?.toString() ?? "unknown",
+    description: tournament.description ?? "",
+  }));
 });

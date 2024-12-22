@@ -1,4 +1,4 @@
-const transfromTournamentDate = (tournamentDate: string | Date) => {
+export const transfromTournamentDate = (tournamentDate: string | Date) => {
   return new Date(tournamentDate).toLocaleString("de-DE", {
     year: "numeric",
     month: "long",

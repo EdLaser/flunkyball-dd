@@ -8,24 +8,22 @@
       </TableRow>
     </TableHeader>
     <TableBody>
-      <TableRow v-for="tournament in tournaments" :key="tournament.id">
+      <TableRow v-for="tournament in tournaments" :key="tournament.title">
         <TableCell>
           <NuxtLink
-            :to="`/tournaments/${tournament.id}`"
+            :to="`/tournaments/${tournament.title}`"
             class="text-primary hover:underline"
           >
-            {{ tournament.name }}
+            {{ tournament.title }}
           </NuxtLink>
         </TableCell>
         <TableCell>
-          {{ tournament.date }}
+          {{ tournament.tournamentDate }}
         </TableCell>
         <TableCell>
           <!-- Example logic for 'Badge' variants -->
           <Badge
-            :variant="
-              tournament.status === 'Upcoming' ? 'default' : 'secondary'
-            "
+            :variant="tournament.status === 'open' ? 'default' : 'secondary'"
           >
             {{ tournament.status }}
           </Badge>
@@ -46,25 +44,12 @@ import {
 } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
 
-// The data array:
-const tournaments = [
-  {
-    id: "1",
-    name: "Summer Flunkyball Showdown",
-    date: "July 15, 2023",
-    status: "Upcoming",
-  },
-  {
-    id: "2",
-    name: "Autumn Bottle Bash",
-    date: "September 22, 2023",
-    status: "Registration Open",
-  },
-  {
-    id: "3",
-    name: "Winter Wonderland Flunky",
-    date: "December 10, 2023",
-    status: "Planning",
-  },
-];
+const props = defineProps<{
+  tournaments: {
+    title: string;
+    description: string;
+    tournamentDate: string;
+    status: string;
+  }[];
+}>();
 </script>

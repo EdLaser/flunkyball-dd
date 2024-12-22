@@ -13,21 +13,30 @@
           :value="`${totalTournaments}`"
           :icon="Trophy"
         />
-        <StatCard title="Active Teams" value="48" :icon="Users" />
-        <StatCard title="Upcoming Events" value="3" :icon="Calendar" />
-        <StatCard title="Venues" value="5" :icon="MapPin" />
+        <StatCard title="Aktive Teams" :value="`${totalTeams}`" :icon="Users" />
+        <StatCard
+          title="Kommende Turniere"
+          :value="`${pastAndUpcomingTournaments?.upcomingTournaments}`"
+          :icon="Calendar"
+        />
+        <StatCard
+          title="Spielorte"
+          :value="`${locations?.length}`"
+          :icon="MapPin"
+        />
       </div>
 
       <div class="grid gap-6 mt-8 md:grid-cols-2">
         <Card>
           <CardHeader>
-            <CardTitle>Recent Tournaments</CardTitle>
-            <CardDescription
-              >Overview of the latest Flunkyball tournaments</CardDescription
-            >
+            <CardTitle>Letzte Turniere</CardTitle>
+            <CardDescription>Die letzten 5 Turniere</CardDescription>
           </CardHeader>
           <CardContent>
-            <TournamentList />
+            <TournamentList
+              v-if="recentTournaments && recentTournaments.length > 0"
+              :tournaments="recentTournaments"
+            />
           </CardContent>
         </Card>
 
@@ -98,6 +107,7 @@ const { data: recentTournaments } = await useFetch(
   "/api/orga/recent-tournaments"
 );
 const { data: totalTeams } = await useFetch("/api/orga/total-teams");
+const { data: locations } = await useFetch("/api/orga/locations");
 
 const totalTournaments = computed(
   () =>
