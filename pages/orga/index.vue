@@ -80,6 +80,16 @@
 definePageMeta({
   middleware: "auth",
   layout: "dashboard",
+  breadcrumb: [
+    {
+      text: "Dashboard",
+      href: "/orga",
+    },
+  ],
+  pageTransition: {
+    name: "page",
+    mode: "out-in",
+  },
 });
 
 import { Trophy, Users, Calendar, MapPin, BarChart } from "lucide-vue-next";

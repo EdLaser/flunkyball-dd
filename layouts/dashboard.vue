@@ -26,7 +26,7 @@
         <Button variant="ghost" class="w-full justify-start">
           <NuxtLink to="/orga/locations" class="flex items-center">
             <MapPin class="mr-2 h-4 w-4" />
-            Venues
+            Locations
           </NuxtLink>
         </Button>
 
