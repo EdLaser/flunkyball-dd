@@ -1,20 +1,22 @@
 <template>
-  <nav class="flex items-center md:items-end justify-between space-y-2 w-full px-2 pt-6 pb-3">
+  <nav
+    class="flex items-center md:items-end justify-between space-y-2 w-full px-2 pt-6 pb-3"
+  >
     <RouteBreadCrumb />
-    <div class="flex flex-col md:flex-row gap-1 md:gap-4">
+    <div class="flex md:flex-row gap-1 md:gap-4 text-xs md:text-base">
       <Button
         v-for="link in user ? loggedInLinks : loggedOutLinks"
         variant="outline"
-        class="w-full justify-start"
+        class="md:w-full justify-start p-2 h-fit w-fit"
         @click="navigateTo(link.to)"
       >
-        <component :is="link.icon" class="mr-2 h-4 w-4" />
-        {{ link.title }}
+        <component :is="link.icon" class="md:mr-2 h-4 w-4" />
+        <span class="hidden md:block">{{ link.title }}</span>
       </Button>
       <Button
         v-if="user"
         variant="outline"
-        class="w-full justify-start text-xs md:text-base"
+        class="w-full justify-start"
         @click="handleLogout()"
       >
         <LogOut class="mr-2 h-4 w-4" />

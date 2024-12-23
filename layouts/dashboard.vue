@@ -1,6 +1,5 @@
 <template>
   <div class="flex h-screen bg-background">
-    <!-- Toggle Sidebar Button -->
     <button
       @click="toggleSidebar"
       class="absolute bottom-4 right-4 z-20 px-2 py-1 text-black rounded-2xl md:hidden supports-backdrop-blur:bg-white/20 backdrop-blur-md"
@@ -14,6 +13,7 @@
       :class="isSidebarOpen ? 'translate-x-0 w-64' : '-translate-x-full w-64'"
     >
       <nav class="space-y-2">
+        <RouteBreadCrumb />
         <Button variant="ghost" class="w-full justify-start">
           <NuxtLink to="/orga" class="flex items-center">
             <LayoutDashboard class="mr-2 h-4 w-4" />
