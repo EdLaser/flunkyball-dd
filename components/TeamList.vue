@@ -2,9 +2,9 @@
   <Table>
     <TableHeader>
       <TableRow>
-        <TableHead>Rank</TableHead>
-        <TableHead>Team</TableHead>
-        <TableHead>Members</TableHead>
+        <TableHead>Rang</TableHead>
+        <TableHead>Name</TableHead>
+        <TableHead>Spieler</TableHead>
       </TableRow>
     </TableHeader>
     <TableBody>
@@ -17,7 +17,6 @@
                 {{ team.name.slice(0, 2).toUpperCase() }}
               </AvatarFallback>
             </Avatar>
-            <!-- Replace Next.js Link with NuxtLink -->
             <NuxtLink
               :to="`/orga/teams/${team.id}`"
               class="text-primary hover:underline"
