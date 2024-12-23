@@ -1,3 +1,5 @@
+import { formatLocation } from "./locations";
+
 export const transfromTournamentDate = (tournamentDate: string | Date) => {
   return new Date(tournamentDate).toLocaleString("de-DE", {
     year: "numeric",
@@ -14,7 +16,17 @@ export const getTournamentDetails = async (title: string, event: any) => {
       title: true,
       description: true,
       tournament_date: true,
-      location: true,
+      locations: {
+        select: {
+          name: true,
+          street: true,
+          city: true,
+          postal_code: true,
+          description: true,
+          directions: true,
+          house_number: true,
+        },
+      },
       tournament_registrations: {
         select: {
           teams: {
@@ -74,7 +86,7 @@ export const getTournamentDetails = async (title: string, event: any) => {
   const tournaments = {
     title: tournamentDetails?.title,
     description: tournamentDetails?.description,
-    location: tournamentDetails?.location,
+    location: formatLocation(tournamentDetails?.locations ?? null),
     tournamentDate: transfromTournamentDate(
       tournamentDetails?.tournament_date ?? ""
     ),
@@ -118,7 +130,17 @@ export const getUpcomingTournaments = async (event: any) => {
       description: true,
       price: true,
       tournament_date: true,
-      location: true,
+      locations: {
+        select: {
+          name: true,
+          street: true,
+          city: true,
+          postal_code: true,
+          description: true,
+          directions: true,
+          house_number: true,
+        },
+      },
     },
     where: {
       tournament_date: {
@@ -133,7 +155,7 @@ export const getUpcomingTournaments = async (event: any) => {
       description: tournament.description,
       price: tournament.price,
       tournamentDate: transfromTournamentDate(tournament.tournament_date ?? ""),
-      location: tournament.location,
+      location: formatLocation(tournament.locations ?? null),
     };
   });
 

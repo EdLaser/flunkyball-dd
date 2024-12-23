@@ -1,10 +1,16 @@
 export default defineEventHandler(async (event) => {
-  const distinctVenues = await usePrisma(event).tournaments.findMany({
+  const distinctLocations = await usePrisma(event).locations.findMany({
     select: {
-      location: true,
+      name: true,
+      street: true,
+      city: true,
+      postal_code: true,
+      description: true,
+      directions: true,
+      house_number: true,
     },
-    distinct: ["location"],
+    distinct: ["name"],
   });
 
-  return distinctVenues;
+  return distinctLocations;
 });
