@@ -7,26 +7,38 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
+import type { RouteRecordNormalized } from "vue-router";
 
 const route = useRoute();
 const router = useRouter();
+const user = useSupabaseUser();
+
+const routeFilter = (r: RouteRecordNormalized) => {
+  const isDynamicRoute = r.path.includes(":");
+  if (user.value) {
+    return (
+      r.path.startsWith(route.path) && r.path !== route.path && !isDynamicRoute
+    );
+  } else {
+    return (
+      r.path.startsWith(route.path) &&
+      r.path !== route.path &&
+      r.meta.middleware !== "auth" &&
+      !isDynamicRoute
+    );
+  }
+};
 
 const paths = computed(() => route.path.split("/").filter((p) => p));
 
 const childRoutes = computed(() =>
   router
     .getRoutes()
-    .filter(
-      (r) =>
-        r.path.startsWith(route.path) &&
-        r.path !== route.path &&
-        route.meta.middleware?.toString() !== "auth"
-    )
+    .filter(routeFilter)
     .map((r) => {
       return { path: r.path, name: r.name };
     })
 );
-console.log("Route:", router.getRoutes());
 </script>
 
 <template>
@@ -55,7 +67,7 @@ console.log("Route:", router.getRoutes());
               class="cursor-pointer"
             >
               <NuxtLink :to="childRoute.path" class="capitalize">
-                {{ childRoute.path.split("/").join(" ") }}
+                {{ childRoute.path }}
               </NuxtLink>
             </DropdownMenuItem>
           </DropdownMenuContent>
@@ -84,7 +96,7 @@ console.log("Route:", router.getRoutes());
         <BreadcrumbItem
           v-if="childRoutes.length > 0 && index === paths.length - 1"
         >
-          <DropdownMenu>
+          <DropdownMenu class="text-blue-500">
             <DropdownMenuTrigger class="flex items-center gap-1">
               <BreadcrumbEllipsis class="h-4 w-4" />
               <span class="sr-only">Toggle menu</span>
@@ -97,7 +109,7 @@ console.log("Route:", router.getRoutes());
                 class="cursor-pointer"
               >
                 <NuxtLink :to="childRoute.path" class="capitalize">
-                  {{ childRoute.path.split("/").join(" ") }}
+                  {{ childRoute.path }}
                 </NuxtLink>
               </DropdownMenuItem>
             </DropdownMenuContent>
