@@ -72,12 +72,26 @@
           <!-- Location -->
           <div class="grid grid-cols-4 items-center gap-4">
             <Label htmlFor="location" class="text-right"> Ort </Label>
-            <Input
-              id="location"
-              v-model="location"
-              class="col-span-3"
-              required
-            />
+            <Select required v-model="location">
+              <SelectTrigger class="col-span-3">
+                <SelectValue placeholder="Ort Auswählen" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectGroup>
+                  <SelectLabel>Orte</SelectLabel>
+                  <SelectItem
+                    v-for="location in locations"
+                    :value="location.name"
+                  >
+                    {{ location.name }}
+                    <small>
+                      ({{ location.street }}, {{ location.postal_code }}
+                      {{ location.city }})
+                    </small>
+                  </SelectItem>
+                </SelectGroup>
+              </SelectContent>
+            </Select>
           </div>
         </div>
 
@@ -113,26 +127,34 @@ const time = ref("");
 const price = ref("");
 const location = ref("");
 
-const handleSubmit = async () => {
-  const result = await $fetch("/api/orga/tournaments/new-tournament", {
-    method: "POST",
-    body: JSON.stringify({
-      title: title.value,
-      description: description.value,
-      tournament_date: new Date(date.value + "T" + time.value).toISOString(),
-      price: price.value,
-      location: location.value,
-    }),
-  });
+const { data: locations } = useFetch("/api/orga/locations");
 
-  if (result.ok) {
-    toast("Turnier erfolgreich erstellt!", { duration: 5000 });
-    title.value = "";
-    description.value = "";
-    date.value = "";
-    price.value = "";
-    location.value = "";
-  } else {
+const handleSubmit = async () => {
+  try {
+    const result = await $fetch("/api/orga/tournaments/new-tournament", {
+      method: "POST",
+      body: JSON.stringify({
+        title: title.value,
+        description: description.value,
+        tournament_date: new Date(date.value + "T" + time.value).toISOString(),
+        price: price.value,
+        location: location.value,
+      }),
+    });
+    console.log(result);
+
+    if (result.status === 200) {
+      toast("Turnier erfolgreich erstellt!", { duration: 5000 });
+      title.value = "";
+      description.value = "";
+      date.value = "";
+      price.value = "";
+      location.value = "";
+    } else {
+      toast("Fehler beim Erstellen des Turniers", { duration: 5000 });
+    }
+  } catch (error) {
+    console.error(error);
     toast("Fehler beim Erstellen des Turniers", { duration: 5000 });
   }
 };

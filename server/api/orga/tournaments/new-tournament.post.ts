@@ -6,8 +6,12 @@ export default defineEventHandler(async (event) => {
       title: body.title,
       description: body.description,
       tournament_date: body.tournament_date,
-      location: body.location,
       price: body.price,
+      locations: {
+        connect: {
+          name: body.location,
+        }
+      }
     },
   });
   return tournmanet

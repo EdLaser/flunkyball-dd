@@ -113,7 +113,7 @@ model tournament_registrations {
 model locations {
   location_id  String        @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
   created_at   DateTime      @default(now()) @db.Timestamptz(6)
-  name         String
+  name         String        @unique
   street       String
   city         String
   postal_code  String
