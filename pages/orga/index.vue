@@ -2,30 +2,57 @@
   <div class="min-h-screen bg-background">
     <header class="bg-primary text-primary-foreground shadow-md">
       <div class="container mx-auto py-6 px-4">
-        <h1 class="text-3xl font-bold">Flunkyball Organization Dashboard</h1>
+        <h1 class="text-3xl font-bold flex justify-between">
+          Flunkyball Organization Dashboard
+          <RefreshButton @click="refreshAll()" :loading="refreshAllPending" />
+        </h1>
       </div>
     </header>
 
     <main class="container mx-auto px-4 py-8">
       <div class="grid gap-6 grid-cols-8">
-        <Button @click="refreshTotalTournaments" class="col-span-2">
-          Refresh
-        </Button>
-        <Button @click="refreshTotalTeams" class="col-span-2"> Refresh </Button>
-        <Button @click="refreshTotalTournaments" class="col-span-2">
-          Refresh
-        </Button>
-        <Button @click="refreshLocations" class="col-span-2"> Refresh </Button>
+        <RefreshButton
+          class="col-span-2 rounded-b-none"
+          @click="refreshTotalTournaments"
+          :loading="statusTotalTournaments === 'pending'"
+        />
+        <RefreshButton
+          class="col-span-2 rounded-b-none"
+          @click="refreshTotalTeams"
+          :loading="statusTotalTeams === 'pending'"
+        />
+        <RefreshButton
+          class="col-span-2 rounded-b-none"
+          @click="refreshTotalTournaments"
+          :loading="statusTotalTournaments === 'pending'"
+        />
+        <RefreshButton
+          class="col-span-2 rounded-b-none"
+          @click="refreshLocations"
+          :loading="statusLocations === 'pending'"
+        />
       </div>
       <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
-        <StatCard title="Turniere" :value="totalTournaments" :icon="Trophy" />
-        <StatCard title="Aktive Teams" :value="totalTeams ?? 0" :icon="Users" />
         <StatCard
+          class="rounded-t-none"
+          title="Turniere"
+          :value="totalTournaments"
+          :icon="Trophy"
+        />
+        <StatCard
+          class="rounded-t-none"
+          title="Aktive Teams"
+          :value="totalTeams ?? 0"
+          :icon="Users"
+        />
+        <StatCard
+          class="rounded-t-none"
           title="Kommende Turniere"
           :value="pastAndUpcomingTournaments?.upcomingTournaments ?? 0"
           :icon="Calendar"
         />
         <StatCard
+          class="rounded-t-none"
           title="Spielorte"
           :value="locations?.length ?? 0"
           :icon="MapPin"
@@ -34,12 +61,15 @@
 
       <div class="grid gap-6 mt-8 md:grid-cols-2">
         <Card>
-          <CardHeader class="flex justify-between flex-row">
-            <div class="flex flex-col">
-              <CardTitle>Letzte Turniere</CardTitle>
-              <CardDescription>Die letzten 5 Turniere</CardDescription>
-            </div>
-            <Button @click="refreshRecentTournaments"> Refresh </Button>
+          <CardHeader>
+            <CardTitle>Letzte Turniere</CardTitle>
+            <CardDescription class="flex justify-between"
+              >Die letzten 5 Turniere
+              <RefreshButton
+                @click="refreshRecentTournaments"
+                :loading="statusRecentTournaments === 'pending'"
+              />
+            </CardDescription>
           </CardHeader>
           <CardContent>
             <TournamentList
@@ -115,16 +145,29 @@ import TournamentList from "@/components/TournamentList.vue";
 import TeamList from "@/components/TeamList.vue";
 import StatCard from "@/components/StatCard.vue";
 
-const { data: pastAndUpcomingTournaments, refresh: refreshTotalTournaments } =
-  await useFetch("/api/orga/tournaments/total-tournaments");
-const { data: recentTournaments, refresh: refreshRecentTournaments } =
-  await useFetch("/api/orga/tournaments/recent-tournaments");
-const { data: totalTeams, refresh: refreshTotalTeams } = await useFetch(
-  "/api/orga/teams/total-teams"
-);
-const { data: locations, refresh: refreshLocations } = await useFetch(
-  "/api/orga/locations"
-);
+const {
+  data: pastAndUpcomingTournaments,
+  status: statusTotalTournaments,
+  refresh: refreshTotalTournaments,
+} = await useFetch("/api/orga/tournaments/total-tournaments");
+
+const {
+  data: recentTournaments,
+  status: statusRecentTournaments,
+  refresh: refreshRecentTournaments,
+} = await useFetch("/api/orga/tournaments/recent-tournaments");
+
+const {
+  data: totalTeams,
+  status: statusTotalTeams,
+  refresh: refreshTotalTeams,
+} = await useFetch("/api/orga/teams/total-teams");
+
+const {
+  data: locations,
+  status: statusLocations,
+  refresh: refreshLocations,
+} = await useFetch("/api/orga/locations");
 
 const refreshAll = () => {
   refreshTotalTournaments();
@@ -132,6 +175,14 @@ const refreshAll = () => {
   refreshTotalTeams();
   refreshLocations();
 };
+
+const refreshAllPending = computed(
+  () =>
+    statusTotalTournaments.value === "pending" ||
+    statusRecentTournaments.value === "pending" ||
+    statusTotalTeams.value === "pending" ||
+    statusLocations.value === "pending"
+);
 
 const totalTournaments = computed(
   () =>

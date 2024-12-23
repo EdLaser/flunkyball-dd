@@ -5,8 +5,9 @@
     <Card>
       <CardHeader>
         <CardTitle>Turnier Management</CardTitle>
-        <CardDescription>
+        <CardDescription class="flex justify-between">
           Hier kannst du alle Turniere verwalten.
+          <RefreshButton variant="ghost" @click="refresh" :loading="status === 'pending'" />
         </CardDescription>
       </CardHeader>
       <CardContent>
@@ -150,7 +151,7 @@ import {
 } from "@/components/ui/table";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Filter } from "lucide-vue-next";
+import { Filter, RefreshCcw } from "lucide-vue-next";
 
 definePageMeta({
   middleware: "auth",
@@ -168,16 +169,17 @@ definePageMeta({
   },
 });
 
-const { data: tournaments } = await useFetch(
-  "/api/orga/tournaments/all-tournaments",
-  {
-    transform: (data) =>
-      data.map((tournament) => ({
-        ...tournament,
-        tournamentDate: new Date(tournament.tournamentDate),
-      })),
-  }
-);
+const {
+  data: tournaments,
+  status,
+  refresh,
+} = await useFetch("/api/orga/tournaments/all-tournaments", {
+  transform: (data) =>
+    data.map((tournament) => ({
+      ...tournament,
+      tournamentDate: new Date(tournament.tournamentDate),
+    })),
+});
 
 const showFinished = ref(true);
 const showOpen = ref(true);

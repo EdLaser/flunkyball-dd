@@ -1,5 +1,5 @@
 <template>
-  <Card>
+  <Card :class="props.class">
     <CardHeader
       class="flex flex-row items-center justify-between space-y-0 pb-2"
     >
@@ -25,6 +25,7 @@ interface StatCardProps {
   title: string;
   value: string | number;
   icon: any;
+  class?: string;
 }
 
 const props = defineProps<StatCardProps>();
