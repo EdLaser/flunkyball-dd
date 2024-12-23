@@ -35,16 +35,16 @@
             </p>
             <ul class="space-y-2 text-gray-600">
               <li class="flex items-center">
-                <BeerIcon class="text-primary inline-block mr-2 h-6 w-6" />
+                <BeerIcon class="text-primary mr-2 h-6 w-6" />
                 Wenn du die mittlere Flasche triffst, darf dein Team trinken!
               </li>
               <li class="flex items-center">
-                <BeerIcon class="text-primary inline-block mr-2 h-6 w-6" />
+                <BeerIcon class="text-primary mr-2 h-6 w-6" />
                 Das andere Team muss die Flasche aufstellen und zur Grundlinie
                 zurückkehren.
               </li>
               <li class="flex items-center">
-                <BeerIcon class="text-primary inline-block mr-2 h-6 w-6" />
+                <BeerIcon class="text-primary mr-2 h-6 w-6" />
                 Das Team, das zuerst alle Biere geleert hat, gewinnt!
               </li>
             </ul>
