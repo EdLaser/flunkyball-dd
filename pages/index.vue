@@ -18,7 +18,11 @@
           Nimm an actiongeladenen Turnieren voller Spaß, Sport und einer Prise
           Chaos teil.
         </p>
-        <RainbowButton class="px-4 py-8 group space-x-4" :speed="8">
+        <RainbowButton
+          class="px-4 py-8 group space-x-4"
+          :speed="8"
+          @click="navigateTo('/teams/register')"
+        >
           <BeerIcon />
           <span class="text-lg md:text-3xl"> Jetzt Anmelden </span>
           <BeerIcon class="-scale-x-100" />
@@ -128,9 +132,7 @@
           Melde dich jetzt für unser bevorstehendes Flunkyball-Turnier an und
           zeig deine Wurfkünste!
         </p>
-        <Button
-          class="px-6 py-3 rounded-lg flex items-center justify-center mx-auto"
-        >
+        <Button class="p-6 flex items-center justify-center mx-auto text-2xl">
           <BeerIcon class="mr-2" />
           Melde dein Team an
         </Button>
