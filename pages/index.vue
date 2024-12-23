@@ -26,7 +26,7 @@
         <h2 class="text-3xl font-bold mb-6 text-center text-gray-800">
           Was ist Flunkyball?
         </h2>
-        <div class="grid md:grid-cols-2 gap-8 items-center">
+        <div class="grid md:grid-cols-2 gap-6 items-center">
           <div>
             <p class="text-lg mb-4 text-gray-600">
               Flunkyball ist ein aufregender Sport, bei dem zwei Teams mit
@@ -35,16 +35,16 @@
             </p>
             <ul class="space-y-2 text-gray-600">
               <li class="flex items-center">
-                <BeerIcon class="text-primary inline-block mr-2" />
+                <BeerIcon class="text-primary inline-block mr-2 h-6 w-6" />
                 Wenn du die mittlere Flasche triffst, darf dein Team trinken!
               </li>
               <li class="flex items-center">
-                <BeerIcon class="text-primary inline-block mr-2" />
+                <BeerIcon class="text-primary inline-block mr-2 h-6 w-6" />
                 Das andere Team muss die Flasche aufstellen und zur Grundlinie
                 zurückkehren.
               </li>
               <li class="flex items-center">
-                <BeerIcon class="text-primary inline-block mr-2" />
+                <BeerIcon class="text-primary inline-block mr-2 h-6 w-6" />
                 Das Team, das zuerst alle Biere geleert hat, gewinnt!
               </li>
             </ul>
@@ -64,10 +64,12 @@
         <h2 class="text-3xl font-bold mb-6 text-center text-gray-800">
           Anstehendes Turnier
         </h2>
-        <TournamentCard
-          :tournament="tournament"
-          v-for="tournament in upcomingTournaments"
-        />
+        <div class="space-y-4">
+          <TournamentCard
+            :tournament="tournament"
+            v-for="tournament in upcomingTournaments"
+          />
+        </div>
       </section>
 
       <!-- Past Tournament Results -->

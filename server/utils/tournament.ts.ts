@@ -175,7 +175,10 @@ export const getPastTournaments = async (event: any) => {
   if (pastTournamentWinners) {
     const tournaments = pastTournamentWinners.map((tournament) => {
       const winner =
-        tournament.stages[0].matches[0].teams_matches_match_winnerToteams.name;
+        tournament.stages.length > 0
+          ? tournament.stages[0].matches[0].teams_matches_match_winnerToteams
+              .name
+          : null;
       return {
         title: tournament.title,
         tournamentDate: transfromTournamentDate(
