@@ -151,7 +151,7 @@
                 <FormControl>
                   <Input
                     type="email"
-                    placeholder="Enter contact email"
+                    placeholder="Kontakt Email"
                     class="border-primary/60 focus:border-primary/80"
                     v-bind="componentField"
                     required

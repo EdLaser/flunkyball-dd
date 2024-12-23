@@ -1,5 +1,6 @@
 <template>
-  <nav class="flex flex-col items-center md:items-end space-y-2 w-full px-2 pt-6 pb-3">
+  <nav class="flex items-center md:items-end justify-between space-y-2 w-full px-2 pt-6 pb-3">
+    <RouteBreadCrumb />
     <div class="flex gap-4">
       <Button
         v-for="link in user ? loggedInLinks : loggedOutLinks"
