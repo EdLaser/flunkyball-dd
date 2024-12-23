@@ -36,12 +36,18 @@ console.log("Child Routes:", childRoutes.value);
             :href="`/${
               index === 0 ? path : `${paths.slice(0, index + 1).join('/')}`
             }`"
+            class="capitalize"
           >
-            {{ capitalize(path) }}
+            {{ path }}
           </BreadcrumbLink>
-          <BreadcrumbPage v-else>{{ capitalize(path) }}</BreadcrumbPage>
+          <BreadcrumbPage class="capitalize" v-else>{{ path }}</BreadcrumbPage>
         </BreadcrumbItem>
-        <BreadcrumbSeparator v-if="index !== paths.length - 1" />
+        <BreadcrumbSeparator
+          v-if="
+            index !== paths.length - 1 ||
+            (childRoutes.length > 0 && index === paths.length - 1)
+          "
+        />
         <BreadcrumbItem
           v-if="childRoutes.length > 0 && index === paths.length - 1"
         >
@@ -51,9 +57,14 @@ console.log("Child Routes:", childRoutes.value);
               <span class="sr-only">Toggle menu</span>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="start">
-              <DropdownMenuItem as-child v-for="childRoute in childRoutes">
-                <NuxtLink :to="childRoute.path">
-                  {{ capitalize(childRoute.path.split("/").join(" ")) }}
+              <DropdownMenuItem
+                as-child
+                v-for="childRoute in childRoutes"
+                :key="childRoute.path"
+                class="cursor-pointer"
+              >
+                <NuxtLink :to="childRoute.path" class="capitalize">
+                  {{ childRoute.path.split("/").join(" ") }}
                 </NuxtLink>
               </DropdownMenuItem>
             </DropdownMenuContent>
