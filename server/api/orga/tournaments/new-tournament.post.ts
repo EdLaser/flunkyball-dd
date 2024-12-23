@@ -10,11 +10,16 @@ export default defineEventHandler(async (event) => {
       locations: {
         connect: {
           name: body.location,
-        }
-      }
+        },
+      },
     },
   });
-  return tournmanet
-    ? new Response("OK", { status: 200 })
-    : new Response("Error", { status: 500 });
+  if (tournmanet) {
+    return new Response(JSON.stringify(tournmanet), { status: 201 });
+  } else {
+    return new Response(
+      JSON.stringify({ message: "Error creating tournament" }),
+      { status: 500 }
+    );
+  }
 });

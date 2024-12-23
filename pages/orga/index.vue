@@ -7,6 +7,16 @@
     </header>
 
     <main class="container mx-auto px-4 py-8">
+      <div class="grid gap-6 grid-cols-8">
+        <Button @click="refreshTotalTournaments" class="col-span-2">
+          Refresh
+        </Button>
+        <Button @click="refreshTotalTeams" class="col-span-2"> Refresh </Button>
+        <Button @click="refreshTotalTournaments" class="col-span-2">
+          Refresh
+        </Button>
+        <Button @click="refreshLocations" class="col-span-2"> Refresh </Button>
+      </div>
       <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
         <StatCard title="Turniere" :value="totalTournaments" :icon="Trophy" />
         <StatCard title="Aktive Teams" :value="totalTeams ?? 0" :icon="Users" />
@@ -24,9 +34,12 @@
 
       <div class="grid gap-6 mt-8 md:grid-cols-2">
         <Card>
-          <CardHeader>
-            <CardTitle>Letzte Turniere</CardTitle>
-            <CardDescription>Die letzten 5 Turniere</CardDescription>
+          <CardHeader class="flex justify-between flex-row">
+            <div class="flex flex-col">
+              <CardTitle>Letzte Turniere</CardTitle>
+              <CardDescription>Die letzten 5 Turniere</CardDescription>
+            </div>
+            <Button @click="refreshRecentTournaments"> Refresh </Button>
           </CardHeader>
           <CardContent>
             <TournamentList
@@ -102,14 +115,23 @@ import TournamentList from "@/components/TournamentList.vue";
 import TeamList from "@/components/TeamList.vue";
 import StatCard from "@/components/StatCard.vue";
 
-const { data: pastAndUpcomingTournaments } = await useFetch(
-  "/api/orga/tournaments/total-tournaments"
+const { data: pastAndUpcomingTournaments, refresh: refreshTotalTournaments } =
+  await useFetch("/api/orga/tournaments/total-tournaments");
+const { data: recentTournaments, refresh: refreshRecentTournaments } =
+  await useFetch("/api/orga/tournaments/recent-tournaments");
+const { data: totalTeams, refresh: refreshTotalTeams } = await useFetch(
+  "/api/orga/teams/total-teams"
 );
-const { data: recentTournaments } = await useFetch(
-  "/api/orga/tournaments/recent-tournaments"
+const { data: locations, refresh: refreshLocations } = await useFetch(
+  "/api/orga/locations"
 );
-const { data: totalTeams } = await useFetch("/api/orga/teams/total-teams");
-const { data: locations } = await useFetch("/api/orga/locations");
+
+const refreshAll = () => {
+  refreshTotalTournaments();
+  refreshRecentTournaments();
+  refreshTotalTeams();
+  refreshLocations();
+};
 
 const totalTournaments = computed(
   () =>
