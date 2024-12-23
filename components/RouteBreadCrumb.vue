@@ -16,18 +16,52 @@ const paths = computed(() => route.path.split("/").filter((p) => p));
 const childRoutes = computed(() =>
   router
     .getRoutes()
-    .filter((r) => r.path.startsWith(route.path) && r.path !== route.path)
+    .filter(
+      (r) =>
+        r.path.startsWith(route.path) &&
+        r.path !== route.path &&
+        route.meta.middleware?.toString() !== "auth"
+    )
     .map((r) => {
       return { path: r.path, name: r.name };
     })
 );
-
-console.log("Child Routes:", childRoutes.value);
+console.log("Route:", router.getRoutes());
 </script>
 
 <template>
-  <Breadcrumb class="flex items-center space-x-2 ml-4">
+  <Breadcrumb class="flex items-center space-x-2 ml-4 text-xs md:text-base">
     <BreadcrumbList>
+      <BreadcrumbItem>
+        <component
+          :is="route.path === '/' ? BreadcrumbPage : BreadcrumbLink"
+          :href="'/'"
+        >
+          Home
+        </component>
+      </BreadcrumbItem>
+      <BreadcrumbSeparator />
+      <BreadcrumbItem v-if="childRoutes.length > 0 && paths.length === 0">
+        <DropdownMenu>
+          <DropdownMenuTrigger class="flex items-center gap-1">
+            <BreadcrumbEllipsis class="h-4 w-4" />
+            <span class="sr-only">Toggle menu</span>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="start">
+            <DropdownMenuItem
+              as-child
+              v-for="childRoute in childRoutes"
+              :key="childRoute.path"
+              class="cursor-pointer"
+            >
+              <NuxtLink :to="childRoute.path" class="capitalize">
+                {{ childRoute.path.split("/").join(" ") }}
+              </NuxtLink>
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
+      </BreadcrumbItem>
+
       <template v-for="(path, index) in paths" :key="index">
         <BreadcrumbItem>
           <BreadcrumbLink
