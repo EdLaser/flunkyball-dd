@@ -14,11 +14,15 @@
         <h2 class="text-5xl font-extrabold mb-4 text-gray-800">
           Erlebe den Nervenkitzel von Flunkyball!
         </h2>
-        <p class="text-xl mb-8 text-gray-600">
+        <p class="text-xl mb-10 text-gray-600">
           Nimm an actiongeladenen Turnieren voller Spaß, Sport und einer Prise
           Chaos teil.
         </p>
-        <Button class="px-6 py-3 rounded-lg"> Jetzt Anmelden </Button>
+        <RainbowButton class="px-4 py-8 group space-x-4" :speed="8">
+          <BeerIcon />
+          <span class="text-lg md:text-3xl"> Jetzt Anmelden </span>
+          <BeerIcon class="-scale-x-100" />
+        </RainbowButton>
       </section>
 
       <!-- About the Game -->
@@ -143,6 +147,7 @@
 
 <script setup lang="ts">
 import { BeerIcon, Users, Trophy } from "lucide-vue-next";
+import RainbowButton from "~/components/inspira/RainbowButton.vue";
 
 const {
   data: upcomingTournaments,

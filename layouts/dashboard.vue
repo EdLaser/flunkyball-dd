@@ -91,7 +91,7 @@ import {
 const supabase = useSupabaseClient();
 const isSidebarOpen = ref(true);
 
-onBeforeMount(() => {
+onMounted(() => {
   // If on mobile (< 768px), collapse the sidebar by default
   if (window.innerWidth < 768) {
     isSidebarOpen.value = false;
