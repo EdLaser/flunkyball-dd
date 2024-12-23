@@ -1,6 +1,6 @@
 <template>
   <div class="p-6">
-    <h1 class="text-3xl font-bold mb-6 text-foreground">Teams</h1>
+    <h1 class="text-3xl font-bold mb-6 text-primary">Teams</h1>
     <Card>
       <CardHeader>
         <CardTitle>Alle Teams</CardTitle>

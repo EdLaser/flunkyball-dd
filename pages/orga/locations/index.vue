@@ -1,107 +1,7 @@
 <template>
   <div class="bg-background container mx-auto px-4 py-8">
-    <div class="flex justify-between items-center mb-6">
-      <h1 class="text-3xl font-bold text-primary">Flunkyball Orte</h1>
+    <h1 class="text-3xl font-bold text-primary mb-6">Flunkyball Orte</h1>
 
-      <Dialog>
-        <DialogTrigger as-child>
-          <Button> <Plus class="mr-2 h-4 w-4" /> Neuen Ort hinzufügen </Button>
-        </DialogTrigger>
-
-        <DialogContent class="sm:max-w-[425px]">
-          <DialogHeader>
-            <DialogTitle>Ort hinzufgen</DialogTitle>
-            <DialogDescription>
-              Gib die Details für die neue Location ein.
-            </DialogDescription>
-          </DialogHeader>
-
-          <Form>
-            <form @submit.prevent="onSubmit()" class="space-y-4">
-              <!-- Location Name -->
-              <FormField v-slot="{ componentField }" name="name">
-                <FormItem>
-                  <FormLabel>Location Name</FormLabel>
-                  <FormControl>
-                    <Input v-bind="componentField" />
-                  </FormControl>
-                </FormItem>
-              </FormField>
-
-              <div class="grid grid-cols-3 md:grid-cols-5 gap-3">
-                <FormField v-slot="{ componentField }" name="street">
-                  <FormItem class="col-span-2 md:col-span-4">
-                    <FormLabel>Straße</FormLabel>
-                    <FormControl>
-                      <Input v-bind="componentField" />
-                    </FormControl>
-                  </FormItem>
-                </FormField>
-
-                <FormField v-slot="{ componentField }" name="house_number">
-                  <FormItem class="col-span-1 md:col-span-1">
-                    <FormLabel>Nr.</FormLabel>
-                    <FormControl>
-                      <Input v-bind="componentField" />
-                    </FormControl>
-                  </FormItem>
-                </FormField>
-              </div>
-
-              <div class="grid grid-cols-2 gap-3">
-                <FormField v-slot="{ componentField }" name="postal_code">
-                  <FormItem>
-                    <FormLabel>PLZ</FormLabel>
-                    <FormControl>
-                      <Input v-bind="componentField" />
-                    </FormControl>
-                  </FormItem>
-                </FormField>
-
-                <FormField v-slot="{ componentField }" name="city">
-                  <FormItem>
-                    <FormLabel>Stadt</FormLabel>
-                    <FormControl>
-                      <Input v-bind="componentField" />
-                    </FormControl>
-                  </FormItem>
-                </FormField>
-              </div>
-
-              <!-- Directions -->
-              <FormField v-slot="{ componentField }" name="directions">
-                <FormItem>
-                  <FormLabel>Wegbeschreibung</FormLabel>
-                  <FormControl>
-                    <Input v-bind="componentField" />
-                  </FormControl>
-                  <FormDescription>
-                    Gib eine kurze Wegbeschreibung (optional) an.
-                  </FormDescription>
-                </FormItem>
-              </FormField>
-
-              <!-- Description -->
-              <FormField v-slot="{ componentField }" name="description">
-                <FormItem>
-                  <FormLabel>Weitere Details</FormLabel>
-                  <FormControl>
-                    <Textarea v-bind="componentField" />
-                  </FormControl>
-                  <FormDescription>
-                    Beschreibe kurz die Location (optional).
-                  </FormDescription>
-                </FormItem>
-              </FormField>
-
-              <Button type="submit"> <Plus />Hinzufügen </Button>
-            </form>
-          </Form>
-        </DialogContent>
-      </Dialog>
-    </div>
-
-    <!-- Main card for existing locations -->
     <Card>
       <CardHeader>
         <CardTitle>Flunkyball Orte</CardTitle>
@@ -154,6 +54,107 @@
         </Table>
       </CardContent>
     </Card>
+
+    <div class="flex justify-end w-full">
+      <Dialog>
+        <DialogTrigger as-child>
+          <Button class="mt-6">
+            <Plus class="mr-2 h-4 w-4" /> Neuen Ort hinzufügen
+          </Button>
+        </DialogTrigger>
+
+        <DialogContent class="sm:max-w-[425px]">
+          <DialogHeader>
+            <DialogTitle>Ort hinzufgen</DialogTitle>
+            <DialogDescription>
+              Gib die Details für die neue Location ein.
+            </DialogDescription>
+          </DialogHeader>
+
+          <Form>
+            <form @submit.prevent="onSubmit()" class="space-y-4">
+              <!-- Location Name -->
+              <FormField v-slot="{ componentField }" name="name">
+                <FormItem>
+                  <FormLabel>Name</FormLabel>
+                  <FormControl>
+                    <Input v-bind="componentField" />
+                  </FormControl>
+                </FormItem>
+              </FormField>
+
+              <div class="grid grid-cols-3 md:grid-cols-5 gap-3">
+                <FormField v-slot="{ componentField }" name="street">
+                  <FormItem class="col-span-2 md:col-span-4">
+                    <FormLabel>Straße</FormLabel>
+                    <FormControl>
+                      <Input v-bind="componentField" />
+                    </FormControl>
+                  </FormItem>
+                </FormField>
+
+                <FormField v-slot="{ componentField }" name="house_number">
+                  <FormItem class="col-span-1 md:col-span-1">
+                    <FormLabel>Nr.</FormLabel>
+                    <FormControl>
+                      <Input v-bind="componentField" />
+                    </FormControl>
+                  </FormItem>
+                </FormField>
+              </div>
+
+              <div class="grid grid-cols-2 gap-3">
+                <FormField v-slot="{ componentField }" name="postal_code">
+                  <FormItem>
+                    <FormLabel>PLZ</FormLabel>
+                    <FormControl>
+                      <Input v-bind="componentField" />
+                    </FormControl>
+                  </FormItem>
+                </FormField>
+
+                <FormField v-slot="{ componentField }" name="city">
+                  <FormItem>
+                    <FormLabel>Stadt</FormLabel>
+                    <FormControl>
+                      <Input v-bind="componentField" />
+                    </FormControl>
+                  </FormItem>
+                </FormField>
+              </div>
+
+              <!-- Directions -->
+              <FormField v-slot="{ componentField }" name="directions">
+                <FormItem>
+                  <FormLabel>Wegbeschreibung</FormLabel>
+                  <FormControl>
+                    <Textarea v-bind="componentField" />
+                  </FormControl>
+                  <FormDescription>
+                    Gib eine kurze Wegbeschreibung (optional) an.
+                  </FormDescription>
+                </FormItem>
+              </FormField>
+
+              <!-- Description -->
+              <FormField v-slot="{ componentField }" name="description">
+                <FormItem>
+                  <FormLabel>Weitere Details</FormLabel>
+                  <FormControl>
+                    <Textarea v-bind="componentField" />
+                  </FormControl>
+                  <FormDescription>
+                    Beschreibe kurz die Location (optional).
+                  </FormDescription>
+                </FormItem>
+              </FormField>
+
+              <Button type="submit"> <Plus />Hinzufügen </Button>
+            </form>
+          </Form>
+        </DialogContent>
+      </Dialog>
+    </div>
   </div>
 </template>
 

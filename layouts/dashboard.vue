@@ -91,7 +91,8 @@ import {
 } from "lucide-vue-next";
 
 const supabase = useSupabaseClient();
-const isSidebarOpen = useStorage("isSidebarOpen", false);
+
+const isSidebarOpen = ref(false);
 
 function toggleSidebar() {
   isSidebarOpen.value = !isSidebarOpen.value;

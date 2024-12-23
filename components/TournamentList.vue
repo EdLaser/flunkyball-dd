@@ -21,7 +21,6 @@
           {{ tournament.tournamentDate }}
         </TableCell>
         <TableCell>
-          <!-- Example logic for 'Badge' variants -->
           <Badge
             :variant="tournament.status === 'open' ? 'default' : 'secondary'"
           >
