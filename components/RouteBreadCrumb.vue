@@ -7,12 +7,11 @@ import {
   BreadcrumbPage,
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
-import { capitalize } from "vue";
 
 const route = useRoute();
 const router = useRouter();
 
-const paths = route.path.split("/").filter((p) => p);
+const paths = computed(() => route.path.split("/").filter((p) => p));
 
 const childRoutes = computed(() =>
   router
@@ -27,7 +26,7 @@ console.log("Child Routes:", childRoutes.value);
 </script>
 
 <template>
-  <Breadcrumb class="flex items-center space-x-2">
+  <Breadcrumb class="flex items-center space-x-2 ml-4">
     <BreadcrumbList>
       <template v-for="(path, index) in paths" :key="index">
         <BreadcrumbItem>
