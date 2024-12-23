@@ -1,13 +1,16 @@
 <template>
-  <NuxtLayout>
-    <Toaster />
-    <NuxtPage />
-  </NuxtLayout>
+  <div class="transition-colors duration-300 bg-background" :class="colorMode.preference">
+    <NuxtLayout>
+      <Toaster />
+      <NuxtPage />
+    </NuxtLayout>
+  </div>
 </template>
 <script setup lang="ts">
 import { Toaster } from "@/components/ui/sonner";
 const router = useRouter();
 const route = useRoute();
+const colorMode = useColorMode();
 
 const user = useSupabaseUser();
 

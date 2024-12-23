@@ -1,4 +1,5 @@
 <template>
+  <p class="text-center text-3xl font-bold text-gray-800 dark:text-gray-100">Impressionen</p>
   <Marquee :pause-on-hover="true">
     <NuxtImg
       class="w-fit h-fit"

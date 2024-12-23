@@ -2,56 +2,57 @@
   <div class="flex h-screen bg-background">
     <button
       @click="toggleSidebar"
-      class="absolute bottom-4 right-4 z-20 px-2 py-1 text-black rounded-2xl md:hidden supports-backdrop-blur:bg-white/20 backdrop-blur-md"
+      class="absolute bottom-4 right-4 z-20 md:p-2 p-1 text-primary rounded-full supports-backdrop-blur:bg-white/30 backdrop-blur-lg"
     >
-      <Menu />
+      <Menu class="h-6 w-6" />
     </button>
 
-    <!-- Sidebar -->
     <aside
       class="fixed inset-y-0 left-0 z-10 bg-muted p-4 transition-transform duration-200"
       :class="isSidebarOpen ? 'translate-x-0 w-64' : '-translate-x-full w-64'"
     >
-      <nav class="space-y-2">
-        <RouteBreadCrumb />
-        <Button variant="ghost" class="w-full justify-start">
-          <NuxtLink to="/orga" class="flex items-center">
-            <LayoutDashboard class="mr-2 h-4 w-4" />
-            Dashboard
-          </NuxtLink>
-        </Button>
+      <nav>
+        <RouteBreadCrumb class="mt-2 mb-4 md:mb-6 md:mt-4" />
+        <div class="space-y-2">
+          <Button variant="ghost" class="w-full justify-start">
+            <NuxtLink to="/orga" class="flex items-center">
+              <LayoutDashboard class="mr-2 h-4 w-4" />
+              Dashboard
+            </NuxtLink>
+          </Button>
 
-        <Button variant="ghost" class="w-full justify-start">
-          <NuxtLink to="/orga/tournaments" class="flex items-center">
-            <Trophy class="mr-2 h-4 w-4" />
-            Tournaments
-          </NuxtLink>
-        </Button>
+          <Button variant="ghost" class="w-full justify-start">
+            <NuxtLink to="/orga/tournaments" class="flex items-center">
+              <Trophy class="mr-2 h-4 w-4" />
+              Turniere
+            </NuxtLink>
+          </Button>
 
-        <Button variant="ghost" class="w-full justify-start">
-          <NuxtLink to="/orga/teams" class="flex items-center">
-            <Users class="mr-2 h-4 w-4" />
-            Teams
-          </NuxtLink>
-        </Button>
+          <Button variant="ghost" class="w-full justify-start">
+            <NuxtLink to="/orga/teams" class="flex items-center">
+              <Users class="mr-2 h-4 w-4" />
+              Teams
+            </NuxtLink>
+          </Button>
 
-        <Button variant="ghost" class="w-full justify-start">
-          <NuxtLink to="/orga/locations" class="flex items-center">
-            <MapPin class="mr-2 h-4 w-4" />
-            Locations
-          </NuxtLink>
-        </Button>
+          <Button variant="ghost" class="w-full justify-start">
+            <NuxtLink to="/orga/locations" class="flex items-center">
+              <MapPin class="mr-2 h-4 w-4" />
+              Spielorte
+            </NuxtLink>
+          </Button>
 
-        <Button variant="ghost" class="w-full justify-start">
-          <NuxtLink to="/orga/settings" class="flex items-center">
-            <Settings class="mr-2 h-4 w-4" />
-            Settings
-          </NuxtLink>
-        </Button>
+          <Button variant="ghost" class="w-full justify-start">
+            <NuxtLink to="/orga/settings" class="flex items-center">
+              <Settings class="mr-2 h-4 w-4" />
+              Einstellungen
+            </NuxtLink>
+          </Button>
+        </div>
       </nav>
 
       <!-- Logout Button -->
-      <div class="absolute bottom-4 left-4 right-4">
+      <div class="absolute bottom-4 left-4 right-4 flex justify-between">
         <Button
           variant="ghost"
           class="w-full justify-start"
@@ -60,6 +61,7 @@
           <LogOut class="mr-2 h-4 w-4" />
           Logout
         </Button>
+        <ColorModeSwitch />
       </div>
     </aside>
 
@@ -75,7 +77,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
+import { useStorage } from "@vueuse/core";
 import { Button } from "@/components/ui/button";
 
 import {
@@ -89,14 +91,7 @@ import {
 } from "lucide-vue-next";
 
 const supabase = useSupabaseClient();
-const isSidebarOpen = ref(true);
-
-onMounted(() => {
-  // If on mobile (< 768px), collapse the sidebar by default
-  if (window.innerWidth < 768) {
-    isSidebarOpen.value = false;
-  }
-});
+const isSidebarOpen = useStorage("isSidebarOpen", false);
 
 function toggleSidebar() {
   isSidebarOpen.value = !isSidebarOpen.value;

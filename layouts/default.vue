@@ -1,27 +1,29 @@
 <template>
   <nav
-    class="flex items-center md:items-end justify-between space-y-2 w-full px-2 pt-6 pb-3"
+    class="flex items-center bg-background-secondary md:items-end justify-between space-y-2 h-14 md:h-16 px-3 md:px-8 pt-3 pb-3"
+    v-auto-animate
   >
     <RouteBreadCrumb />
-    <div class="flex md:flex-row gap-1 md:gap-4 text-xs md:text-base">
+    <div class="flex h-full items-center md:flex-row gap-1 md:gap-4 text-xs md:text-base">
       <Button
         v-for="link in user ? loggedInLinks : loggedOutLinks"
         variant="outline"
-        class="md:w-full justify-start p-2 h-fit w-fit"
+        class="flex items-center p-2 h-fit w-auto"
         @click="navigateTo(link.to)"
       >
-        <component :is="link.icon" class="md:mr-2 h-4 w-4" />
+        <component :is="link.icon" class="h-4 w-4" />
         <span class="hidden md:block">{{ link.title }}</span>
       </Button>
       <Button
         v-if="user"
         variant="outline"
-        class="w-full justify-start"
+        class="flex items-center w-auto"
         @click="handleLogout()"
       >
         <LogOut class="mr-2 h-4 w-4" />
         Logout
       </Button>
+      <ColorModeSwitch />
     </div>
   </nav>
   <slot />
@@ -29,6 +31,7 @@
 
 <script lang="ts" setup>
 import { LayoutDashboard, LogIn, UserPlus, LogOut } from "lucide-vue-next";
+import { vAutoAnimate } from "@formkit/auto-animate";
 const user = useSupabaseUser();
 const supabase = useSupabaseClient();
 

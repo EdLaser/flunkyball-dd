@@ -42,7 +42,7 @@ const childRoutes = computed(() =>
 </script>
 
 <template>
-  <Breadcrumb class="flex items-center space-x-2 ml-4 text-xs md:text-base">
+  <Breadcrumb class="flex items-center space-x-2 text-xs md:text-base h-full">
     <BreadcrumbList>
       <BreadcrumbItem>
         <component

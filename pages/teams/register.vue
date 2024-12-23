@@ -203,6 +203,7 @@ const isSubmitting = ref(false);
 const getRandomTeamName = () => {
   return capitalize(randomName());
 };
+
 const teamSchema = toTypedSchema(
   z.object({
     name: z.string().min(2, {

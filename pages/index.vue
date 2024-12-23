@@ -1,6 +1,6 @@
 <template>
-  <div class="min-h-screen bg-gray-50">
-    <header class="bg-white shadow-sm">
+  <div class="min-h-screen bg-background">
+    <header class="bg-background shadow-sm">
       <div class="container mx-auto py-6">
         <h1 class="text-4xl font-bold text-center text-primary">
           Flunkyball-Turniere Dresden
@@ -11,10 +11,12 @@
     <main class="container mx-auto px-4">
       <!-- Hero Section -->
       <section class="text-center py-20">
-        <h2 class="text-5xl font-extrabold mb-4 text-gray-800">
+        <h2
+          class="text-5xl font-extrabold mb-4 text-gray-800 dark:text-gray-50"
+        >
           Erlebe den Nervenkitzel von Flunkyball!
         </h2>
-        <p class="text-xl mb-10 text-gray-600">
+        <p class="text-xl mb-10 text-gray-600 dark:text-gray-100">
           Nimm an actiongeladenen Turnieren voller Spaß, Sport und einer Prise
           Chaos teil.
         </p>
@@ -31,17 +33,21 @@
 
       <!-- About the Game -->
       <section class="py-16">
-        <h2 class="text-3xl font-bold mb-6 text-center text-gray-800">
+        <h2
+          class="text-3xl font-bold mb-6 text-center text-gray-800 dark:text-gray-50"
+        >
           Was ist Flunkyball?
         </h2>
-        <div class="grid md:grid-cols-2 gap-6 items-center">
+        <div
+          class="grid md:grid-cols-2 gap-6 items-center text-gray-600 dark:text-gray-100"
+        >
           <div>
-            <p class="text-lg mb-4 text-gray-600">
+            <p class="text-lg mb-4">
               Flunkyball ist ein aufregender Sport, bei dem zwei Teams mit
               jeweils zwei Spielern gegeneinander antreten, indem sie eine
               Flasche auf eine Flasche in der Mitte des Spielfelds werfen.
             </p>
-            <ul class="space-y-2 text-gray-600">
+            <ul class="space-y-2">
               <li class="flex items-center">
                 <BeerIcon class="text-primary mr-2 h-6 w-6" />
                 Wenn du die mittlere Flasche triffst, darf dein Team trinken!
@@ -69,8 +75,10 @@
 
       <!-- Upcoming Tournament -->
       <section class="py-16">
-        <h2 class="text-3xl font-bold mb-6 text-center text-gray-800">
-          Anstehendes Turnier
+        <h2
+          class="text-3xl font-bold mb-6 text-center text-gray-800 dark:text-gray-50"
+        >
+          Anstehende Turniere
         </h2>
         <div class="space-y-4">
           <TournamentCard
@@ -82,7 +90,9 @@
 
       <!-- Past Tournament Results -->
       <section class="py-16">
-        <h2 class="text-3xl font-bold mb-6 text-center text-gray-800">
+        <h2
+          class="text-3xl font-bold mb-6 text-center text-gray-800 dark:text-gray-50"
+        >
           Ergebnisse vergangener Turniere
         </h2>
         <div class="grid md:grid-cols-3 gap-6">
@@ -95,7 +105,9 @@
 
       <!-- Team Overview -->
       <section class="py-16">
-        <h2 class="text-3xl font-bold mb-6 text-center text-gray-800">
+        <h2
+          class="text-3xl font-bold mb-6 text-center text-gray-800 dark:text-gray-50"
+        >
           Antretende Teams
         </h2>
         <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -125,10 +137,10 @@
 
       <!-- Registration CTA -->
       <section class="text-center py-20">
-        <h2 class="text-4xl font-bold mb-4 text-gray-800">
+        <h2 class="text-4xl font-bold mb-4 text-gray-600 dark:text-gray-100">
           Bereit, dabei zu sein?
         </h2>
-        <p class="text-xl mb-8 text-gray-600">
+        <p class="text-xl mb-8 text-gray-600 dark:text-gray-100">
           Melde dich jetzt für unser bevorstehendes Flunkyball-Turnier an und
           zeig deine Wurfkünste!
         </p>
@@ -139,7 +151,7 @@
       </section>
     </main>
 
-    <footer class="bg-primary text-white py-8">
+    <footer class="bg-primary text-white dark:text-gray-700 py-8">
       <div class="container mx-auto text-center">
         <p>&copy; Edi Z, Ruben K. All Beers reserved.</p>
       </div>

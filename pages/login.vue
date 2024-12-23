@@ -1,21 +1,13 @@
 <template>
   <div
-    class="min-h-screen bg-gray-50 flex flex-col items-center justify-center p-4"
+    class="min-h-screen flex flex-col items-center justify-center p-4"
   >
-    <NuxtLink
-      to="/"
-      class="absolute top-4 left-4 text-primary hover:-translate-x-1 duration-150 flex items-center"
-    >
-      <ArrowLeft class="mr-2" />
-      Zurück
-    </NuxtLink>
-
     <Card class="w-full max-w-md">
       <CardHeader>
-        <CardTitle class="text-2xl font-bold text-center text-gray-800">
+        <CardTitle class="text-2xl font-bold text-center text-gray-800 dark:text-gray-50">
           Willkommen bei unseren Flunkyball Turnieren!
         </CardTitle>
-        <CardDescription class="text-center text-gray-600">
+        <CardDescription class="text-center text-gray-600 dark:text-gray-100">
           Loge dich ein oder registriere dich, um an unseren Turnieren
           teilzunehmen.
         </CardDescription>

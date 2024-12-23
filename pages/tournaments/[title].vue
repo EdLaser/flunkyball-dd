@@ -3,13 +3,6 @@
     <!-- Header -->
     <header class="bg-primary text-primary-foreground shadow-md">
       <div class="container mx-auto py-6 px-4">
-        <NuxtLink
-          to="/"
-          class="inline-flex items-center text-primary-foreground hover:text-primary-foreground/80"
-        >
-          <ArrowLeft class="mr-2 h-4 w-4" />
-          Zurück
-        </NuxtLink>
         <h1 class="text-3xl font-bold mt-4">{{ tournament?.title }}</h1>
       </div>
     </header>

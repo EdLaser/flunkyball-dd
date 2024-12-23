@@ -1,10 +1,10 @@
 <template>
   <div class="p-6">
-    <h1 class="text-3xl font-bold mb-6">Teams</h1>
+    <h1 class="text-3xl font-bold mb-6 text-foreground">Teams</h1>
     <Card>
       <CardHeader>
-        <CardTitle>All Teams</CardTitle>
-        <CardDescription>Manage and view all Flunkyball teams</CardDescription>
+        <CardTitle>Alle Teams</CardTitle>
+        <CardDescription>Anzeigen und bearbeiten aller Teams</CardDescription>
       </CardHeader>
       <CardContent>
         <TeamList />
