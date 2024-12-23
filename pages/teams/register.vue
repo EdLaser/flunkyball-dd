@@ -85,15 +85,14 @@
               </FormItem>
             </FormField>
 
-            <!-- Captain & Second Member -->
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <!-- Captain -->
-              <FormField name="member1" v-slot="{ componentField }">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+              <span class="md:col-span-2 text-xl">Spieler 1</span>
+              <FormField name="member1.firstName" v-slot="{ componentField }">
                 <FormItem>
-                  <FormLabel class="font-semibold">Spieler 1</FormLabel>
+                  <FormLabel class="font-semibold">Vorname</FormLabel>
                   <FormControl>
                     <Input
-                      placeholder="Name Spieler 1"
+                      placeholder="Vorname Spieler 1"
                       class="border-primary/60 focus:border-primary/80"
                       v-bind="componentField"
                       required
@@ -101,13 +100,41 @@
                   </FormControl>
                 </FormItem>
               </FormField>
-              <!-- Second Member -->
-              <FormField v-slot="{ componentField }" name="member2">
+              <FormField name="member1.lastName" v-slot="{ componentField }">
                 <FormItem>
-                  <FormLabel class="font-semibold">Name Spieler 2</FormLabel>
+                  <FormLabel class="font-semibold">Nachname</FormLabel>
                   <FormControl>
                     <Input
-                      placeholder="Name Spieler 2"
+                      placeholder="Nachname Spieler 1"
+                      class="border-primary/60 focus:border-primary/80"
+                      v-bind="componentField"
+                      required
+                    />
+                  </FormControl>
+                </FormItem>
+              </FormField>
+            </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
+              <span class="md:col-span-2 text-xl">Spieler 2</span>
+              <FormField name="member2.firstName" v-slot="{ componentField }">
+                <FormItem>
+                  <FormLabel class="font-semibold">Vorname</FormLabel>
+                  <FormControl>
+                    <Input
+                      placeholder="Vorname Spieler 2"
+                      class="border-primary/60 focus:border-primary/80"
+                      v-bind="componentField"
+                      required
+                    />
+                  </FormControl>
+                </FormItem>
+              </FormField>
+              <FormField name="member2.lastName" v-slot="{ componentField }">
+                <FormItem>
+                  <FormLabel class="font-semibold">Nachname</FormLabel>
+                  <FormControl>
+                    <Input
+                      placeholder="Nachname Spieler 2"
                       class="border-primary/60 focus:border-primary/80"
                       v-bind="componentField"
                       required
@@ -184,25 +211,29 @@ const teamSchema = toTypedSchema(
     slogan: z.string().max(100, {
       message: "Team Slogan must be less than 100 characters.",
     }),
-    member1: z.string().min(2, {
-      message: "Member name must be at least 2 characters.",
+    member1: z.object({
+      firstName: z.string().min(2, {
+        message: "Member name must be at least 2 characters.",
+      }),
+      lastName: z.string().min(2, {
+        message: "Member name must be at least 2 characters.",
+      }),
     }),
     email: z.string().email({
       message: "Please enter a valid email address.",
     }),
-    member2: z.string().min(2, {
-      message: "Member name must be at least 2 characters.",
+    member2: z.object({
+      firstName: z.string().min(2, {
+        message: "Member name must be at least 2 characters.",
+      }),
+      lastName: z.string().min(2, {
+        message: "Member name must be at least 2 characters.",
+      }),
     }),
   })
 );
 
 const form = useForm({
-  initialValues: {
-    name: "",
-    member1: "",
-    email: "",
-    member2: "",
-  },
   validationSchema: teamSchema,
 });
 
