@@ -119,6 +119,9 @@
         </div>
       </CardFooter>
     </Card>
+    <div class="flex justify-end w-full mt-6">
+      <NewTournamentDialog />
+    </div>
   </div>
 </template>
 
