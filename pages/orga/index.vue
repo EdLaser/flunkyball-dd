@@ -10,53 +10,59 @@
     </header>
 
     <main class="container mx-auto px-4 py-8">
-      <div class="grid gap-6 grid-cols-8">
-        <RefreshButton
-          class="col-span-2 rounded-b-none"
-          @click="refreshTotalTournaments"
-          :loading="statusTotalTournaments === 'pending'"
-        />
-        <RefreshButton
-          class="col-span-2 rounded-b-none"
-          @click="refreshTotalTeams"
-          :loading="statusTotalTeams === 'pending'"
-        />
-        <RefreshButton
-          class="col-span-2 rounded-b-none"
-          @click="refreshTotalTournaments"
-          :loading="statusTotalTournaments === 'pending'"
-        />
-        <RefreshButton
-          class="col-span-2 rounded-b-none"
-          @click="refreshLocations"
-          :loading="statusLocations === 'pending'"
-        />
-      </div>
       <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
-        <StatCard
-          class="rounded-t-none"
-          title="Turniere"
-          :value="totalTournaments"
-          :icon="Trophy"
-        />
-        <StatCard
-          class="rounded-t-none"
-          title="Aktive Teams"
-          :value="totalTeams ?? 0"
-          :icon="Users"
-        />
-        <StatCard
-          class="rounded-t-none"
-          title="Kommende Turniere"
-          :value="pastAndUpcomingTournaments?.upcomingTournaments ?? 0"
-          :icon="Calendar"
-        />
-        <StatCard
-          class="rounded-t-none"
-          title="Spielorte"
-          :value="locations?.length ?? 0"
-          :icon="MapPin"
-        />
+        <div class="flex flex-col">
+          <RefreshButton
+            class="col-span-2 rounded-b-none"
+            @click="refreshTotalTournaments"
+            :loading="statusTotalTournaments === 'pending'"
+          />
+          <StatCard
+            class="rounded-t-none"
+            title="Turniere"
+            :value="totalTournaments"
+            :icon="Trophy"
+          />
+        </div>
+        <div class="flex flex-col">
+          <RefreshButton
+            class="col-span-2 rounded-b-none"
+            @click="refreshTotalTeams"
+            :loading="statusTotalTeams === 'pending'"
+          />
+          <StatCard
+            class="rounded-t-none"
+            title="Aktive Teams"
+            :value="totalTeams ?? 0"
+            :icon="Users"
+          />
+        </div>
+        <div class="flex flex-col">
+          <RefreshButton
+            class="col-span-2 rounded-b-none"
+            @click="refreshRecentTournaments"
+            :loading="statusRecentTournaments === 'pending'"
+          />
+          <StatCard
+            class="rounded-t-none"
+            title="Kommende Turniere"
+            :value="pastAndUpcomingTournaments?.upcomingTournaments ?? 0"
+            :icon="Calendar"
+          />
+        </div>
+        <div class="flex flex-col">
+          <RefreshButton
+            class="col-span-2 rounded-b-none"
+            @click="refreshLocations"
+            :loading="statusLocations === 'pending'"
+          />
+          <StatCard
+            class="rounded-t-none"
+            title="Spielorte"
+            :value="locations?.length ?? 0"
+            :icon="MapPin"
+          />
+        </div>
       </div>
 
       <div class="grid gap-6 mt-8 md:grid-cols-2">

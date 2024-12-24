@@ -14,35 +14,55 @@
       <nav>
         <RouteBreadCrumb class="mt-2 mb-4 md:mb-6 md:mt-4" />
         <div class="space-y-2">
-          <Button variant="ghost" class="w-full justify-start">
+          <Button
+            variant="ghost"
+            class="w-full justify-start"
+            @click="isMobile && toggleSidebar()"
+          >
             <NuxtLink to="/orga" class="flex items-center">
               <LayoutDashboard class="mr-2 h-4 w-4" />
               Dashboard
             </NuxtLink>
           </Button>
 
-          <Button variant="ghost" class="w-full justify-start">
+          <Button
+            variant="ghost"
+            class="w-full justify-start"
+            @click="isMobile && toggleSidebar()"
+          >
             <NuxtLink to="/orga/tournaments" class="flex items-center">
               <Trophy class="mr-2 h-4 w-4" />
               Turniere
             </NuxtLink>
           </Button>
 
-          <Button variant="ghost" class="w-full justify-start">
+          <Button
+            variant="ghost"
+            class="w-full justify-start"
+            @click="isMobile && toggleSidebar()"
+          >
             <NuxtLink to="/orga/teams" class="flex items-center">
               <Users class="mr-2 h-4 w-4" />
               Teams
             </NuxtLink>
           </Button>
 
-          <Button variant="ghost" class="w-full justify-start">
+          <Button
+            variant="ghost"
+            class="w-full justify-start"
+            @click="isMobile && toggleSidebar()"
+          >
             <NuxtLink to="/orga/locations" class="flex items-center">
               <MapPin class="mr-2 h-4 w-4" />
               Spielorte
             </NuxtLink>
           </Button>
 
-          <Button variant="ghost" class="w-full justify-start">
+          <Button
+            variant="ghost"
+            class="w-full justify-start"
+            @click="isMobile && toggleSidebar()"
+          >
             <NuxtLink to="/orga/settings" class="flex items-center">
               <Settings class="mr-2 h-4 w-4" />
               Einstellungen
@@ -78,6 +98,7 @@
 
 <script setup lang="ts">
 import { Button } from "@/components/ui/button";
+import { useMouse } from "@vueuse/core";
 
 import {
   LayoutDashboard,
@@ -90,6 +111,16 @@ import {
 } from "lucide-vue-next";
 
 const supabase = useSupabaseClient();
+
+const { x } = useMouse();
+
+const isMobile = computed(() => window.innerWidth < 768);
+
+watch(x, (value) => {
+  if (value < 17) {
+    isSidebarOpen.value = true;
+  }
+});
 
 const isSidebarOpen = ref(false);
 

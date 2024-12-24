@@ -7,20 +7,26 @@
         <CardTitle>Turnier Management</CardTitle>
         <CardDescription class="flex justify-between">
           Hier kannst du alle Turniere verwalten.
-          <RefreshButton variant="ghost" @click="refresh" :loading="status === 'pending'" />
+          <RefreshButton
+            variant="ghost"
+            @click="refresh"
+            :loading="status === 'pending'"
+          />
         </CardDescription>
       </CardHeader>
       <CardContent>
         <div class="flex justify-between items-center mb-4">
-          <div class="flex items-center space-x-2">
+          <div
+            class="grid grid-cols-3 md:grid-cols-5 gap-2"
+          >
             <Input
               placeholder="Search tournaments..."
               v-model="searchQuery"
-              class="w-[300px]"
+              class="col-span-2 md:col-span-4"
             />
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
-                <Button variant="outline" class="ml-auto">
+                <Button variant="outline" class="ml-auto col-span-1 h-full">
                   <Filter class="mr-2 h-4 w-4" /> Filter
                 </Button>
               </DropdownMenuTrigger>
