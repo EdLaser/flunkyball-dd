@@ -1,15 +1,17 @@
 <template>
   <Card>
     <CardHeader>
-      <CardTitle>{{ props.player.firstName }} {{ props.player.lastName }}</CardTitle>
+      <CardTitle
+        >{{ props.player.firstName }} {{ props.player.lastName }}</CardTitle
+      >
       <CardDescription>
         {{ props.player.slogan }}
       </CardDescription>
     </CardHeader>
 
     <CardContent>
-      <div class="grid grid-cols-2">
-        <div class="flex col-span-2 items-center gap-5">
+      <div class="grid">
+        <div class="flex items-center gap-5">
           <Avatar>
             <AvatarFallback>
               {{
@@ -34,6 +36,14 @@
         </div>
       </div>
       <div class="grid grid-cols-2 mt-8">
+        <div class="flex col-span-1 flex-col gap-2">
+          <span class="flex gap-2 font-semibold"
+            ><Trophy />Spiele gespielt:</span
+          >
+          <InspiraNumberTicker :value="gamesPlayed ?? 0" />
+        </div>
+      </div>
+      <div class="grid md:grid-cols-2 mt-8">
         <div
           class="flex col-span-1 items-center gap-5"
           v-if="props.player.slogan"
@@ -55,16 +65,16 @@
       </div>
     </CardContent>
     <CardFooter class="font-light text-muted-foreground text-sm text-end">
-      Bitte speichere dir deine ID für später.
     </CardFooter>
   </Card>
 </template>
 
 <script lang="ts" setup>
 import type { Player } from "~/types/Player";
+import { Trophy } from "lucide-vue-next";
 
 const props = defineProps<{
   player: Player;
-  gamesPlayed: number;
+  gamesPlayed?: number;
 }>();
 </script>

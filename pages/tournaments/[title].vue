@@ -3,7 +3,7 @@
     <!-- Header -->
     <header class="bg-primary text-primary-foreground shadow-md">
       <div class="container mx-auto py-6 px-4">
-        <h1 class="text-3xl font-bold mt-4">{{ tournament?.title }}</h1>
+        <h1 class="text-3xl font-bold">{{ tournament?.title }}</h1>
       </div>
     </header>
 
