@@ -2,7 +2,7 @@
   <div class="flex h-screen bg-background">
     <button
       @click="toggleSidebar"
-      class="absolute bottom-4 right-4 z-20 md:p-2 p-1 text-primary rounded-full supports-backdrop-blur:bg-white/30 backdrop-blur-lg"
+      class="absolute bottom-6 right-6 z-20 md:p-2 p-1 text-primary rounded-full supports-backdrop-blur:bg-white/30 backdrop-blur-lg"
     >
       <Menu class="h-6 w-6" />
     </button>
@@ -119,6 +119,8 @@ const isMobile = computed(() => window.innerWidth < 768);
 watch(x, (value) => {
   if (value < 17) {
     isSidebarOpen.value = true;
+  } else {
+    isMobile.value && (isSidebarOpen.value = false);
   }
 });
 

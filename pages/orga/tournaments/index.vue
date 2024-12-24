@@ -83,7 +83,7 @@
               <TableCell>{{ tournament.description }}</TableCell>
               <TableCell>
                 <span
-                  class="px-2 py-1 rounded-full text-xs font-semibold"
+                  class="p-2 rounded-full text-xs font-semibold"
                   :class="{
                     'bg-blue-300 text-blue-800': tournament.status === 'open',
                     'bg-green-300 text-green-800':
@@ -157,7 +157,7 @@ import {
 } from "@/components/ui/table";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Filter, RefreshCcw } from "lucide-vue-next";
+import { Filter } from "lucide-vue-next";
 
 definePageMeta({
   middleware: "auth",
