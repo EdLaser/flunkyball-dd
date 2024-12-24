@@ -122,7 +122,7 @@
 
 <script setup lang="ts">
 // Import your Vue-compatible Lucide icons instead of 'lucide-react'
-import { ArrowLeft, Calendar, MapPin, Users, Clock } from "lucide-vue-next";
+import { Calendar, MapPin, Users } from "lucide-vue-next";
 
 // Import your UI components
 import { Button } from "@/components/ui/button";

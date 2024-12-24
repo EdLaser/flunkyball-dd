@@ -162,6 +162,7 @@
 <script setup lang="ts">
 import { BeerIcon, Users, Trophy } from "lucide-vue-next";
 import RainbowButton from "~/components/inspira/RainbowButton.vue";
+import PastTournamenCard from "~/components/tournament/PastTournamenCard.vue";
 
 const {
   data: upcomingTournaments,

@@ -133,6 +133,7 @@
 </template>
 
 <script setup lang="ts">
+import NewTournamentDialog from "~/components/tournament/NewTournamentDialog.vue";
 import {
   DropdownMenu,
   DropdownMenuTrigger,
