@@ -7,13 +7,15 @@
         <CardDescription>Anzeigen und bearbeiten aller Teams</CardDescription>
       </CardHeader>
       <CardContent>
-        <TeamList />
+        <TeamsTable v-if="teams" :data="teams" />
       </CardContent>
     </Card>
   </div>
 </template>
 
 <script lang="ts" setup>
+import TeamsTable from "~/components/team/TeamsTable.vue";
+
 definePageMeta({
   middleware: "auth",
   title: "Teams",
@@ -29,4 +31,6 @@ definePageMeta({
     mode: "out-in",
   },
 });
+
+const { data: teams } = await useFetch("/api/orga/teams/all-teams");
 </script>
