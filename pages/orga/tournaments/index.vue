@@ -15,10 +15,8 @@
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <div class="flex justify-between items-center mb-4">
-          <div
-            class="grid grid-cols-3 md:grid-cols-5 gap-2"
-          >
+        <!-- <div class="flex justify-between items-center mb-4">
+          <div class="grid grid-cols-3 md:grid-cols-5 gap-2">
             <Input
               placeholder="Search tournaments..."
               v-model="searchQuery"
@@ -43,67 +41,11 @@
               </DropdownMenuContent>
             </DropdownMenu>
           </div>
-        </div>
-        <Table>
-          <TableHeader>
-            <TableRow>
-              <TableHead> Titel </TableHead>
-              <TableHead class="cursor-pointer" @click="handleSort()">
-                Datum
-                <span>
-                  {{ sortDirection === "asc" ? "↑" : "↓" }}
-                </span>
-              </TableHead>
-              <TableHead>Preis</TableHead>
-              <TableHead>Ort</TableHead>
-              <TableHead>Details</TableHead>
-              <TableHead>Status</TableHead>
-              <TableHead>Actions</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            <TableRow
-              v-for="(tournament, index) in filteredAndSortedTournaments"
-              :key="index"
-            >
-              <TableCell class="font-medium">
-                {{ tournament.title }}
-              </TableCell>
-              <TableCell>{{
-                tournament.tournamentDate.toLocaleDateString("de-DE", {
-                  year: "numeric",
-                  month: "2-digit",
-                  day: "2-digit",
-                  minute: "2-digit",
-                  hour: "2-digit",
-                })
-              }}</TableCell>
-              <TableCell>{{ tournament.price }}</TableCell>
-              <TableCell>{{ tournament.location }}</TableCell>
-              <TableCell>{{ tournament.description }}</TableCell>
-              <TableCell>
-                <span
-                  class="p-2 rounded-full text-xs font-semibold"
-                  :class="{
-                    'bg-blue-300 text-blue-800': tournament.status === 'open',
-                    'bg-green-300 text-green-800':
-                      tournament.status === 'in_progress',
-                    'bg-gray-300 text-gray-800':
-                      tournament.status === 'finished',
-                  }"
-                >
-                  {{ tournament.status }}
-                </span>
-              </TableCell>
-              <TableCell>
-                <Button variant="outline" size="sm"> View Details </Button>
-              </TableCell>
-            </TableRow>
-          </TableBody>
-        </Table>
+        </div> -->
+        <TournamentTable v-if="tournaments" :data="tournaments" />
       </CardContent>
       <CardFooter class="flex justify-between">
-        <div class="text-sm text-muted-foreground">
+        <!-- <div class="text-sm text-muted-foreground">
           Zeige {{ filteredAndSortedTournaments.length }} von
           {{ tournaments?.length }} Turnieren
         </div>
@@ -123,7 +65,7 @@
             </small>
           </span>
           <span v-if="searchQuery">Stichwort: {{ searchQuery }}</span>
-        </div>
+        </div> -->
       </CardFooter>
     </Card>
     <div class="flex justify-end w-full mt-6">
@@ -134,12 +76,7 @@
 
 <script setup lang="ts">
 import NewTournamentDialog from "~/components/tournament/NewTournamentDialog.vue";
-import {
-  DropdownMenu,
-  DropdownMenuTrigger,
-  DropdownMenuContent,
-  DropdownMenuCheckboxItem,
-} from "@/components/ui/dropdown-menu";
+import TournamentTable from "~/components/tournament/TournamentTable.vue";
 import {
   Card,
   CardHeader,
@@ -148,17 +85,6 @@ import {
   CardTitle,
   CardDescription,
 } from "@/components/ui/card";
-import {
-  Table,
-  TableHeader,
-  TableBody,
-  TableRow,
-  TableHead,
-  TableCell,
-} from "@/components/ui/table";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { Filter } from "lucide-vue-next";
 
 definePageMeta({
   middleware: "auth",
@@ -186,46 +112,5 @@ const {
       ...tournament,
       tournamentDate: new Date(tournament.tournamentDate),
     })),
-});
-
-const showFinished = ref(true);
-const showOpen = ref(true);
-const showInProgress = ref(true);
-
-const sortDirection = ref<"asc" | "desc">("asc");
-const searchQuery = ref("");
-
-const filterForStatus = (tournament: any) => {
-  if (showOpen.value && tournament.status === "open") return true;
-  if (showInProgress.value && tournament.status === "in_progress") return true;
-  if (showFinished.value && tournament.status === "finished") return true;
-  return false;
-};
-
-const handleSort = () => {
-  sortDirection.value = sortDirection.value === "asc" ? "desc" : "asc";
-};
-
-const filterForQuery = (tournament: any) => {
-  if (!searchQuery.value) return true;
-  return (
-    tournament.title.toLowerCase().includes(searchQuery.value.toLowerCase()) ||
-    tournament.location.toLowerCase().includes(searchQuery.value.toLowerCase())
-  );
-};
-
-const filteredAndSortedTournaments = computed(() => {
-  let list = tournaments.value ?? [];
-
-  // Apply filters
-  list = list.filter(
-    (tournament) => filterForQuery(tournament) && filterForStatus(tournament)
-  );
-
-  return list.sort((a, b) => {
-    return sortDirection.value === "asc"
-      ? a.tournamentDate.getTime() - b.tournamentDate.getTime()
-      : b.tournamentDate.getTime() - a.tournamentDate.getTime();
-  });
 });
 </script>

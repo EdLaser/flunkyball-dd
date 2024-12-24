@@ -141,7 +141,6 @@ const handleSubmit = async () => {
         location: location.value,
       }),
     });
-    console.log(result.status);
 
     if (result.status === 200) {
       toast("Turnier erfolgreich erstellt!", { duration: 5000 });
