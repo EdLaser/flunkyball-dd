@@ -4,7 +4,9 @@
   >
     <Card class="w-full max-w-2xl">
       <CardHeader>
-        <CardTitle class="text-2xl font-bold text-center text-gray-800 dark:text-gray-50">
+        <CardTitle
+          class="text-2xl font-bold text-center text-gray-800 dark:text-gray-50"
+        >
           Willkommen bei unseren Flunkyball Turnieren!
         </CardTitle>
         <CardDescription class="text-center text-gray-600 dark:text-gray-100">
@@ -12,287 +14,229 @@
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <Form
-          v-slot="{ meta, values, validate }"
-          as=""
-          keep-values
-          :validation-schema="toTypedSchema(registerSchema[stepIndex - 1])"
+        <Stepper
+          v-slot="{ isNextDisabled, isPrevDisabled, nextStep, prevStep }"
+          v-model="stepIndex"
+          class="block w-full"
+          :validation-schema="registerSchema"
         >
-          <Stepper
-            v-slot="{ isNextDisabled, isPrevDisabled, nextStep, prevStep }"
-            v-model="stepIndex"
-            class="block w-full"
-          >
-            <form
-              @submit="
-                (e) => {
-                  e.preventDefault();
-                  validate();
+          <form @submit.prevent="onSubmit">
+            <div class="flex w-full flex-start gap-2">
+              <StepperItem
+                v-for="step in steps"
+                :key="step.step"
+                v-slot="{ state }"
+                class="relative flex w-full flex-col items-center justify-center"
+                :step="step.step"
+              >
+                <StepperSeparator
+                  v-if="step.step !== steps[steps.length - 1].step"
+                  class="absolute left-[calc(50%+20px)] right-[calc(-50%+10px)] top-5 block h-0.5 shrink-0 rounded-full bg-muted group-data-[state=completed]:bg-primary"
+                />
 
-                  if (stepIndex === steps.length && meta.valid) {
-                    onSubmit(values);
-                  }
-                }
-              "
-            >
-              <div class="flex w-full flex-start gap-2">
-                <StepperItem
-                  v-for="step in steps"
-                  :key="step.step"
-                  v-slot="{ state }"
-                  class="relative flex w-full flex-col items-center justify-center"
-                  :step="step.step"
-                >
-                  <StepperSeparator
-                    v-if="step.step !== steps[steps.length - 1].step"
-                    class="absolute left-[calc(50%+20px)] right-[calc(-50%+10px)] top-5 block h-0.5 shrink-0 rounded-full bg-muted group-data-[state=completed]:bg-primary"
-                  />
-
-                  <StepperTrigger as-child>
-                    <Button
-                      :variant="
-                        state === 'completed' || state === 'active'
-                          ? 'default'
-                          : 'outline'
-                      "
-                      size="icon"
-                      class="z-10 rounded-full shrink-0"
-                      :class="[
-                        state === 'active' &&
-                          'ring-2 ring-ring ring-offset-2 ring-offset-background',
-                      ]"
-                      :disabled="state !== 'completed' && !meta.valid"
-                    >
-                      <component :is="step.icon" class="w-4 h-4" />
-                    </Button>
-                  </StepperTrigger>
-
-                  <div class="mt-5 flex flex-col items-center text-center">
-                    <StepperTitle
-                      :class="[state === 'active' && 'text-primary']"
-                      class="text-sm font-semibold transition lg:text-base"
-                    >
-                      {{ step.title }}
-                    </StepperTitle>
-                    <StepperDescription
-                      :class="[state === 'active' && 'text-primary']"
-                      class="sr-only text-xs text-muted-foreground transition md:not-sr-only lg:text-sm"
-                    >
-                      {{ step.description }}
-                    </StepperDescription>
-                  </div>
-                </StepperItem>
-              </div>
-
-              <div class="flex flex-col gap-4 mt-4">
-                <template v-if="stepIndex === 1">
-                  <FormField v-slot="{ componentField }" name="firstName">
-                    <FormItem v-auto-animate>
-                      <FormLabel>Vorname</FormLabel>
-                      <FormControl>
-                        <Input type="text" v-bind="componentField" />
-                      </FormControl>
-                    </FormItem>
-                  </FormField>
-
-                  <FormField v-slot="{ componentField }" name="lastName">
-                    <FormItem v-auto-animate>
-                      <FormLabel>Nachname</FormLabel>
-                      <FormControl>
-                        <Input type="text" v-bind="componentField" />
-                      </FormControl>
-                    </FormItem>
-                  </FormField>
-
-                  <FormField v-slot="{ componentField }" name="slogan">
-                    <FormItem v-auto-animate>
-                      <FormLabel>Slogan</FormLabel>
-                      <FormControl>
-                        <Input
-                          type="text"
-                          placeholder="Dein Slogan / Mantra"
-                          v-bind="componentField"
-                        />
-                      </FormControl>
-                    </FormItem>
-                  </FormField>
-                </template>
-
-                <template v-if="stepIndex === 2">
-                  <FormField v-slot="{ componentField }" name="email">
-                    <FormItem v-auto-animate>
-                      <FormLabel>Email</FormLabel>
-                      <FormControl>
-                        <Input type="email" v-bind="componentField" />
-                      </FormControl>
-                    </FormItem>
-                  </FormField>
-
-                  <FormField v-slot="{ componentField }" name="password">
-                    <FormItem v-auto-animate>
-                      <FormLabel>Passwort</FormLabel>
-                      <FormControl>
-                        <Input type="password" v-bind="componentField" />
-                      </FormControl>
-                    </FormItem>
-                  </FormField>
-
-                  <FormField v-slot="{ componentField }" name="confirmPassword">
-                    <FormItem v-auto-animate>
-                      <FormLabel>Passwort bestätigen</FormLabel>
-                      <FormControl>
-                        <Input type="password" v-bind="componentField" />
-                      </FormControl>
-                    </FormItem>
-                  </FormField>
-                </template>
-
-                <template v-if="stepIndex === 3">
-                  <FormField v-slot="{ componentField, value }" name="otp">
-                    <FormItem class="my-14 mx-auto flex flex-col items-center">
-                      <Label class="text-center text-lg">OTP</Label>
-                      <PinInput
-                        id="otp"
-                        :model-value="value"
-                        placeholder="○"
-                        class="flex gap-2 items-center mt-1 justify-between"
-                        otp
-                        type="number"
-                        :name="componentField.name"
-                        @complete="handleComplete"
-                        @update:model-value="
-                            (arrStr: any) => {
-                              setFieldValue('otp', arrStr.filter(Boolean));
-                            }
-                          "
-                      >
-                        <PinInputGroup>
-                          <PinInputInput
-                            v-for="(id, index) in 6"
-                            :key="id"
-                            :index="index"
-                          /> </PinInputGroup
-                      ></PinInput>
-                      <small class="text-center text-gray-500 max-w-md"
-                        >Du hast dein <b>O</b>ne <b>T</b>ime <b>P</b>asswort per
-                        Email erhalten. Bitte Prüfe auch deinen
-                        Spam-Ordner.</small
-                      >
-                    </FormItem>
-                  </FormField>
-                </template>
-              </div>
-
-              <div class="flex items-center justify-between mt-4">
-                <Button
-                  :disabled="isPrevDisabled"
-                  variant="outline"
-                  size="sm"
-                  @click="prevStep()"
-                >
-                  Zurück
-                </Button>
-                <div class="flex items-center gap-3">
+                <StepperTrigger as-child>
                   <Button
-                    v-if="stepIndex <= 3"
-                    :type="meta.valid ? 'button' : 'submit'"
-                    :disabled="isNextDisabled"
-                    size="sm"
-                    @click="meta.valid && nextStep()"
+                    :variant="
+                      state === 'completed' || state === 'active'
+                        ? 'default'
+                        : 'outline'
+                    "
+                    size="icon"
+                    class="z-10 rounded-full shrink-0"
+                    :class="[
+                      state === 'active' &&
+                        'ring-2 ring-ring ring-offset-2 ring-offset-background',
+                    ]"
+                    :disabled="!meta.valid"
                   >
-                    {{ stepIndex === 2 ? "Registrieren" : "Weiter" }}
+                    <component :is="step.icon" class="w-4 h-4" />
                   </Button>
+                </StepperTrigger>
+
+                <div class="mt-5 flex flex-col items-center text-center">
+                  <StepperTitle
+                    :class="[state === 'active' && 'text-primary']"
+                    class="text-sm font-semibold transition lg:text-base"
+                  >
+                    {{ step.title }}
+                  </StepperTitle>
+                  <StepperDescription
+                    :class="[state === 'active' && 'text-primary']"
+                    class="sr-only text-xs text-muted-foreground transition md:not-sr-only lg:text-sm"
+                  >
+                    {{ step.description }}
+                  </StepperDescription>
                 </div>
+              </StepperItem>
+            </div>
+
+            <div class="flex flex-col gap-4 mt-4">
+              <template v-if="stepIndex <= 2">
+                <FormField v-slot="{ componentField }" name="firstName">
+                  <FormItem v-auto-animate>
+                    <FormLabel>Vorname</FormLabel>
+                    <FormControl>
+                      <Input
+                        type="text"
+                        :disabled="stepIndex === 2"
+                        v-bind="componentField"
+                      />
+                    </FormControl>
+                  </FormItem>
+                </FormField>
+
+                <FormField v-slot="{ componentField }" name="lastName">
+                  <FormItem v-auto-animate>
+                    <FormLabel>Nachname</FormLabel>
+                    <FormControl>
+                      <Input
+                        type="text"
+                        :disabled="stepIndex === 2"
+                        v-bind="componentField"
+                      />
+                    </FormControl>
+                  </FormItem>
+                </FormField>
+
+                <FormField v-slot="{ componentField }" name="slogan">
+                  <FormItem v-auto-animate>
+                    <FormLabel>Slogan</FormLabel>
+                    <FormControl>
+                      <Input
+                        type="text"
+                        placeholder="Dein Slogan / Mantra"
+                        :disabled="stepIndex === 2"
+                        v-bind="componentField"
+                      />
+                    </FormControl>
+                  </FormItem>
+                </FormField>
+              </template>
+
+              <template v-if="stepIndex === 3">
+                <PlayerCreatedCard
+                  v-if="createdPlayer"
+                  :player="createdPlayer"
+                />
+              </template>
+            </div>
+
+            <div class="flex items-center justify-between mt-4">
+              <Button
+                :disabled="isPrevDisabled"
+                variant="outline"
+                size="sm"
+                @click="prevStep()"
+              >
+                Zurück
+              </Button>
+              <div class="flex items-center gap-3">
+                <Button
+                  v-if="stepIndex < 2"
+                  :disabled="isNextDisabled || !meta.valid"
+                  :type="'button'"
+                  size="sm"
+                  @click="nextStep()"
+                >
+                  Weiter
+                </Button>
+                <Button
+                  v-else-if="stepIndex === 2"
+                  :disabled="isNextDisabled || !meta.valid"
+                  :type="'submit'"
+                  size="sm"
+                >
+                  Registrieren
+                </Button>
               </div>
-            </form>
-          </Stepper>
-        </Form>
+            </div>
+          </form>
+        </Stepper>
       </CardContent>
       <CardFooter class="flex justify-center">
         <Beer class="text-primary mr-2" />
-        <span class="text-gray-600 dark:text-gray-100">Join the Flunkyball community!</span>
+        <span class="text-gray-600 dark:text-gray-100">
+          Join the Flunkyball community!
+        </span>
       </CardFooter>
     </Card>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ArrowLeft, Beer, User, Mail, MailCheck } from "lucide-vue-next";
+import { UserCheck, Beer, User, UserSearch, Loader2 } from "lucide-vue-next";
 import { vAutoAnimate } from "@formkit/auto-animate/vue";
 import { toast } from "vue-sonner";
 import * as z from "zod";
 import { toTypedSchema } from "@vee-validate/zod";
 import { useForm } from "vee-validate";
 
+definePageMeta({
+  title: "Registrieren",
+  description: "Registriere dich für unsere Flunkyball Turniere.",
+});
+
 const supabase = useSupabaseClient();
 
-const registerUser = async (email: string, password: string) => {
+const createAccount = ref(false);
+
+const loading = ref(false);
+const stepIndex = ref(1);
+
+const createSuccessfull = ref(false);
+const createdPlayer = ref<{
+  firstName: string;
+  lastName: string | null;
+  slogan: string | null;
+  publicID: string | null;
+  phone: string | null;
+}>();
+
+const registerUser = async (player: {
+  firstName: string;
+  lastName: string | null;
+  slogan?: string;
+}) => {
+  loading.value = true;
   try {
-    const result = await supabase.auth.signUp({
-      email,
-      password,
+    const res = await $fetch("/api/players/new-player", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(player),
     });
-    if (result.error) {
-      throw new Error(result.error.message);
-    } else if (result.data.user) {
-      return true;
+
+    if (res.publicID) {
+      createSuccessfull.value = true;
+      createdPlayer.value = res;
+      stepIndex.value = 3;
     }
   } catch (error) {
     console.error(error);
-    return false;
+  } finally {
+    loading.value = false;
   }
 };
 
-const onSubmit = (values: any) => {
-  toast({
-    title: "You submitted the following values:",
-    description: h(
-      "pre",
-      { class: "mt-2 w-[340px] rounded-md bg-slate-950 p-4" },
-      h("code", { class: "text-white" }, JSON.stringify(values, null, 2))
-    ),
-  });
-};
+const registerSchema = z.object({
+  firstName: z.string().min(2),
+  lastName: z.string().min(2),
+  slogan: z.string().optional(),
+});
 
-const registerSchema = [
-  z.object({
-    firstName: z.string(),
-    lastName: z.string(),
-    slogan: z.string(),
-  }),
-  z
-    .object({
-      email: z.string().email(),
-      password: z.string().min(2).max(50),
-      confirmPassword: z.string(),
-    })
-    .refine(
-      (values) => {
-        return values.password === values.confirmPassword;
-      },
-      {
-        message: "Passwörter müssen übereinstimmen!",
-        path: ["confirmPassword"],
-      }
-    ),
-  z.object({
-    otp: z.array(z.coerce.string()).length(6),
-  }),
-];
-
-const { handleSubmit, setFieldValue } = useForm({
-  validationSchema: registerSchema,
+const { handleSubmit, meta } = useForm({
+  validationSchema: toTypedSchema(registerSchema),
   initialValues: {
     firstName: "",
     lastName: "",
     slogan: "Flunkyball is love Flunkyball is life",
-    password: "",
-    confirmPassword: "",
-    otp: [],
   },
 });
 
-const handleComplete = (e: string[]) => console.log(e.join(""));
+const onSubmit = handleSubmit(async (values) => {
+  await registerUser(values);
+});
 
 const steps = [
   {
@@ -304,16 +248,14 @@ const steps = [
   {
     step: 2,
     title: "Deine Daten",
-    description: "Erstelle ein Konto.",
-    icon: Mail,
+    description: "Daten Prüfen.",
+    icon: UserSearch,
   },
   {
     step: 3,
-    title: "Account bestätigen",
-    description: "Bestätige dein Konto.",
-    icon: MailCheck,
+    title: "Fertig",
+    description: "Dein Player Account.",
+    icon: UserCheck,
   },
 ];
-
-const stepIndex = ref(1);
 </script>

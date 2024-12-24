@@ -1,5 +1,8 @@
 <template>
-  <div class="transition-colors duration-300 bg-background" :class="colorMode.preference">
+  <div
+    class="transition-colors duration-300 bg-background"
+    :class="colorMode.preference"
+  >
     <NuxtLayout>
       <Toaster />
       <NuxtPage />
