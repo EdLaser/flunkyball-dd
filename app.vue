@@ -2,7 +2,7 @@
   <div
     class="transition-colors duration-300 bg-background"
     :class="colorMode.preference"
-    :style="{ fontFamily: 'Inter' }"
+    style="font-family: 'Inter', sans-serif"
   >
     <NuxtLayout>
       <Toaster />
