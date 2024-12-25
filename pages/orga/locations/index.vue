@@ -286,7 +286,7 @@ const initialLocations: Array<LocationType> = [
   },
 ];
 
-const locations = ref<LocationType[]>(initialLocations);
+const { data: locations } = await useFetch("/api/orga/locations");
 
 const form = useForm({
   validationSchema: toTypedSchema(locationSchema),
@@ -297,7 +297,6 @@ const onSubmit = form.handleSubmit((values) => {
 });
 
 function deleteLocation(index: number) {
-  locations.value.splice(index, 1);
   toast("Location Deleted", {
     description: "The location has been successfully deleted.",
   });

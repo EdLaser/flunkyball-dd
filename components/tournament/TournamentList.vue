@@ -22,9 +22,17 @@
         </TableCell>
         <TableCell>
           <Badge
-            :variant="tournament.status === 'open' ? 'default' : 'secondary'"
+            :class="determineBadgeClass(tournament.status as 'finished' | 'open' | 'in_progress')"
           >
-            {{ tournament.status }}
+            {{
+              tournament.status === "finished"
+                ? "Vorbei"
+                : tournament.status === "open"
+                ? "Offen"
+                : tournament.status === "in_progress"
+                ? "In Progress"
+                : ""
+            }}
           </Badge>
         </TableCell>
       </TableRow>
@@ -42,6 +50,19 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
+
+const determineBadgeClass = (status: "finished" | "open" | "in_progress") => {
+  switch (status) {
+    case "finished":
+      return "bg-red-500";
+    case "open":
+      return "bg-green-500";
+    case "in_progress":
+      return "bg-yellow-500";
+    default:
+      return "";
+  }
+};
 
 const props = defineProps<{
   tournaments: {

@@ -49,7 +49,12 @@
               <CardTitle>Spiele</CardTitle>
             </CardHeader>
             <CardContent>
-              <div class="space-y-4">
+              <div
+                class="space-y-4"
+                v-if="
+                  tournament?.stages?.length && tournament?.stages?.length > 0
+                "
+              >
                 <div
                   v-for="(stage, index) in tournament?.stages"
                   v-if="tournament?.stages"
@@ -67,6 +72,7 @@
                   />
                 </div>
               </div>
+              <p v-else>Keine Spiele vorhanden.</p>
             </CardContent>
           </Card>
         </div>
@@ -79,7 +85,13 @@
               <CardTitle>Teilnehmende Teams</CardTitle>
             </CardHeader>
             <CardContent>
-              <ul class="space-y-4">
+              <ul
+                class="space-y-4"
+                v-if="
+                  tournament?.tournamentRegistrations &&
+                  tournament?.tournamentRegistrations.length > 0
+                "
+              >
                 <li
                   v-for="team in tournament?.tournamentRegistrations"
                   :key="team.name ?? team.slogan + team.players"
@@ -105,6 +117,7 @@
                   </div>
                 </li>
               </ul>
+              <p v-else>Keine Teams angemeldet.</p>
             </CardContent>
           </Card>
 

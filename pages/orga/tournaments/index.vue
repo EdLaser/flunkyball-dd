@@ -106,7 +106,7 @@ const {
   data: tournaments,
   status,
   refresh,
-} = await useFetch("/api/orga/tournaments/all-tournaments", {
+} = await useFetch("/api/tournaments/all-tournaments", {
   transform: (data) =>
     data.map((tournament) => ({
       ...tournament,
