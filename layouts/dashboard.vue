@@ -1,12 +1,15 @@
 <template>
   <div class="flex h-screen bg-background">
-    <button
+    <Button
       @click="toggleSidebar"
-      class="absolute bottom-6 right-6 z-20 md:p-2 p-1 text-primary rounded-full supports-backdrop-blur:bg-white/30 backdrop-blur-lg"
+      v-if="!isSidebarOpen"
+      variant="ghost"
+      v-auto-animate
+      size="icon"
+      class="absolute bottom-4 md:bottom-6 left-5 md:left-6 z-20 text-primary rounded-full border-primary/50 border-2 supports-backdrop-blur:bg-white/40 backdrop-blur-lg"
     >
-      <Menu class="h-6 w-6" />
-    </button>
-
+      <PanelLeftOpen class="h-4 w-4 md:h-5 md:w-5" />
+    </Button>
     <aside
       class="fixed inset-y-0 left-0 z-10 bg-muted p-4 transition-transform duration-200"
       :class="isSidebarOpen ? 'translate-x-0 w-64' : '-translate-x-full w-64'"
@@ -71,17 +74,28 @@
         </div>
       </nav>
 
-      <!-- Logout Button -->
-      <div class="absolute bottom-4 left-4 right-4 flex justify-between">
-        <Button
-          variant="ghost"
-          class="w-full justify-start"
-          @click="handleLogout()"
-        >
-          <LogOut class="mr-2 h-4 w-4" />
-          Logout
-        </Button>
-        <ColorModeSwitch />
+      <div class="absolute bottom-4 left-4 right-4 flex flex-col gap-2">
+        <div class="div flex justify-end w-full">
+          <Button
+            @click="toggleSidebar"
+            size="icon"
+            variant="outline"
+            class="p-2 text-primary bg-background"
+          >
+            <PanelLeftClose class="h-4 w-4" />
+          </Button>
+        </div>
+        <div class="flex justify-between">
+          <Button
+            variant="ghost"
+            class="w-full justify-start"
+            @click="handleLogout()"
+          >
+            <LogOut class="mr-2 h-4 w-4" />
+            Logout
+          </Button>
+          <ColorModeSwitch />
+        </div>
       </div>
     </aside>
 
@@ -107,8 +121,10 @@ import {
   MapPin,
   Settings,
   LogOut,
-  Menu,
+  PanelLeftOpen,
+  PanelLeftClose,
 } from "lucide-vue-next";
+import { vAutoAnimate } from "@formkit/auto-animate";
 
 const supabase = useSupabaseClient();
 
