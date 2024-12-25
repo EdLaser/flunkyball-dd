@@ -18,7 +18,8 @@ import TeamsTable from "~/components/team/TeamsTable.vue";
 
 definePageMeta({
   middleware: "auth",
-  title: "Teams",
+  title: "Teams (Orga)",
+  name: "Teams (Orga)",
   breadcrumb: [
     {
       text: "Teams",

@@ -14,6 +14,11 @@
 </template>
 
 <script lang="ts" setup>
+definePageMeta({
+  title: "Turniere",
+  name: "Turniere (Orga)",
+});
+
 const { data: tournaments } = await useFetch(
   "/api/tournaments/all-tournaments",
   {

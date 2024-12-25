@@ -202,7 +202,8 @@ import { toTypedSchema } from "@vee-validate/zod";
 
 definePageMeta({
   middleware: "auth",
-  title: "Locations",
+  title: "Orte (Orga)",
+  name: "Orte (Orga)",
   breadcrumb: [
     {
       text: "Lcoations",

@@ -3,7 +3,7 @@
     <CardHeader
       class="flex flex-row items-center justify-between space-y-0 pb-2"
     >
-      <CardTitle class="text-sm font-medium">
+      <CardTitle class="text-base font-medium">
         {{ title }}
       </CardTitle>
       <!-- Dynamically render the icon component -->
@@ -11,7 +11,7 @@
     </CardHeader>
     <CardContent>
       <div class="text-2xl font-bold">
-        <InspiraNumberTicker v-if="isNumber(value)" :value="value" />
+        <InspiraNumberTicker v-if="isNumber(value)" :value="value as number" />
         <span v-else>{{ value }}</span>
       </div>
     </CardContent>

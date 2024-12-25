@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import { useMouse } from "@vueuse/core";
+import { useMouse, useStorage } from "@vueuse/core";
 
 export const useSideBarStore = defineStore("SideBarStore", () => {
   const { x } = useMouse();
@@ -15,7 +15,7 @@ export const useSideBarStore = defineStore("SideBarStore", () => {
     }
   });
 
-  const isSidebarOpen = ref(false);
+  const isSidebarOpen = useStorage("isSidebarOpen", false);
 
   const toggleSidebar = () => {
     isSidebarOpen.value = !isSidebarOpen.value;

@@ -5,7 +5,8 @@
 <script lang="ts" setup>
 definePageMeta({
   middleware: "auth",
-  title: "Settings",
+  title: "Einstellungen",
+  name: "Einstellungen",
   breadcrumb: [
     {
       text: "Settings",

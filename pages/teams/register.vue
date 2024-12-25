@@ -192,6 +192,11 @@
 import { Beer, Trophy, Users } from "lucide-vue-next";
 import { toast } from "vue-sonner";
 
+definePageMeta({
+  title: "Team regsitrieren",
+  name: "Team registrieren",
+});
+
 // Zod for validation
 import * as z from "zod";
 import { useForm } from "vee-validate";

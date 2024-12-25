@@ -1,10 +1,10 @@
 <template>
-  <div
-    class="min-h-screen flex flex-col items-center justify-center p-4"
-  >
+  <div class="min-h-screen flex flex-col items-center justify-center p-4">
     <Card class="w-full max-w-md">
       <CardHeader>
-        <CardTitle class="text-2xl font-bold text-center text-gray-800 dark:text-gray-50">
+        <CardTitle
+          class="text-2xl font-bold text-center text-gray-800 dark:text-gray-50"
+        >
           Willkommen bei unseren Flunkyball Turnieren!
         </CardTitle>
         <CardDescription class="text-center text-gray-600 dark:text-gray-100">
@@ -13,7 +13,6 @@
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <!-- Note @submit.prevent instead of onSubmit -->
         <form
           @submit.prevent="handleLogin"
           class="space-y-4 h-full flex flex-col"
@@ -60,12 +59,22 @@
 </template>
 
 <script setup lang="ts">
-import { ArrowLeft, Beer } from "lucide-vue-next";
+import { Beer } from "lucide-vue-next";
 import { toast } from "vue-sonner";
 
 // Local state using refs
 const loginEmail = ref("");
 const loginPassword = ref("");
+const user = useSupabaseUser();
+
+definePageMeta({
+  title: "Login",
+  name: "Einloggen",
+});
+
+if (user.value) {
+  navigateTo("/orga");
+}
 
 const supabase = useSupabaseClient();
 

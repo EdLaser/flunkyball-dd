@@ -164,7 +164,7 @@
 </template>
 
 <script setup lang="ts">
-import { UserCheck, Beer, User, UserSearch, Loader2 } from "lucide-vue-next";
+import { UserCheck, Beer, User, UserSearch } from "lucide-vue-next";
 import { vAutoAnimate } from "@formkit/auto-animate/vue";
 import { toast } from "vue-sonner";
 import * as z from "zod";
@@ -174,6 +174,7 @@ import { useForm } from "vee-validate";
 definePageMeta({
   title: "Registrieren",
   description: "Registriere dich für unsere Flunkyball Turniere.",
+  name: "Registieren"
 });
 
 const supabase = useSupabaseClient();

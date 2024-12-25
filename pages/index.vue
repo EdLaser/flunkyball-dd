@@ -1,6 +1,6 @@
 <template>
   <div class="min-h-screen bg-background">
-    <header class="bg-background shadow-sm">
+    <header>
       <div class="container mx-auto py-6">
         <h1 class="text-4xl font-bold text-center text-primary">
           Flunkyball-Turniere Dresden
@@ -113,7 +113,6 @@
         <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           <Card
             :key="`${index}-${team.name}`"
-            class="bg-white"
             v-for="(team, index) in teams"
           >
             <CardHeader>
@@ -123,7 +122,7 @@
               </CardTitle>
             </CardHeader>
             <CardContent>
-              <p class="text-gray-600">
+              <p class="">
                 <strong>Mitglieder:</strong> {{ team.members.join(", ") }}
               </p>
             </CardContent>
@@ -144,14 +143,15 @@
           Melde dich jetzt für unser bevorstehendes Flunkyball-Turnier an und
           zeig deine Wurfkünste!
         </p>
-        <Button class="p-6 flex items-center justify-center mx-auto text-2xl">
-          <BeerIcon class="mr-2" />
+        <Button
+          class="p-6 md:p-8 rounded-lg flex items-center justify-center mx-auto text-2xl"
+        >
           Melde dein Team an
         </Button>
       </section>
     </main>
 
-    <footer class="bg-primary text-white dark:text-gray-700 py-8">
+    <footer class="bg-primary text-white py-8">
       <div class="container mx-auto text-center">
         <p>&copy; Edi Z, Ruben K. All Beers reserved.</p>
       </div>

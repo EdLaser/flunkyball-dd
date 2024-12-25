@@ -2,7 +2,7 @@
   <div class="min-h-screen bg-background">
     <header class="bg-primary text-primary-foreground shadow-md">
       <div class="container mx-auto py-6 px-4">
-        <h1 class="text-3xl font-bold">Flunkyball Organization Dashboard</h1>
+        <h1 class="text-3xl font-bold text-foreground">Flunkyball Organization Dashboard</h1>
       </div>
     </header>
     <ActionGridButton
@@ -80,6 +80,8 @@
               >Die letzten 5 Turniere
               <RefreshButton
                 @click="refreshRecentTournaments"
+                size="icon"
+                variant="outline"
                 :loading="statusRecentTournaments === 'pending'"
               />
             </CardDescription>

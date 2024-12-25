@@ -65,10 +65,10 @@ const childRoutes = computed(() =>
               as-child
               v-for="childRoute in childRoutes"
               :key="childRoute.path"
-              class="cursor-pointer hover:bg-primary/50 hover:text-white"
+              class="cursor-pointer hover:bg-primary/50 hover:text-white hover:translate-x-1 duration-150"
             >
               <NuxtLink :to="childRoute.path" class="capitalize">
-                <ChevronRight /> {{ childRoute.path }}
+                <ChevronRight /> {{ childRoute.name }}
               </NuxtLink>
             </DropdownMenuItem>
           </DropdownMenuContent>
@@ -109,10 +109,10 @@ const childRoutes = computed(() =>
                 as-child
                 v-for="childRoute in childRoutes"
                 :key="childRoute.path"
-                class="cursor-pointer hover:bg-primary/50 hover:text-white"
+                class="cursor-pointer hover:bg-primary/50 hover:text-white hover:translate-x-1 duration-150"
               >
                 <NuxtLink :to="childRoute.path" class="capitalize">
-                  <ChevronRight /> {{ childRoute.path }}
+                  <ChevronRight /> {{ childRoute.name }}
                 </NuxtLink>
               </DropdownMenuItem>
             </DropdownMenuContent>

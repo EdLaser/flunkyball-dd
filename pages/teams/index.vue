@@ -16,6 +16,7 @@
 <script lang="ts" setup>
 definePageMeta({
   title: "Teams",
+  name: "Teams",
   breadcrumb: [
     {
       text: "Teams",

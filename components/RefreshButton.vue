@@ -4,8 +4,7 @@
     :class="cn(props.class)"
     @click="props.onClick"
   >
-    <RefreshCcw class="h-4 w-4" :class="{ 'animate-spin': props.loading }" />
-    <span v-if="!noText"> Refresh </span>
+    <RefreshCcw class="h-4 w-4" :class="{ 'animate-spin': props.loading, 'text-white': !props.variant }" />
   </Button>
 </template>
 
