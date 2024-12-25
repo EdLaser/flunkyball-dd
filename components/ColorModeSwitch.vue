@@ -1,12 +1,17 @@
 <script setup lang="ts">
 import { SunMedium, Moon } from "lucide-vue-next";
 import { vAutoAnimate } from "@formkit/auto-animate";
+import { cn } from "~/lib/utils";
 
 const colorMode = useColorMode();
 
 const toggleColorMode = () => {
   colorMode.preference = colorMode.preference === "dark" ? "light" : "dark";
 };
+
+const props = defineProps<{
+  class?: string;
+}>();
 </script>
 
 <template>
@@ -14,7 +19,7 @@ const toggleColorMode = () => {
     <Button
       @click="toggleColorMode()"
       size="icon"
-      class="p-2"
+      :class="cn(props.class)"
       variant="outline"
       v-auto-animate
     >

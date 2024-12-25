@@ -5,11 +5,9 @@
         <h1 class="text-3xl font-bold">Flunkyball Organization Dashboard</h1>
       </div>
     </header>
-    <Button
+    <ActionGridButton
       v-if="!isSidebarOpen"
-      class="absolute bottom-4 md:bottom-6 left-8 md:left-10 z-20 ml-7 rounded-full border-primary/50 border-2 supports-backdrop-blur:bg-white/40 backdrop-blur-lg"
-      variant="ghost"
-      v-auto-animate
+      class="absolute bottom-4 md:bottom-6 left-8 md:left-10 z-20 ml-7 rounded-full"
       size="icon"
       @click="refreshAll()"
     >
@@ -17,7 +15,7 @@
         class="h-4 w-4"
         :class="{ 'animate-spin': refreshAllPending }"
       />
-    </Button>
+    </ActionGridButton>
     <main class="container mx-auto px-4 py-8">
       <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
         <div class="flex flex-col">
