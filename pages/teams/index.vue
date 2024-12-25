@@ -1,6 +1,6 @@
 <template>
-  <div class="p-6">
-    <h1 class="text-3xl font-bold mb-6">Teams</h1>
+  <div class="bg-background container mx-auto px-4 py-8 min-h-screen">
+    <h1 class="text-3xl font-bold text-primary mb-6">Teams</h1>
     <Card>
       <CardHeader>
         <CardTitle>Alle Teams</CardTitle>

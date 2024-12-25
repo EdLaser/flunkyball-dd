@@ -8,6 +8,7 @@ import {
   BreadcrumbSeparator,
 } from "@/components/ui/breadcrumb";
 import type { RouteRecordNormalized } from "vue-router";
+import { ChevronRight } from "lucide-vue-next";
 
 const route = useRoute();
 const router = useRouter();
@@ -59,15 +60,15 @@ const childRoutes = computed(() =>
             <BreadcrumbEllipsis class="h-4 w-4" />
             <span class="sr-only">Toggle menu</span>
           </DropdownMenuTrigger>
-          <DropdownMenuContent align="start">
+          <DropdownMenuContent align="start" class="divide-y-3">
             <DropdownMenuItem
               as-child
               v-for="childRoute in childRoutes"
               :key="childRoute.path"
-              class="cursor-pointer"
+              class="cursor-pointer hover:bg-primary/50 hover:text-white"
             >
               <NuxtLink :to="childRoute.path" class="capitalize">
-                {{ childRoute.path }}
+                <ChevronRight /> {{ childRoute.path }}
               </NuxtLink>
             </DropdownMenuItem>
           </DropdownMenuContent>
@@ -108,10 +109,10 @@ const childRoutes = computed(() =>
                 as-child
                 v-for="childRoute in childRoutes"
                 :key="childRoute.path"
-                class="cursor-pointer"
+                class="cursor-pointer hover:bg-primary/50 hover:text-white"
               >
                 <NuxtLink :to="childRoute.path" class="capitalize">
-                  {{ childRoute.path }}
+                  <ChevronRight /> {{ childRoute.path }}
                 </NuxtLink>
               </DropdownMenuItem>
             </DropdownMenuContent>

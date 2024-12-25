@@ -10,7 +10,7 @@
         </p>
       </div>
       <!-- Card -->
-      <Card class="backdrop-blur-sm bg-white/80 shadow-xl border-primary/20">
+      <Card class="backdrop-blur-sm shadow-xl border-primary/20">
         <CardHeader class="space-y-1">
           <CardTitle class="text-2xl font-bold text-center"
             >Team anmelden</CardTitle
@@ -58,11 +58,11 @@
                       @click="form.setFieldValue('name', getRandomTeamName())"
                       class="col-span-1 text-xs h-full w-full"
                     >
-                      Zufälliger Name
+                      Zufällig
                     </Button>
                   </div>
                 </FormControl>
-                <FormDescription class="text-gray-700">
+                <FormDescription class="text-secondary-foreground">
                   Wähle einen tollen Team Namen.
                 </FormDescription>
               </FormItem>
@@ -79,7 +79,7 @@
                     required
                   />
                 </FormControl>
-                <FormDescription class="text-gray-700">
+                <FormDescription class="text-secondary-foreground">
                   Ein toller und motivierender Slogan.
                 </FormDescription>
               </FormItem>
@@ -157,8 +157,8 @@
                     required
                   />
                 </FormControl>
-                <FormDescription class="text-gray-700">
-                  Wir nutze deine EMail für die Kommunikation.
+                <FormDescription class="text-secondary-foreground">
+                  Wir nutze deine E-Mail für die Kommunikation.
                 </FormDescription>
               </FormItem>
             </FormField>
@@ -177,9 +177,9 @@
 
       <!-- Link to View Teams -->
       <div class="mt-8 text-center">
-        <p class="text-gray-700">
+        <p class="text-secondary-foreground">
           Already registered?
-          <NuxtLink to="/" class="text-gray-500 hover:underline">
+          <NuxtLink to="/teams" class="text-gray-500 hover:underline">
             View all teams
           </NuxtLink>
         </p>

@@ -9,6 +9,7 @@ export default defineNuxtConfig({
     "@nuxt/image",
     "@nuxtjs/supabase",
     "@pinia/nuxt",
+    "@nuxt/fonts",
   ],
   colorMode: {
     preference: "system", // default value of $colorMode.preference

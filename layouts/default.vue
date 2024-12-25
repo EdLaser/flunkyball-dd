@@ -1,6 +1,6 @@
 <template>
   <nav
-    class="flex items-center bg-background-secondary md:items-end justify-between space-y-2 h-14 md:h-16 px-3 md:px-8 pt-3 pb-3"
+    class="flex items-center bg-background-secondary md:items-end justify-between space-y-2 h-fit md:h-16 px-3 md:px-8 pt-3 pb-3"
     v-auto-animate
   >
     <RouteBreadCrumb />

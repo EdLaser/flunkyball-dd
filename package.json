@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "@formkit/auto-animate": "^0.8.2",
+    "@nuxt/fonts": "0.10.3",
     "@nuxt/image": "1.8.1",
     "@nuxtjs/color-mode": "3.5.2",
     "@nuxtjs/supabase": "1.4.5",
