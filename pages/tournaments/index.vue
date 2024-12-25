@@ -16,7 +16,7 @@
 <script lang="ts" setup>
 definePageMeta({
   title: "Turniere",
-  name: "Turniere (Orga)",
+  name: "Turniere",
 });
 
 const { data: tournaments } = await useFetch(

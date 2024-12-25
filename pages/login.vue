@@ -73,7 +73,7 @@ definePageMeta({
 });
 
 if (user.value) {
-  navigateTo("/orga");
+  await navigateTo("/orga");
 }
 
 const supabase = useSupabaseClient();
