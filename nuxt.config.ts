@@ -8,6 +8,7 @@ export default defineNuxtConfig({
     "@nuxtjs/color-mode",
     "@nuxt/image",
     "@nuxtjs/supabase",
+    "@pinia/nuxt",
   ],
   colorMode: {
     preference: "system", // default value of $colorMode.preference

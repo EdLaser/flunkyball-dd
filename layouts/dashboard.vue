@@ -1,7 +1,7 @@
 <template>
   <div class="flex h-screen bg-background">
     <Button
-      @click="toggleSidebar"
+      @click="sideBarStore.toggleSidebar"
       v-if="!isSidebarOpen"
       variant="ghost"
       v-auto-animate
@@ -20,7 +20,7 @@
           <Button
             variant="ghost"
             class="w-full justify-start"
-            @click="isMobile && toggleSidebar()"
+            @click="isMobile && sideBarStore.toggleSidebar()"
           >
             <NuxtLink to="/orga" class="flex items-center">
               <LayoutDashboard class="mr-2 h-4 w-4" />
@@ -31,7 +31,7 @@
           <Button
             variant="ghost"
             class="w-full justify-start"
-            @click="isMobile && toggleSidebar()"
+            @click="isMobile && sideBarStore.toggleSidebar()"
           >
             <NuxtLink to="/orga/tournaments" class="flex items-center">
               <Trophy class="mr-2 h-4 w-4" />
@@ -42,7 +42,7 @@
           <Button
             variant="ghost"
             class="w-full justify-start"
-            @click="isMobile && toggleSidebar()"
+            @click="isMobile && sideBarStore.toggleSidebar()"
           >
             <NuxtLink to="/orga/teams" class="flex items-center">
               <Users class="mr-2 h-4 w-4" />
@@ -53,7 +53,7 @@
           <Button
             variant="ghost"
             class="w-full justify-start"
-            @click="isMobile && toggleSidebar()"
+            @click="isMobile && sideBarStore.toggleSidebar()"
           >
             <NuxtLink to="/orga/locations" class="flex items-center">
               <MapPin class="mr-2 h-4 w-4" />
@@ -64,7 +64,7 @@
           <Button
             variant="ghost"
             class="w-full justify-start"
-            @click="isMobile && toggleSidebar()"
+            @click="isMobile && sideBarStore.toggleSidebar()"
           >
             <NuxtLink to="/orga/settings" class="flex items-center">
               <Settings class="mr-2 h-4 w-4" />
@@ -74,18 +74,18 @@
         </div>
       </nav>
 
-      <div class="absolute bottom-4 left-4 right-4 flex flex-col gap-2">
-        <div class="div flex justify-end w-full">
+      <div class="absolute bottom-4 left-4 right-4 grid grid-cols-2 gap-2">
+        <div class="div flex justify-end w-full col-span-2">
           <Button
-            @click="toggleSidebar"
+            @click="sideBarStore.toggleSidebar"
             size="icon"
             variant="outline"
-            class="p-2 text-primary bg-background"
+            class="p-2"
           >
             <PanelLeftClose class="h-4 w-4" />
           </Button>
         </div>
-        <div class="flex justify-between">
+        <div class="flex justify-between col-span-2">
           <Button
             variant="ghost"
             class="w-full justify-start"
@@ -112,7 +112,6 @@
 
 <script setup lang="ts">
 import { Button } from "@/components/ui/button";
-import { useMouse } from "@vueuse/core";
 
 import {
   LayoutDashboard,
@@ -125,26 +124,13 @@ import {
   PanelLeftClose,
 } from "lucide-vue-next";
 import { vAutoAnimate } from "@formkit/auto-animate";
+import { useSideBarStore } from "~/stores/SideBar";
+
+const sideBarStore = useSideBarStore();
+
+const { isSidebarOpen, isMobile } = storeToRefs(sideBarStore);
 
 const supabase = useSupabaseClient();
-
-const { x } = useMouse();
-
-const isMobile = computed(() => window.innerWidth < 768);
-
-watch(x, (value) => {
-  if (value < 17) {
-    isSidebarOpen.value = true;
-  } else {
-    isMobile.value && (isSidebarOpen.value = false);
-  }
-});
-
-const isSidebarOpen = ref(false);
-
-function toggleSidebar() {
-  isSidebarOpen.value = !isSidebarOpen.value;
-}
 
 const logoutUser = async () => {
   try {

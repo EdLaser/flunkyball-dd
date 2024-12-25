@@ -2,13 +2,22 @@
   <div class="min-h-screen bg-background">
     <header class="bg-primary text-primary-foreground shadow-md">
       <div class="container mx-auto py-6 px-4">
-        <h1 class="text-3xl font-bold flex justify-between">
-          Flunkyball Organization Dashboard
-          <RefreshButton @click="refreshAll()" :loading="refreshAllPending" />
-        </h1>
+        <h1 class="text-3xl font-bold">Flunkyball Organization Dashboard</h1>
       </div>
     </header>
-
+    <Button
+      v-if="!isSidebarOpen"
+      class="absolute bottom-4 md:bottom-6 left-8 md:left-10 z-20 ml-7 rounded-full border-primary/50 border-2 supports-backdrop-blur:bg-white/40 backdrop-blur-lg"
+      variant="ghost"
+      v-auto-animate
+      size="icon"
+      @click="refreshAll()"
+    >
+      <RefreshCcw
+        class="h-4 w-4"
+        :class="{ 'animate-spin': refreshAllPending }"
+      />
+    </Button>
     <main class="container mx-auto px-4 py-8">
       <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
         <div class="flex flex-col">
@@ -138,7 +147,14 @@ definePageMeta({
   },
 });
 
-import { Trophy, Users, Calendar, MapPin, BarChart } from "lucide-vue-next";
+import {
+  Trophy,
+  Users,
+  Calendar,
+  MapPin,
+  BarChart,
+  RefreshCcw,
+} from "lucide-vue-next";
 import NewTournamentDialog from "~/components/tournament/NewTournamentDialog.vue";
 
 import {
@@ -151,6 +167,11 @@ import {
 import TournamentList from "~/components/tournament/TournamentList.vue";
 import TeamList from "~/components/team/TeamList.vue";
 import StatCard from "@/components/StatCard.vue";
+import { vAutoAnimate } from "@formkit/auto-animate";
+
+const sideBarStore = useSideBarStore();
+
+const { isSidebarOpen } = storeToRefs(sideBarStore);
 
 const {
   data: pastAndUpcomingTournaments,

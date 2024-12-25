@@ -5,7 +5,7 @@
     @click="props.onClick"
   >
     <RefreshCcw class="h-4 w-4" :class="{ 'animate-spin': props.loading }" />
-    Refresh
+    <span v-if="!noText"> Refresh </span>
   </Button>
 </template>
 
@@ -17,6 +17,8 @@ const props = defineProps<{
   onClick: () => void;
   loading: boolean;
   class?: string;
+  size?: "icon" | "sm" | "md" | "lg";
   variant?: "secondary" | "outline" | "ghost";
+  noText?: boolean;
 }>();
 </script>
