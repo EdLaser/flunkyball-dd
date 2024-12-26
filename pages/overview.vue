@@ -115,12 +115,11 @@
             <CardHeader>
               <CardTitle class="flex items-center">
                 <Beer class="mr-2 h-6 w-6 text-primary" />
-                Flunkyball Fun Facts
+                Fun Facts
               </CardTitle>
             </CardHeader>
             <CardContent>
               <ul class="space-y-2">
-                <li>Average game duration: 15 minutes</li>
                 <li>Most bottles flipped in one game: 42</li>
                 <li>Longest winning streak: 8 games</li>
                 <li>Most popular team size: 3 players</li>
@@ -131,7 +130,7 @@
       </main>
 
       <aside class="lg:w-64 flex-shrink-0">
-        <OverviewSidebar topTeams="{topTeams}" topPlayers="{topPlayers}" />
+        <OverviewSidebar />
       </aside>
     </div>
   </div>

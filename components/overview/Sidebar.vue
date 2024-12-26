@@ -33,9 +33,7 @@
           {topPlayers.map((player, index) => (
           <li key="{index}" class="flex justify-between items-center">
             <span class="font-medium">{player.name}</span>
-            <span class="text-sm text-muted-foreground"
-              >{player.score}</span
-            >
+            <span class="text-sm text-muted-foreground">{player.score}</span>
           </li>
           ))}
         </ul>
@@ -63,4 +61,9 @@
 
 <script lang="ts" setup>
 import { Trophy, Star, User } from "lucide-vue-next";
+
+const props = defineProps<{
+  topTeams: { name: string; wins: number; losses: number }[];
+  topPlayers: { name: string; score: number }[];
+}>();
 </script>

@@ -23,9 +23,10 @@ model players {
 /// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
 model teams {
   id                                  String                     @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  name                                String?                    @default("Anonymus")
+  name                                String                     @default("Anonymus")
   slogan                              String
   created_at                          DateTime                   @default(now()) @db.Timestamptz(6)
+  public_id                           String?
   matches_matches_away_team_idToteams matches[]                  @relation("matches_away_team_idToteams")
   matches_matches_home_team_idToteams matches[]                  @relation("matches_home_team_idToteams")
   matches_matches_match_winnerToteams matches[]                  @relation("matches_match_winnerToteams")

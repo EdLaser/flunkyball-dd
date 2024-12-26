@@ -148,8 +148,9 @@
                   </FormDescription>
                 </FormItem>
               </FormField>
-
-              <Button type="submit"> <Plus />Hinzufügen </Button>
+              <div class="flex justify-end w-full">
+                <Button type="submit"> <Plus />Hinzufügen </Button>
+              </div>
             </form>
           </Form>
         </DialogContent>

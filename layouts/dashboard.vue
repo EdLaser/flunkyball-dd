@@ -13,6 +13,9 @@
       :class="isSidebarOpen ? 'translate-x-0 w-64' : '-translate-x-full w-64'"
       ref="sidebarRef"
     >
+    <span>
+      Hallo, {{ user?.email }}
+    </span>
       <nav>
         <RouteBreadCrumb class="mt-2 mb-4 md:mb-6 md:mt-4" />
         <div class="space-y-2">
@@ -115,7 +118,6 @@ import {
   PanelLeftOpen,
   PanelLeftClose,
 } from "lucide-vue-next";
-import { vAutoAnimate } from "@formkit/auto-animate";
 import { useSideBarStore } from "~/stores/SideBar";
 
 const sideBarStore = useSideBarStore();
@@ -123,6 +125,7 @@ const sideBarStore = useSideBarStore();
 const { isSidebarOpen, isMobile, sidebarRef } = storeToRefs(sideBarStore);
 
 const supabase = useSupabaseClient();
+const user = useSupabaseUser();
 
 const logoutUser = async () => {
   try {

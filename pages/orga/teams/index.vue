@@ -10,11 +10,15 @@
         <TeamsTable v-if="teams" :data="teams" />
       </CardContent>
     </Card>
+    <div class="flex justify-end w-full mt-6">
+      <AddTeamDialog />
+    </div>
   </div>
 </template>
 
 <script lang="ts" setup>
 import TeamsTable from "~/components/team/TeamsTable.vue";
+import AddTeamDialog from "~/components/team/AddTeamDialog.vue";
 
 definePageMeta({
   middleware: "auth",
