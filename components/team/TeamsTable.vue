@@ -8,7 +8,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table";
-
+import PlayerToTeam from "./PlayerToTeam.vue";
 import {
   FlexRender,
   getCoreRowModel,
@@ -19,8 +19,7 @@ import {
 import type { SortingState, ColumnFiltersState } from "@tanstack/vue-table";
 import { valueUpdater } from "~/lib/utils";
 import { Button } from "../ui/button";
-import { Input } from "@/components/ui/input";
-import { ArrowUpDown, ArrowUpAZ, ArrowDownAZ } from "lucide-vue-next";
+import { ArrowUpAZ, ArrowDownAZ } from "lucide-vue-next";
 import { NuxtLink } from "#components";
 import { Avatar, AvatarFallback } from "../ui/avatar";
 
@@ -36,6 +35,8 @@ interface Team {
   players: Array<Player>;
   registeredTournaments: Array<string>;
 }
+
+const { data: allPlayers } = await useFetch("/api/players/all-players");
 
 const props = defineProps<{
   data: Team[];
@@ -86,30 +87,54 @@ const columns: ColumnDef<Team>[] = [
     accessorKey: "players",
     header: "Spieler",
     cell: ({ row }) => {
-      return h(
-        "div",
-        { class: "flex flex-col" },
-        (row.getValue("players") as Player[]).map((player: Player) => {
-          return h("div", { class: "flex items-center" }, [
-            h(Avatar, { class: "h-8 w-8 mr-2" }, () => [
-              h(AvatarFallback, null, () => {
-                const name = `${player.firstName} ${player.lastName}`;
-                return name.slice(0, 2).toUpperCase();
-              }),
-            ]),
-            h(
-              "div",
-              { class: "text-sm" },
-              `${player.firstName} ${player.lastName}`
-            ),
-          ]);
-        })
-      );
+      const players = row.getValue("players") as Player[] | null;
+      if (players && players.length > 0) {
+        return h(
+          "div",
+          { class: "flex flex-col" },
+          players.map((player: Player) => {
+            return h("div", { class: "flex items-center" }, [
+              h(Avatar, { class: "h-8 w-8 mr-2" }, () => [
+                h(AvatarFallback, null, () => {
+                  const name = `${player.firstName} ${player.lastName}`;
+                  return name.slice(0, 2).toUpperCase();
+                }),
+              ]),
+              h(
+                "div",
+                { class: "text-sm" },
+                `${player.firstName} ${player.lastName}`
+              ),
+            ]);
+          })
+        );
+      } else {
+        return h(PlayerToTeam, {
+          teamName: row.getValue("name"),
+          players: allPlayers.value,
+        });
+      }
     },
   },
   {
     accessorKey: "registeredTournaments",
     header: "Registriert für",
+    cell: ({ row }) => {
+      const tournaments = row.getValue("registeredTournaments") as
+        | string[]
+        | null;
+      if (tournaments && tournaments.length > 0) {
+        return h(
+          "div",
+          { class: "flex flex-col" },
+          tournaments.map((tournament: string) => {
+            return h("div", { class: "text-sm" }, tournament);
+          })
+        );
+      } else {
+        return h("div", { class: "text-sm" }, "add tournaments");
+      }
+    },
   },
 ];
 
