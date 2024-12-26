@@ -189,7 +189,7 @@ const {
   data: totalTeams,
   status: statusTotalTeams,
   refresh: refreshTotalTeams,
-} = await useFetch("/api/orga/teams/total-teams");
+} = await useFetch("/api/teams/total-teams");
 
 const {
   data: locations,

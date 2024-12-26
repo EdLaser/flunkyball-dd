@@ -11,7 +11,11 @@
     </CardHeader>
     <CardContent>
       <div class="text-2xl font-bold">
-        <InspiraNumberTicker v-if="isNumber(value)" :value="value as number" />
+        <InspiraNumberTicker
+          v-if="isNumber(value)"
+          :value="value as number"
+          :decimal-places="0"
+        />
         <span v-else>{{ value }}</span>
       </div>
     </CardContent>

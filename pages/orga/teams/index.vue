@@ -33,5 +33,5 @@ definePageMeta({
   },
 });
 
-const { data: teams } = await useFetch("/api/orga/teams/all-teams");
+const { data: teams } = await useFetch("/api/teams/all-teams");
 </script>

@@ -18,9 +18,6 @@ export default defineNuxtConfig({
   supabase: {
     redirect: false,
   },
-  routeRules: {
-    "/orga": { ssr: false },
-  },
   shadcn: {
     /**
      * Prefix for all the imported component
