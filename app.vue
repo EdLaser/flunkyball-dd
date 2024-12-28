@@ -16,11 +16,11 @@ const router = useRouter();
 const route = useRoute();
 const colorMode = useColorMode();
 
-const { user } = useUserSession();
+const { user, loggedIn } = useUserSession();
 
 onMounted(() => {
-  watch(user, (user, prevUser) => {
-    if (prevUser && !user) {
+  watch(loggedIn, (nowLoggedIn, wasLoggedIn) => {
+    if (wasLoggedIn && !nowLoggedIn) {
       // user logged out
       router.push("/login");
     } else if (user && typeof route.query.redirect === "string") {

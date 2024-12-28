@@ -114,12 +114,12 @@
                 <template v-if="createAccount" v-auto-animate="">
                   <div class="grid grid-cols-2 gap-4">
                     <div class="col-span-1">
-                      <Label> Email </Label>
-                      <Input type="email" required v-model="email" />
+                      <Label for="email"> Email </Label>
+                      <Input id="email" type="email" required v-model="email" />
                     </div>
                     <div class="cols-span-1">
-                      <Label> Passwort </Label>
-                      <Input type="password" required v-model="password" />
+                      <Label for="password"> Passwort </Label>
+                      <Input id="password" type="password" required v-model="password" />
                     </div>
                   </div>
                 </template>

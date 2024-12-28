@@ -1,3 +1,5 @@
+import { getUserForLogin } from "../utils/auth";
+
 export default defineEventHandler(async (event) => {
   const body = await readBody(event);
 
@@ -7,20 +9,7 @@ export default defineEventHandler(async (event) => {
 
   const { email, password } = body;
 
-  const possibleUser = await usePrisma(event).users.findUnique({
-    select: {
-      hashed_password: true,
-      players: {
-        select: {
-          first_name: true,
-          public_id: true,
-        },
-      },
-    },
-    where: {
-      email: email,
-    },
-  });
+  const possibleUser = await getUserForLogin(email, event);
 
   if (!possibleUser) {
     throw createError({
@@ -32,7 +21,7 @@ export default defineEventHandler(async (event) => {
       possibleUser.hashed_password,
       password
     );
-    console.log(isCorrectPassword);
+
     if (isCorrectPassword) {
       await setUserSession(event, {
         user: {
@@ -40,7 +29,8 @@ export default defineEventHandler(async (event) => {
           publicID: possibleUser.players.first_name,
         },
       });
-      return new Response(null, { status: 200 });
+      setResponseStatus(event, 200);
+      return "OK";
     } else {
       throw createError({
         statusCode: 400,

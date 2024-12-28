@@ -13,6 +13,31 @@
         </CardDescription>
       </CardHeader>
       <CardContent>
+        <div class="grid grid-cols-2 gap-5 mb-5 px-8">
+          <span class="text-sm col-span-2 text-center text-muted-foreground"
+            >Anmelden als...</span
+          >
+          <Button
+            :variant="!loginAsStaff ? 'default' : 'outline'"
+            :class="{
+              'text-white ': !loginAsStaff,
+            }"
+            class="transition-colors duration-200 rounded-xl"
+            @click="toggleLoginAsStaff"
+          >
+            Spieler/in
+          </Button>
+          <Button
+            :variant="loginAsStaff ? 'default' : 'outline'"
+            :class="{
+              'text-white ': loginAsStaff,
+            }"
+            class="transition-colors duration-200 rounded-xl"
+            @click="toggleLoginAsStaff"
+          >
+            Mitwirkende/r
+          </Button>
+        </div>
         <form
           @submit.prevent="handleLogin"
           class="space-y-4 h-full flex flex-col"
@@ -49,9 +74,9 @@
       <CardFooter>
         <NuxtLink to="/register" class="flex justify-center w-full">
           <Beer class="text-primary mr-2" />
-          <span class="text-primary hover:underline animate-pulse"
-            >Join the Flunkyball community!</span
-          >
+          <span class="text-primary hover:underline animate-pulse">
+            Join the Flunkyball community!
+          </span>
         </NuxtLink>
       </CardFooter>
     </Card>
@@ -65,19 +90,21 @@ import { toast } from "vue-sonner";
 // Local state using refs
 const loginEmail = ref("");
 const loginPassword = ref("");
+const loginAsStaff = ref(false);
 
 definePageMeta({
   title: "Login",
   name: "Einloggen",
 });
 
-// if (user.value) {
-//   await navigateTo("/orga");
-// }
+const toggleLoginAsStaff = () => {
+  loginAsStaff.value = !loginAsStaff.value;
+};
 
 const signIgnUser = async (email: string, password: string) => {
   try {
-    const result = await $fetch("/api/login", {
+    const url = loginAsStaff.value ? "/api/orga/login" : "/api/login";
+    const result = await $fetch(url, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -85,9 +112,9 @@ const signIgnUser = async (email: string, password: string) => {
       body: JSON.stringify({ email, password }),
     });
 
-    if (!result?.ok) {
-      throw new Error(result?.statusText);
-    } else if (result.ok) {
+    if (!result) {
+      throw new Error(result);
+    } else if (result === "OK") {
       return true;
     }
   } catch (error) {
@@ -102,7 +129,7 @@ const handleLogin = async () => {
 
   if (success) {
     toast.success("Erfolgreich eingeloggt!");
-    navigateTo("/");
+    await navigateTo(loginAsStaff.value ? "/orga" : "/");
   } else {
     toast.error("Ein Fehler ist aufgetreten!");
   }

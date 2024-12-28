@@ -129,13 +129,13 @@ model locations {
 
 /// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
 model staff {
-  staff_id      String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  last_name     String
-  first_name    String
-  email         String
-  passwort_hash String
-  public_id     String?
-  created_at    DateTime @default(now()) @db.Timestamptz(6)
+  staff_id        String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  last_name       String
+  first_name      String
+  email           String   @unique
+  hashed_password String
+  public_id       String?
+  created_at      DateTime @default(now()) @db.Timestamptz(6)
 }
 
 /// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.

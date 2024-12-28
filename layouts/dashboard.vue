@@ -9,11 +9,11 @@
       <PanelLeftOpen class="h-4 w-4 md:h-5 md:w-5" />
     </ActionGridButton>
     <aside
-      class="fixed inset-y-0 left-0 z-10 bg-muted p-4 transition-transform duration-200"
+      class="fixed inset-y-0 left-0 z-10 bg-muted p-4 transition-transform duration-200 border-r-2"
       :class="isSidebarOpen ? 'translate-x-0 w-64' : '-translate-x-full w-64'"
       ref="sidebarRef"
     >
-      <span> Hallo, {{ user?.firstName }} </span>
+      <span class="text-muted-foreground"> Hallo, {{ user?.firstName }} </span>
       <nav>
         <RouteBreadCrumb class="mt-2 mb-4 md:mb-6 md:mt-4" />
         <div class="space-y-2">
@@ -83,7 +83,8 @@
             class="text-white bg-gradient-to-br rounded-lg from-blue-500 to-pink-500 shadow-lg transition-all duration-200 ease-in-out hover:scale-105 hover:shadow-xl hover:from-purple-600 hover:to-pink-600 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-opacity-50"
           />
         </div>
-        <div class="flex col-span-4 justify-end">
+        <div class="flex flex-col col-span-4 justify-between gap-2">
+          <NewStaffMember />
           <ActionGridButton :onClick="handleLogout" size="default">
             <LogOut class="mr-2 h-4 w-4" />
             Logout
@@ -122,7 +123,12 @@ const sideBarStore = useSideBarStore();
 
 const { isSidebarOpen, isMobile, sidebarRef } = storeToRefs(sideBarStore);
 
-const { user, clear } = useUserSession();
+const { loggedIn, user, clear, fetch } = useUserSession();
+watch(loggedIn, async (nowLoggedIn, wasLoggedIn) => {
+  if (!wasLoggedIn && nowLoggedIn) {
+    await fetch();
+  }
+});
 
 const logoutUser = async () => {
   try {

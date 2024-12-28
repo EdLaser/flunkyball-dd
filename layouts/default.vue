@@ -4,7 +4,9 @@
     v-auto-animate
   >
     <RouteBreadCrumb />
-    <div class="flex h-full items-center md:flex-row gap-1 md:gap-4 text-xs md:text-base">
+    <div
+      class="flex h-full items-center md:flex-row gap-1 md:gap-4 text-xs md:text-base"
+    >
       <Button
         v-for="link in loggedIn ? loggedInLinks : loggedOutLinks"
         variant="outline"
@@ -33,7 +35,13 @@
 import { LayoutDashboard, LogIn, UserPlus, LogOut } from "lucide-vue-next";
 import { vAutoAnimate } from "@formkit/auto-animate";
 
-const { loggedIn, clear } = useUserSession()
+const { loggedIn, clear, fetch } = useUserSession();
+
+watch(loggedIn, async (nowLoggedIn, wasLoggedIn) => {
+  if (!wasLoggedIn && nowLoggedIn) {
+    await fetch();
+  }
+});
 
 const handleLogout = async () => {
   await clear();
