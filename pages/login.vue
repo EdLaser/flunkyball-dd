@@ -93,7 +93,7 @@ definePageMeta({
   name: "Einloggen",
 });
 
-const { loggedIn } = useUserSession();
+const { loggedIn, fetch } = useUserSession();
 
 if (loggedIn.value) await navigateTo("/");
 
@@ -122,6 +122,7 @@ const signIgnUser = async (email: string, password: string) => {
     if (!result) {
       throw new Error(result);
     } else if (result === "OK") {
+      await fetch();
       return true;
     }
   } catch (error) {

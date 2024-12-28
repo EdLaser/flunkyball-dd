@@ -1,5 +1,5 @@
 import { serverSupabaseClient } from "#supabase/server";
-import { FileObject } from "~/types/FileUploads";
+import { FileObject, UploadResult } from "~/types/FileUploads";
 const config = useRuntimeConfig();
 
 /**
@@ -18,13 +18,13 @@ export async function uploadToSupabase(
   userPublicID: string,
   bucketName: string = config.AVATAR_BUCKET_NAME,
   pathPrefix: string = "/"
-): Promise<object> {
+): Promise<UploadResult> {
   try {
     const supabase = await serverSupabaseClient(event);
 
     const { data, error } = await supabase.storage
       .from(bucketName)
-      .upload(`${pathPrefix}${userPublicID}`, file.data, {
+      .upload(`${pathPrefix}${userPublicID}/avatar.jpeg`, file.data, {
         contentType: file.type,
       });
 

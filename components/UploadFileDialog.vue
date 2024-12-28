@@ -29,23 +29,25 @@ const uploadFile = async () => {
   }
 
   const formData = new FormData();
-  console.log(selectedFile.value);
   formData.append("file", selectedFile.value);
-  console.log(formData);
+
+  // Debug: Log FormData contents
+  for (const [key, value] of formData.entries()) {
+    console.log(`${key}:`, value);
+  }
+
   try {
     loading.value = true;
     uploadMessage.value = "";
 
-    const response = await $fetch("/api/upload", {
-      headers: {
-        "Content-Type": "multipart/form-data",
-      },
-      body: formData,
+    const response = await $fetch("/api/players/upload-avatar", {
+      method: "POST",
+      body: formData, // Let the browser set the correct headers for FormData
     });
 
-    uploadMessage.value = response.data.message || "Upload successful!";
-  } catch (error) {
-    uploadMessage.value = error.response?.data?.message || "Upload failed.";
+    uploadMessage.value = response.message || "Upload successful!";
+  } catch (error: any) {
+    uploadMessage.value = error.message || "Upload failed.";
   } finally {
     loading.value = false;
   }
@@ -68,12 +70,7 @@ const uploadFile = async () => {
         </DialogHeader>
         <div class="grid w-full items-center gap-1.5 my-4">
           <Label for="picture">Avatar</Label>
-          <Input
-            id="picture"
-            type="file"
-            required
-            @change="handleFileChange"
-          />
+          <Input id="picture" type="file" required @change="handleFileChange" />
         </div>
         {{ uploadMessage }}
         <DialogFooter>

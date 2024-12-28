@@ -26,7 +26,7 @@ export default defineEventHandler(async (event) => {
       await setUserSession(event, {
         user: {
           firstName: possibleUser.players.first_name,
-          publicID: possibleUser.players.first_name,
+          publicID: possibleUser.players.public_id ?? "",
         },
         secure: {
           publicID: possibleUser.players.public_id ?? "",
