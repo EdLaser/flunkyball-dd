@@ -25,6 +25,19 @@
         <LogOut class="mr-2 h-4 w-4" />
         Logout
       </Button>
+      <NuxtLink
+        v-if="user"
+        :to="`/players/${encodeURIComponent(user.publicID)}`"
+      >
+        <Avatar
+          v-if="loggedIn"
+          class="bg-background rounded-md h-9 text-primary shadow-sm hover:bg-accent hover:text-accent-foreground cursor-pointer"
+        >
+          <AvatarFallback>
+            {{ user?.firstName.slice(0, 2).toUpperCase() }}
+          </AvatarFallback>
+        </Avatar>
+      </NuxtLink>
       <ColorModeSwitch />
     </div>
   </nav>
@@ -35,7 +48,7 @@
 import { LayoutDashboard, LogIn, UserPlus, LogOut } from "lucide-vue-next";
 import { vAutoAnimate } from "@formkit/auto-animate";
 
-const { loggedIn, clear, fetch } = useUserSession();
+const { loggedIn, user, clear, fetch } = useUserSession();
 
 watch(loggedIn, async (nowLoggedIn, wasLoggedIn) => {
   if (!wasLoggedIn && nowLoggedIn) {

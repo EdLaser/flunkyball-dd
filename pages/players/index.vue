@@ -1,13 +1,10 @@
 <template>
-  <div>
-    
-  </div>
+  <div></div>
 </template>
 
 <script lang="ts" setup>
-
+definePageMeta({
+  name: "Spieler",
+  title: "Alle Spieler",
+});
 </script>
-
-<style scoped>
-
-</style>

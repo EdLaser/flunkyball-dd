@@ -25,6 +25,4 @@ const { data: playerDetails } = await useFetch(
       route.params.id as string
     )}`
 );
-
-console.log("Details Client", playerDetails.value);
 </script>

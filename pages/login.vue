@@ -14,9 +14,9 @@
       </CardHeader>
       <CardContent>
         <div class="grid grid-cols-2 gap-5 mb-5 px-8">
-          <span class="text-sm col-span-2 text-center text-muted-foreground"
-            >Anmelden als...</span
-          >
+          <span class="text-sm col-span-2 text-center text-muted-foreground">
+            Anmelden als...
+          </span>
           <Button
             :variant="!loginAsStaff ? 'default' : 'outline'"
             :class="{
@@ -85,17 +85,24 @@
 
 <script setup lang="ts">
 import { Beer } from "lucide-vue-next";
+import { routeLocationKey } from "vue-router";
 import { toast } from "vue-sonner";
+
+definePageMeta({
+  title: "Login",
+  name: "Einloggen",
+});
+
+const { loggedIn } = useUserSession();
+
+if (loggedIn.value) await navigateTo("/");
 
 // Local state using refs
 const loginEmail = ref("");
 const loginPassword = ref("");
 const loginAsStaff = ref(false);
 
-definePageMeta({
-  title: "Login",
-  name: "Einloggen",
-});
+const route = useRoute();
 
 const toggleLoginAsStaff = () => {
   loginAsStaff.value = !loginAsStaff.value;
@@ -129,7 +136,7 @@ const handleLogin = async () => {
 
   if (success) {
     toast.success("Erfolgreich eingeloggt!");
-    await navigateTo(loginAsStaff.value ? "/orga" : "/");
+    if (!route.query) await navigateTo(loginAsStaff ? "/orga" : "/");
   } else {
     toast.error("Ein Fehler ist aufgetreten!");
   }

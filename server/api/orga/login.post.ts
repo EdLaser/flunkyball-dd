@@ -26,11 +26,12 @@ export default defineEventHandler(async (event) => {
       await setUserSession(event, {
         user: {
           firstName: possibleStaff.first_name,
-          publicID: possibleStaff.public_id,
+          publicID: possibleStaff.public_id ?? "",
         },
         secure: {
           isStaff: true,
         },
+        isStaff: true,
       });
       setResponseStatus(event, 200);
       return "OK";
