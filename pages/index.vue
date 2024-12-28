@@ -48,18 +48,25 @@
               Flasche auf eine Flasche in der Mitte des Spielfelds werfen.
             </p>
             <ul class="space-y-2">
-              <li class="flex items-center">
+              <li class="flex items-center justify-between">
                 <BeerIcon class="text-primary mr-2 h-6 w-6" />
-                Wenn du die mittlere Flasche triffst, darf dein Team trinken!
+                <span class="text-end"
+                  >Wenn du die mittlere Flasche triffst, darf dein Team
+                  trinken!</span
+                >
               </li>
-              <li class="flex items-center">
+              <li class="flex items-center justify-between">
                 <BeerIcon class="text-primary mr-2 h-6 w-6" />
-                Das andere Team muss die Flasche aufstellen und zur Grundlinie
-                zurückkehren.
+                <span class="text-end">
+                  Das andere Team muss die Flasche aufstellen und zur Grundlinie
+                  zurückkehren.
+                </span>
               </li>
-              <li class="flex items-center">
+              <li class="flex items-center justify-between">
                 <BeerIcon class="text-primary mr-2 h-6 w-6" />
-                Das Team, das zuerst alle Biere geleert hat, gewinnt!
+                <span class="text-end">
+                  Das Team, das zuerst alle Biere geleert hat, gewinnt!
+                </span>
               </li>
             </ul>
           </div>
@@ -111,10 +118,7 @@
           Antretende Teams
         </h2>
         <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          <Card
-            :key="`${index}-${team.name}`"
-            v-for="(team, index) in teams"
-          >
+          <Card :key="`${index}-${team.name}`" v-for="(team, index) in teams">
             <CardHeader>
               <CardTitle class="flex items-center text-primary">
                 <Users class="mr-2" />

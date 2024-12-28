@@ -77,7 +77,13 @@ definePageMeta({
 
 const signIgnUser = async (email: string, password: string) => {
   try {
-    const result = await $fetch("/api/login");
+    const result = await $fetch("/api/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ email, password }),
+    });
 
     if (!result?.ok) {
       throw new Error(result?.statusText);
