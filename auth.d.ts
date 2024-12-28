@@ -10,6 +10,7 @@ declare module "#auth-utils" {
 
   interface SecureSessionData {
     isStaff?: boolean;
+    publicID?: string;
   }
 }
 

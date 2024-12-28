@@ -192,7 +192,7 @@ import { useForm } from "vee-validate";
 definePageMeta({
   title: "Registrieren",
   description: "Registriere dich für unsere Flunkyball Turniere.",
-  name: "Registieren",
+  name: "Registrieren",
 });
 
 const createAccount = ref(false);

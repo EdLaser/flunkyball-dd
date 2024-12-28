@@ -28,6 +28,9 @@ export default defineEventHandler(async (event) => {
           firstName: possibleUser.players.first_name,
           publicID: possibleUser.players.first_name,
         },
+        secure: {
+          publicID: possibleUser.players.public_id ?? "",
+        },
       });
       setResponseStatus(event, 200);
       return "OK";
