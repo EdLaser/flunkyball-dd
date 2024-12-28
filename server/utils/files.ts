@@ -24,7 +24,7 @@ export async function uploadToSupabase(
 
     const { data, error } = await supabase.storage
       .from(bucketName)
-      .upload(`${pathPrefix}${userPublicID}/avatar.jpeg`, file.data, {
+      .upload(`${pathPrefix}uploads/${userPublicID}`, file.data, {
         contentType: file.type,
       });
 

@@ -8,6 +8,8 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import { Upload, X } from "lucide-vue-next";
+import { toast } from "vue-sonner";
 
 const selectedFile = ref(null);
 const loading = ref(false);
@@ -18,23 +20,18 @@ const handleFileChange = (event: any) => {
   if (file) {
     selectedFile.value = file;
   } else {
-    uploadMessage.value = "No file selected.";
+    toast("No file selected.");
   }
 };
 
 const uploadFile = async () => {
   if (!selectedFile.value) {
-    uploadMessage.value = "Please select a file first!";
+    toast("Please select a file first!");
     return;
   }
 
   const formData = new FormData();
   formData.append("file", selectedFile.value);
-
-  // Debug: Log FormData contents
-  for (const [key, value] of formData.entries()) {
-    console.log(`${key}:`, value);
-  }
 
   try {
     loading.value = true;
@@ -44,10 +41,15 @@ const uploadFile = async () => {
       method: "POST",
       body: formData, // Let the browser set the correct headers for FormData
     });
+    if (!response.success) throw new Error(response.message);
 
-    uploadMessage.value = response.message || "Upload successful!";
+    toast("Upload successful!", {
+      description: response.message,
+    });
   } catch (error: any) {
-    uploadMessage.value = error.message || "Upload failed.";
+    toast("Upload failed.", {
+      description: error.message,
+    });
   } finally {
     loading.value = false;
   }
@@ -72,10 +74,9 @@ const uploadFile = async () => {
           <Label for="picture">Avatar</Label>
           <Input id="picture" type="file" required @change="handleFileChange" />
         </div>
-        {{ uploadMessage }}
-        <DialogFooter>
-          <Button variant="destructive">Abbrechen</Button>
-          <Button @click="uploadFile()">Hochladen</Button>
+        <DialogFooter class="flex gap-3">
+          <Button variant="destructive"><X /> Abbrechen</Button>
+          <Button @click="uploadFile()"><Upload /> Hochladen</Button>
         </DialogFooter>
       </DialogContent>
     </form>
