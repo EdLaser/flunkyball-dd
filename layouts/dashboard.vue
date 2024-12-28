@@ -2,7 +2,7 @@
   <div class="flex h-screen bg-background">
     <ActionGridButton
       @click="sideBarStore.toggleSidebar"
-      variant="ghost"
+      size="icon"
       v-if="!isSidebarOpen"
       class="absolute bottom-4 md:bottom-6 left-5 md:left-6 z-20 rounded-full"
     >
@@ -13,9 +13,7 @@
       :class="isSidebarOpen ? 'translate-x-0 w-64' : '-translate-x-full w-64'"
       ref="sidebarRef"
     >
-    <span>
-      Hallo, {{ user?.email }}
-    </span>
+      <span> Hallo, {{ user?.firstName }} </span>
       <nav>
         <RouteBreadCrumb class="mt-2 mb-4 md:mb-6 md:mt-4" />
         <div class="space-y-2">
@@ -124,20 +122,17 @@ const sideBarStore = useSideBarStore();
 
 const { isSidebarOpen, isMobile, sidebarRef } = storeToRefs(sideBarStore);
 
-const supabase = useSupabaseClient();
-const user = useSupabaseUser();
+const { user, clear } = useUserSession();
 
 const logoutUser = async () => {
   try {
-    await supabase.auth.signOut();
-    return true;
+    await clear();
   } catch (error) {
     console.error(error);
-    return false;
   }
 };
 
 async function handleLogout() {
-  const result = await logoutUser();
+  await logoutUser();
 }
 </script>

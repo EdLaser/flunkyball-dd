@@ -6,7 +6,7 @@
     <RouteBreadCrumb />
     <div class="flex h-full items-center md:flex-row gap-1 md:gap-4 text-xs md:text-base">
       <Button
-        v-for="link in user ? loggedInLinks : loggedOutLinks"
+        v-for="link in loggedIn ? loggedInLinks : loggedOutLinks"
         variant="outline"
         class="flex items-center p-2 h-fit w-auto"
         @click="navigateTo(link.to)"
@@ -15,7 +15,7 @@
         <span class="hidden md:block">{{ link.title }}</span>
       </Button>
       <Button
-        v-if="user"
+        v-if="loggedIn"
         variant="outline"
         class="flex items-center w-auto"
         @click="handleLogout()"
@@ -32,11 +32,11 @@
 <script lang="ts" setup>
 import { LayoutDashboard, LogIn, UserPlus, LogOut } from "lucide-vue-next";
 import { vAutoAnimate } from "@formkit/auto-animate";
-const user = useSupabaseUser();
-const supabase = useSupabaseClient();
+
+const { loggedIn, clear } = useUserSession()
 
 const handleLogout = async () => {
-  await supabase.auth.signOut();
+  await clear();
 };
 
 const loggedInLinks = [

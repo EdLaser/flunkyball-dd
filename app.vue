@@ -16,7 +16,7 @@ const router = useRouter();
 const route = useRoute();
 const colorMode = useColorMode();
 
-const user = useSupabaseUser();
+const { user } = useUserSession();
 
 onMounted(() => {
   watch(user, (user, prevUser) => {

@@ -65,28 +65,23 @@ import { toast } from "vue-sonner";
 // Local state using refs
 const loginEmail = ref("");
 const loginPassword = ref("");
-const user = useSupabaseUser();
 
 definePageMeta({
   title: "Login",
   name: "Einloggen",
 });
 
-if (user.value) {
-  await navigateTo("/orga");
-}
-
-const supabase = useSupabaseClient();
+// if (user.value) {
+//   await navigateTo("/orga");
+// }
 
 const signIgnUser = async (email: string, password: string) => {
   try {
-    const result = await supabase.auth.signInWithPassword({
-      email,
-      password,
-    });
-    if (result.error) {
-      throw new Error(result.error.message);
-    } else if (result.data.user) {
+    const result = await $fetch("/api/login");
+
+    if (!result?.ok) {
+      throw new Error(result?.statusText);
+    } else if (result.ok) {
       return true;
     }
   } catch (error) {

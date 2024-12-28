@@ -111,6 +111,18 @@
                     </FormControl>
                   </FormItem>
                 </FormField>
+                <template v-if="createAccount" v-auto-animate="">
+                  <div class="grid grid-cols-2 gap-4">
+                    <div class="col-span-1">
+                      <Label> Email </Label>
+                      <Input type="email" required v-model="email" />
+                    </div>
+                    <div class="cols-span-1">
+                      <Label> Passwort </Label>
+                      <Input type="password" required v-model="password" />
+                    </div>
+                  </div>
+                </template>
               </template>
 
               <template v-if="stepIndex === 3">
@@ -130,25 +142,31 @@
               >
                 Zurück
               </Button>
-              <div class="flex items-center gap-3">
-                <Button
-                  v-if="stepIndex < 2"
-                  :disabled="isNextDisabled || !meta.valid"
-                  :type="'button'"
-                  size="sm"
-                  @click="nextStep()"
-                >
-                  Weiter
-                </Button>
-                <Button
-                  v-else-if="stepIndex === 2"
-                  :disabled="isNextDisabled || !meta.valid"
-                  :type="'submit'"
-                  size="sm"
-                >
-                  Registrieren
-                </Button>
+              <div
+                v-if="stepIndex === 2"
+                v-auto-animate
+                class="space-x-2 flex items-center"
+              >
+                <Switch v-model:checked="createAccount" />
+                <small class="text-muted-foreground">Account anlegen</small>
               </div>
+              <Button
+                v-if="stepIndex < 2"
+                :disabled="isNextDisabled || !meta.valid"
+                :type="'button'"
+                size="sm"
+                @click="nextStep()"
+              >
+                Weiter
+              </Button>
+              <Button
+                v-else-if="stepIndex === 2"
+                :disabled="isNextDisabled || !meta.valid"
+                :type="'submit'"
+                size="sm"
+              >
+                Registrieren
+              </Button>
             </div>
           </form>
         </Stepper>
@@ -174,15 +192,16 @@ import { useForm } from "vee-validate";
 definePageMeta({
   title: "Registrieren",
   description: "Registriere dich für unsere Flunkyball Turniere.",
-  name: "Registieren"
+  name: "Registieren",
 });
-
-const supabase = useSupabaseClient();
 
 const createAccount = ref(false);
 
 const loading = ref(false);
 const stepIndex = ref(1);
+
+const email = ref("");
+const password = ref("");
 
 const createSuccessfull = ref(false);
 const createdPlayer = ref<{
@@ -212,6 +231,17 @@ const registerUser = async (player: {
       createSuccessfull.value = true;
       createdPlayer.value = res;
       stepIndex.value = 3;
+    }
+
+    if (createAccount) {
+      const result = await $fetch("/api/register", {
+        method: "POST",
+        body: {
+          password: password.value,
+          email: email.value,
+          publicID: res.publicID,
+        },
+      });
     }
   } catch (error) {
     console.error(error);

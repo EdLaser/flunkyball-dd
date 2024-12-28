@@ -66,11 +66,11 @@ const toggleSorting = (column: Column<Tournament>) => {
 const determineBadgeClass = (status: Tournament["status"]) => {
   switch (status) {
     case "finished":
-      return "bg-red-500";
+      return "bg-red-500 hover:bg-red-500/70";
     case "open":
-      return "bg-green-500";
+      return "bg-green-500 hover:bg-green-500/70";
     case "in_progress":
-      return "bg-yellow-500";
+      return "bg-yellow-500 hover:bg-yellow-500/70";
     default:
       return "";
   }
@@ -123,7 +123,7 @@ const columns: ColumnDef<Tournament>[] = [
       return h(
         Badge,
         {
-          variant: "outline",
+          variant: "default",
           class: determineBadgeClass(status),
         },
         {

@@ -11,7 +11,9 @@ const props = defineProps<{
 <template>
   <Popover>
     <PopoverTrigger as-child>
-      <Button variant="outline" size="icon"> <UserPlus /> </Button>
+      <div class="div flex w-full text-center items-center">
+        <Button variant="outline" size="icon"> <UserPlus /> </Button>
+      </div>
     </PopoverTrigger>
     <PopoverContent class="w-80 md:w-96">
       <div class="grid space-y-4">

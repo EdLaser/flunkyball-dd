@@ -10,6 +10,7 @@ export default defineNuxtConfig({
     "@nuxtjs/supabase",
     "@pinia/nuxt",
     "@nuxt/fonts",
+    "nuxt-auth-utils",
   ],
   colorMode: {
     preference: "system", // default value of $colorMode.preference
