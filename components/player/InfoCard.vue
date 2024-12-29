@@ -39,8 +39,10 @@
               </div>
             </div>
           </div>
-          <div class="grid mt-8 gap-2">
-            <div class="flex col-span-1 justify-between gap-2">
+          <Separator class="my-4" label="Stats" />
+
+          <div class="grid gap-2">
+            <div class="flex justify-between gap-2">
               <span class="flex gap-2 font-semibold">
                 <Swords />
                 Spiele:
@@ -50,14 +52,14 @@
                 :decimal-places="0"
               />
             </div>
-            <div class="flex col-span-1 justify-between gap-2">
+            <div class="flex justify-between gap-2">
               <span class="flex gap-2 font-semibold">
                 <Trophy />
                 Siege:
               </span>
               <InspiraNumberTicker :value="wins ?? 0" :decimal-places="0" />
             </div>
-            <div class="flex col-span-1 justify-between gap-2">
+            <div class="flex justify-between gap-2">
               <span class="flex gap-2 font-semibold">
                 <Beer />
                 Liter:
@@ -69,18 +71,15 @@
               />
             </div>
           </div>
-          <div class="grid mt-8">
-            <div class="flex items-center gap-5" v-if="props.playsIn">
-              <div class="flex flex-col">
-                <span class="font-semibold">Team:</span>
-                <NuxtLink class="font-light">
-                  {{ props.playsIn }}</NuxtLink
-                >
-              </div>
+          <Separator class="my-4" label="Social" />
+          <div class="grid gap-2">
+            <div class="flex items-center justify-between" v-if="props.playsIn">
+              <span class="flex gap-2 font-semibold"><Medal /> Team:</span>
+              <NuxtLink class="font-light"> {{ props.playsIn }}</NuxtLink>
             </div>
             <div class="flex items-center gap-5" v-if="props.player.slogan">
-              <div class="flex flex-col">
-                <span class="font-semibold">Slogan:</span>
+              <div class="flex flex-col gap-1">
+                <span class="flex gap-2 font-semibold"><Speech />Slogan:</span>
                 <span class="font-light">{{ props.player.slogan }}</span>
               </div>
             </div>
@@ -103,7 +102,8 @@
 
 <script lang="ts" setup>
 import type { Player } from "~/types/Player";
-import { Trophy, Beer, Medal, Swords } from "lucide-vue-next";
+import { Trophy, Beer, Medal, Swords, Speech } from "lucide-vue-next";
+import { Separator } from "../ui/separator";
 
 const props = defineProps<{
   player: Player;
