@@ -39,7 +39,7 @@
               </div>
             </div>
           </div>
-          <div class="grid md:grid-cols-2 mt-8">
+          <div class="grid mt-8">
             <div class="flex col-span-1 flex-col gap-2">
               <span class="flex gap-2 font-semibold">
                 <Trophy />
@@ -52,16 +52,18 @@
             </div>
           </div>
           <div class="grid mt-8">
+            <div class="flex items-center gap-5" v-if="props.playsIn">
+              <div class="flex flex-col">
+                <span class="font-semibold">Team:</span>
+                <NuxtLink :to="`/teams/${props.playsIn}`" class="font-light">
+                  {{ props.playsIn }}</NuxtLink
+                >
+              </div>
+            </div>
             <div class="flex items-center gap-5" v-if="props.player.slogan">
               <div class="flex flex-col">
                 <span class="font-semibold">Slogan:</span>
                 <span class="font-light">{{ props.player.slogan }}</span>
-              </div>
-            </div>
-            <div class="flex items-center gap-5" v-if="props.player.phone">
-              <div class="flex flex-col">
-                <span class="font-semibold">Telefon:</span>
-                <span class="font-light">{{ props.player.phone }}</span>
               </div>
             </div>
           </div>
@@ -69,14 +71,13 @@
         <div class="flex justify-center">
           <InspiraFlipCard
             :title="player.firstName"
-            :image="'/img/catching.jpeg'"
-            :subtitle="`Wer ist dieser ${player.firstName}`"
+            :subtitle="`Wer ist ${player.firstName}`"
             :description="player.slogan ?? ''"
           />
         </div>
       </div>
     </CardContent>
-    <CardFooter class="flex justify-end">
+    <CardFooter class="flex justify-end" v-if="!noUpload">
       <UploadFileDialog />
     </CardFooter>
   </Card>
@@ -89,5 +90,7 @@ import { Trophy } from "lucide-vue-next";
 const props = defineProps<{
   player: Player;
   gamesPlayed?: number;
+  playsIn?: string;
+  noUpload?: boolean;
 }>();
 </script>

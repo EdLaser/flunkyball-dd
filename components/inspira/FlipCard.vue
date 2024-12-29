@@ -10,10 +10,15 @@
     >
       <!-- Front -->
       <div class="absolute size-full [backface-visibility:hidden]">
-        <img
+        <NuxtImg
           :src="props.image"
+          v-if="props.image"
           alt="image"
           class="size-full rounded-2xl object-cover shadow-2xl shadow-black/40"
+        />
+        <div
+          v-else
+          class="bg-gradient-to-br from-blue-500 to-pink-500 size-full rounded-2xl object-cover shadow-2xl shadow-black/40"
         />
         <div class="absolute bottom-4 left-4 text-xl font-bold text-white">
           {{ props.title }}
@@ -46,10 +51,10 @@
 import { cn } from "@/lib/utils";
 
 interface FlipCardProps {
-  image: string;
   title: string;
-  subtitle?: string;
   description: string;
+  subtitle?: string;
+  image?: string;
   rotate?: "x" | "y";
   class?: string;
 }

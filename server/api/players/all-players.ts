@@ -7,21 +7,32 @@ export default defineEventHandler(async (event) => {
       teams: {
         select: {
           name: true,
+          _count: {
+            select: {
+              matches_matches_away_team_idToteams: true,
+              matches_matches_home_team_idToteams: true,
+            },
+          },
         },
       },
     },
     where: {
       public_id: {
-        not: {
-          equals: null,
-        },
+        not: null,
       },
     },
+    orderBy: {
+      first_name: "asc",
+    },
   });
+
   return players.map((player) => ({
     firstName: player.first_name,
     lastName: player.last_name,
-    publicId: player.public_id,
+    publicID: player.public_id,
     playsIn: player.teams?.name ?? null,
+    matchesPlayed:
+      (player.teams?._count?.matches_matches_away_team_idToteams ?? 0) +
+      (player.teams?._count?.matches_matches_home_team_idToteams ?? 0),
   }));
 });
