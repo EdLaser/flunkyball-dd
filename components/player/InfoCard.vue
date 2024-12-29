@@ -22,7 +22,7 @@
                 <NuxtLink
                   v-if="props.player.publicID"
                   :to="`/players/${encodeURIComponent(props.player.publicID)}`"
-                  class="text-sm font-light"
+                  class="text-sm font-light underline underline-offset-1 hover:text-primary"
                   >{{ props.player.publicID }}</NuxtLink
                 >
               </div>
