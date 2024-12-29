@@ -11,6 +11,8 @@ import {
 import { Upload, X } from "lucide-vue-next";
 import { toast } from "vue-sonner";
 
+const { session } = useUserSession();
+
 const selectedFile = ref(null);
 const loading = ref(false);
 const uploadMessage = ref("");
@@ -37,10 +39,13 @@ const uploadFile = async () => {
     loading.value = true;
     uploadMessage.value = "";
 
-    const response = await $fetch("/api/players/upload-avatar", {
-      method: "POST",
-      body: formData, // Let the browser set the correct headers for FormData
-    });
+    const response = await $fetch(
+      `/api/players/upload-avatar/${session.value?.user?.publicID}`,
+      {
+        method: "POST",
+        body: formData, // Let the browser set the correct headers for FormData
+      }
+    );
     if (!response.success) throw new Error(response.message);
 
     toast("Upload successful!", {

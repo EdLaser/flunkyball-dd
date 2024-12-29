@@ -88,7 +88,7 @@
       v-if="
         !noUpload &&
         loggedIn &&
-        session.secure?.publicID === props.player.publicID
+        session.user?.publicID === props.player.publicID
       "
     >
       <UploadFileDialog />
