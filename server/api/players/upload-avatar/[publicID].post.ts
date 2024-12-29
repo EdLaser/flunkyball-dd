@@ -4,6 +4,8 @@ import { FileObject } from "~/types/FileUploads";
 export default defineEventHandler(async (event) => {
   const publicID = getRouterParam(event, "publicID");
 
+  const decodedId = decodeURIComponent(publicID ?? "");
+
   if (!publicID) {
     throw createError({
       statusCode: 400,
@@ -26,7 +28,7 @@ export default defineEventHandler(async (event) => {
     });
   }
 
-  if (session.secure?.publicID !== publicID) {
+  if (session.secure?.publicID !== decodedId) {
     throw createError({
       statusCode: 400,
       message: "Public ID does not match logged in user.",

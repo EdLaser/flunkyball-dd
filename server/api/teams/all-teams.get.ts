@@ -3,6 +3,7 @@ export default defineEventHandler(async (event) => {
     select: {
       name: true,
       slogan: true,
+      public_id: true,
       players: {
         select: {
           first_name: true,
@@ -42,6 +43,7 @@ export default defineEventHandler(async (event) => {
       .map((team) => ({
         name: team.name ?? "",
         slogan: team.slogan ?? "",
+        publicID: team.public_id ?? "",
         players: team.players.map((player) => ({
           firstName: player.first_name ?? "",
           lastName: player.last_name ?? "",

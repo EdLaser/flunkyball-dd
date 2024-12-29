@@ -21,7 +21,7 @@
               </AvatarFallback>
             </Avatar>
             <NuxtLink
-              :to="`/teams/${team.name}`"
+              :to="`/teams/${encodeURIComponent(team.publicID)}`"
               class="text-primary hover:underline"
             >
               {{ team.name }}
