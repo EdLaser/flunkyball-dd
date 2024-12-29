@@ -11,6 +11,8 @@
         v-if="playerDetails"
         :player="playerDetails"
         :games-played="playerDetails?.gamesPlayed ?? 0"
+        :plays-in="playerDetails.team ?? ''"
+        :wins="playerDetails?.wins ?? 0"
       />
     </main>
   </div>

@@ -13,29 +13,18 @@
       <div class="grid grid-cols-2">
         <div class="pr-5">
           <div class="grid">
-            <div class="flex md:flex-row flex-col md:items-center gap-5">
-              <Avatar>
-                <AvatarFallback>
-                  {{
-                    props.player.lastName
-                      ? props.player.firstName.charAt(0)
-                      : props.player.firstName.slice(0, 2)
-                  }}
-                  {{
-                    props.player.lastName ? props.player.lastName.charAt(0) : ""
-                  }}
-                </AvatarFallback>
-              </Avatar>
-              <div class="flex flex-col">
-                <span class="font-semibold">
-                  {{ props.player.firstName }} {{ props.player.lastName }}
-                </span>
-                <div class="space-x-2">
-                  <span class="text-sm font-semibold">ID:</span>
-                  <span class="text-sm font-light">{{
-                    props.player.publicID
-                  }}</span>
-                </div>
+            <div class="flex flex-col">
+              <span class="font-semibold">
+                {{ props.player.firstName }} {{ props.player.lastName }}
+              </span>
+              <div class="space-x-2">
+                <span class="text-sm font-semibold">ID:</span>
+                <NuxtLink
+                  v-if="props.player.publicID"
+                  :to="`/players/${encodeURIComponent(props.player.publicID)}`"
+                  class="text-sm font-light"
+                  >{{ props.player.publicID }}</NuxtLink
+                >
               </div>
             </div>
           </div>

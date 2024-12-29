@@ -12,6 +12,7 @@ export default defineEventHandler(async (event) => {
       public_id: true,
       teams: {
         select: {
+          name: true,
           _count: {
             select: {
               matches_matches_away_team_idToteams: true,
@@ -35,6 +36,7 @@ export default defineEventHandler(async (event) => {
   const transformed = {
     firstName: playerDetails?.first_name ?? "",
     lastName: playerDetails?.last_name ?? "",
+    team: playerDetails?.teams?.name ?? "",
     slogan: playerDetails?.slogan ?? "",
     phone: playerDetails?.phone ?? "",
     publicID: playerDetails?.public_id ?? "",
