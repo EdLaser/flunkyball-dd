@@ -83,7 +83,14 @@
         </div>
       </div>
     </CardContent>
-    <CardFooter class="flex justify-end" v-if="!noUpload">
+    <CardFooter
+      class="flex justify-end"
+      v-if="
+        !noUpload &&
+        loggedIn &&
+        session.secure?.publicID === props.player.publicID
+      "
+    >
       <UploadFileDialog />
     </CardFooter>
   </Card>
@@ -93,6 +100,8 @@
 import type { Player } from "~/types/Player";
 import { Trophy, Beer, Medal, Swords, Speech } from "lucide-vue-next";
 import { Separator } from "../ui/separator";
+
+const { session, loggedIn } = useUserSession();
 
 const props = defineProps<{
   player: Player;
