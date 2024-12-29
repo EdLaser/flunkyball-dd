@@ -28,26 +28,35 @@ export default defineEventHandler(async (event) => {
           },
         },
       },
+      _count: {
+        select: {
+          matches_matches_match_winnerToteams: true,
+        },
+      },
     },
   });
+  console.log(allTeams)
 
   return (
-    allTeams.map((team) => ({
-      name: team.name ?? "",
-      slogan: team.slogan ?? "",
-      players: team.players.map((player) => ({
-        firstName: player.first_name ?? "",
-        lastName: player.last_name ?? "",
-        slogan: player.slogan ?? "",
-      })),
-      registeredTournaments: [
-        ...team.tournament_registrations.map(
-          (registration) => registration.tournaments.title
-        ),
-        ...team.pre_registrations.map(
-          (registration) => registration.tournaments.title
-        ),
-      ],
-    })) ?? []
+    allTeams
+      .map((team) => ({
+        name: team.name ?? "",
+        slogan: team.slogan ?? "",
+        players: team.players.map((player) => ({
+          firstName: player.first_name ?? "",
+          lastName: player.last_name ?? "",
+          slogan: player.slogan ?? "",
+        })),
+        registeredTournaments: [
+          ...team.tournament_registrations.map(
+            (registration) => registration.tournaments.title
+          ),
+          ...team.pre_registrations.map(
+            (registration) => registration.tournaments.title
+          ),
+        ],
+        wins: team._count.matches_matches_match_winnerToteams,
+      }))
+      .sort((a, b) => b.wins - a.wins) ?? []
   );
 });

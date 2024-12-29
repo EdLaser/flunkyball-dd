@@ -3,13 +3,16 @@
     <TableHeader>
       <TableRow>
         <TableHead>Rang</TableHead>
+        <TableHead>Siege</TableHead>
         <TableHead>Name</TableHead>
         <TableHead>Spieler</TableHead>
+        <TableHead>Spielt in</TableHead>
       </TableRow>
     </TableHeader>
     <TableBody>
-      <TableRow v-for="team in teams" :key="team.id">
-        <TableCell>{{ team.rank }}</TableCell>
+      <TableRow v-for="(team, index) in teams" :key="team.name">
+        <TableCell class="font-bold text-lg">{{ index + 1 }}</TableCell>
+        <TableCell>{{ team.wins }}</TableCell>
         <TableCell>
           <div class="flex items-center">
             <Avatar class="h-8 w-8 mr-2">
@@ -18,7 +21,7 @@
               </AvatarFallback>
             </Avatar>
             <NuxtLink
-              :to="`/orga/teams/${team.id}`"
+              :to="`/teams/${team.name}`"
               class="text-primary hover:underline"
             >
               {{ team.name }}
@@ -26,7 +29,12 @@
           </div>
         </TableCell>
         <TableCell>
-          {{ team.members.join(", ") }}
+          {{
+            team.players.map((p) => `${p.firstName} ${p.lastName}`).join(", ")
+          }}
+        </TableCell>
+        <TableCell>
+          {{ team.registeredTournaments.join(", ") }}
         </TableCell>
       </TableRow>
     </TableBody>
@@ -41,11 +49,7 @@ import {
   TableHead,
   TableRow,
 } from "@/components/ui/table";
-const teams = [
-  { id: "1", name: "Bottle Bashers", rank: 1, members: ["Alice", "Bob"] },
-  { id: "2", name: "Flunky Fanatics", rank: 2, members: ["Charlie", "Diana"] },
-  { id: "3", name: "Tipsy Tossers", rank: 3, members: ["Eve", "Frank"] },
-  { id: "4", name: "Sling Kings", rank: 4, members: ["Grace", "Henry"] },
-];
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+
+const { data: teams } = await useFetch("/api/teams/all-teams");
 </script>

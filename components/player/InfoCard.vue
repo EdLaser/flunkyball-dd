@@ -1,28 +1,21 @@
 <template>
   <Card>
-    <CardHeader>
-      <CardTitle
-        >{{ props.player.firstName }} {{ props.player.lastName }}</CardTitle
-      >
-      <CardDescription>
-        {{ props.player.slogan }}
-      </CardDescription>
-    </CardHeader>
-
-    <CardContent>
+    <CardContent class="p-5 md:p-7">
       <div class="grid grid-cols-2">
         <div class="pr-5">
           <div class="grid">
             <div class="flex flex-col">
-              <span class="font-semibold">
+              <span class="font-semibold text-xl">
                 {{ props.player.firstName }} {{ props.player.lastName }}
               </span>
-              <div class="space-x-2">
-                <span class="text-sm font-semibold">ID:</span>
+              <div class="flex justify-between gap-2">
+                <span class="flex gap-2 items-center text-sm font-semibold">
+                  <IdCard />ID:
+                </span>
                 <NuxtLink
                   v-if="props.player.publicID"
                   :to="`/players/${encodeURIComponent(props.player.publicID)}`"
-                  class="text-sm font-light underline underline-offset-1 hover:text-primary"
+                  class="text-sm font-light underline underline-offset-1 text-primary"
                   >{{ props.player.publicID }}</NuxtLink
                 >
               </div>
@@ -36,28 +29,21 @@
                 <Swords />
                 Spiele:
               </span>
-              <InspiraNumberTicker
-                :value="gamesPlayed ?? 0"
-                :decimal-places="0"
-              />
+              {{ gamesPlayed ?? 0 }}
             </div>
             <div class="flex justify-between gap-2">
               <span class="flex gap-2 font-semibold">
                 <Trophy />
                 Siege:
               </span>
-              <InspiraNumberTicker :value="wins ?? 0" :decimal-places="0" />
+              {{ props.wins ?? 0 }}
             </div>
             <div class="flex justify-between gap-2">
               <span class="flex gap-2 font-semibold">
                 <Beer />
                 Liter:
               </span>
-              <InspiraNumberTicker
-                :value="gamesPlayed ? gamesPlayed * 0.5 : 0"
-                :decimal-places="1"
-                as-liter
-              />
+              {{ gamesPlayed ? gamesPlayed * 0.5 : 0.0 }} L
             </div>
           </div>
           <Separator class="my-4" label="Social" />
@@ -98,7 +84,7 @@
 
 <script lang="ts" setup>
 import type { Player } from "~/types/Player";
-import { Trophy, Beer, Medal, Swords, Speech } from "lucide-vue-next";
+import { Trophy, Beer, Medal, Swords, Speech, IdCard } from "lucide-vue-next";
 import { Separator } from "../ui/separator";
 
 const { session, loggedIn } = useUserSession();

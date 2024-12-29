@@ -13,7 +13,7 @@
           ? session.isStaff
             ? staffLinks
             : userLinks
-          : loggedOutLinks"
+          : userLinks.concat(loggedOutLinks)"
         variant="outline"
         :size="link.title ? 'default' : 'icon'"
         class="flex items-center p-2 h-fit w-auto"
