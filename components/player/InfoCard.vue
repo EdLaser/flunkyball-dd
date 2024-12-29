@@ -11,7 +11,7 @@
 
     <CardContent>
       <div class="grid grid-cols-2">
-        <div>
+        <div class="pr-5">
           <div class="grid">
             <div class="flex md:flex-row flex-col md:items-center gap-5">
               <Avatar>
@@ -39,15 +39,33 @@
               </div>
             </div>
           </div>
-          <div class="grid mt-8">
-            <div class="flex col-span-1 flex-col gap-2">
+          <div class="grid mt-8 gap-2">
+            <div class="flex col-span-1 justify-between gap-2">
               <span class="flex gap-2 font-semibold">
-                <Trophy />
-                Spiele gespielt:
+                <Swords />
+                Spiele:
               </span>
               <InspiraNumberTicker
                 :value="gamesPlayed ?? 0"
                 :decimal-places="0"
+              />
+            </div>
+            <div class="flex col-span-1 justify-between gap-2">
+              <span class="flex gap-2 font-semibold">
+                <Trophy />
+                Siege:
+              </span>
+              <InspiraNumberTicker :value="wins ?? 0" :decimal-places="0" />
+            </div>
+            <div class="flex col-span-1 justify-between gap-2">
+              <span class="flex gap-2 font-semibold">
+                <Beer />
+                Liter:
+              </span>
+              <InspiraNumberTicker
+                :value="gamesPlayed ? gamesPlayed * 0.5 : 0"
+                :decimal-places="1"
+                as-liter
               />
             </div>
           </div>
@@ -55,7 +73,7 @@
             <div class="flex items-center gap-5" v-if="props.playsIn">
               <div class="flex flex-col">
                 <span class="font-semibold">Team:</span>
-                <NuxtLink :to="`/teams/${props.playsIn}`" class="font-light">
+                <NuxtLink class="font-light">
                   {{ props.playsIn }}</NuxtLink
                 >
               </div>
@@ -85,12 +103,13 @@
 
 <script lang="ts" setup>
 import type { Player } from "~/types/Player";
-import { Trophy } from "lucide-vue-next";
+import { Trophy, Beer, Medal, Swords } from "lucide-vue-next";
 
 const props = defineProps<{
   player: Player;
   gamesPlayed?: number;
   playsIn?: string;
+  wins?: number;
   noUpload?: boolean;
 }>();
 </script>

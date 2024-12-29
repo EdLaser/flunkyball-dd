@@ -14,6 +14,7 @@
         v-for="player in filteredPlayers"
         :player="player"
         :games-played="player?.matchesPlayed ?? 0"
+        :plays-in="player.playsIn ?? ''"
         no-upload
       />
     </div>

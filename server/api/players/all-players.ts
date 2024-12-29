@@ -11,6 +11,7 @@ export default defineEventHandler(async (event) => {
             select: {
               matches_matches_away_team_idToteams: true,
               matches_matches_home_team_idToteams: true,
+              matches_matches_match_winnerToteams: true,
             },
           },
         },
@@ -34,5 +35,6 @@ export default defineEventHandler(async (event) => {
     matchesPlayed:
       (player.teams?._count?.matches_matches_away_team_idToteams ?? 0) +
       (player.teams?._count?.matches_matches_home_team_idToteams ?? 0),
+    wins: player.teams?._count?.matches_matches_match_winnerToteams ?? 0,
   }));
 });

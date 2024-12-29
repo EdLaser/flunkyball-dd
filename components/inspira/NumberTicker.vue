@@ -9,6 +9,7 @@
     "
   >
     {{ output }}
+    {{ props.asLiter ? " L" : "" }}
   </span>
 </template>
 
@@ -25,6 +26,7 @@ type TransitionsPresetsKeys = keyof typeof TransitionPresets;
 interface NumberTickerProps {
   value: number;
   direction?: "up" | "down";
+  asLiter?: boolean;
   duration?: number;
   delay?: number;
   decimalPlaces?: number;

@@ -14,7 +14,9 @@ export default defineEventHandler(async (event) => {
         select: {
           _count: {
             select: {
-              tournament_registrations: true,
+              matches_matches_away_team_idToteams: true,
+              matches_matches_home_team_idToteams: true,
+              matches_matches_match_winnerToteams: true,
             },
           },
         },
@@ -26,7 +28,8 @@ export default defineEventHandler(async (event) => {
   });
 
   const gamesPlayed = playerDetails?.teams
-    ? playerDetails?.teams._count?.tournament_registrations
+    ? playerDetails?.teams._count?.matches_matches_away_team_idToteams +
+      playerDetails?.teams._count?.matches_matches_home_team_idToteams
     : 0;
 
   const transformed = {
@@ -36,6 +39,8 @@ export default defineEventHandler(async (event) => {
     phone: playerDetails?.phone ?? "",
     publicID: playerDetails?.public_id ?? "",
     gamesPlayed: gamesPlayed,
+    wins:
+      playerDetails?.teams?._count?.matches_matches_match_winnerToteams ?? 0,
   };
 
   return transformed;
