@@ -12,11 +12,11 @@ import { ChevronRight } from "lucide-vue-next";
 
 const route = useRoute();
 const router = useRouter();
-const { loggedIn } = useUserSession();
+const { loggedIn, session } = useUserSession();
 
 const routeFilter = (r: RouteRecordNormalized) => {
   const isDynamicRoute = r.path.includes(":");
-  if (loggedIn.value) {
+  if (loggedIn.value && session.value.isStaff) {
     return (
       r.path.startsWith(route.path) && r.path !== route.path && !isDynamicRoute
     );

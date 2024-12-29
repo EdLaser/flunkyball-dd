@@ -13,6 +13,10 @@ export default defineNuxtConfig({
     "nuxt-auth-utils",
   ],
 
+  app: {
+    pageTransition: { name: "page", mode: "out-in" },
+  },
+
   runtimeConfig: {
     AVATAR_BUCKET_NAME: process.env.AVATAR_BUCKET_NAME,
   },
