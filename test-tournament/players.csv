@@ -1,0 +1,33 @@
+id,created_at,first_name,last_name,slogan,plays_in,public_id,phone
+2d88021c-537d-4343-9283-8afe6113e467,2025-01-03 12:39:44.864559+00,Clara,Wagner,"Trink, als gäbe es kein Morgen!",ef7736ac-bc88-4756-93c0-ff391849dce0,clara-wagner#9348,+497136719883
+6b9ad173-1181-4ca8-a22e-76021d9fafee,2025-01-03 12:39:44.864559+00,Jonas,Hoffmann,Ein Bier ist nie genug.,d649d5c8-bfec-4308-85cc-30b7b1d8088b,jonas-hoffmann#9590,+495532769102
+436c8234-7354-4b52-82fc-4a8b5ca25b96,2025-01-03 12:39:44.864559+00,Felix,Weber,Kein Bier vor vier? Egal!,ef7736ac-bc88-4756-93c0-ff391849dce0,felix-weber#6555,+491285165554
+9efecef8-b903-409d-9374-3dd14ed427aa,2025-01-03 12:39:44.864559+00,Felix,Schulz,"Trink, als gäbe es kein Morgen!",05b5262c-95fc-4aa6-8497-a638ac0ab85a,felix-schulz#5859,+492176336955
+04fe7c49-b1ba-40f2-8b16-14f375ee6a2a,2025-01-03 12:39:44.864559+00,Maximilian,Müller,Prost! Prost! Prost!,05b5262c-95fc-4aa6-8497-a638ac0ab85a,maximilian-müller#5954,+495046100981
+8922110e-422e-4a0f-a71c-dc441c4be3a6,2025-01-03 12:39:44.864559+00,Leon,Schneider,"Trink, als gäbe es kein Morgen!",0d9e598d-9e91-40c1-b943-30f7c4607e3e,leon-schneider#5419,+498253465931
+574166f5-6068-456a-b682-5ae0d1195c35,2025-01-03 12:39:44.864559+00,Emma,Schmidt,Durst wird durch Bier erst schön.,0d9e598d-9e91-40c1-b943-30f7c4607e3e,emma-schmidt#6204,+498114352033
+091acaa9-2434-46b1-a06a-e8ac88ba162c,2025-01-03 12:39:44.864559+00,Sophie,Müller,"Cheers, Kameraden!",18af7064-b8d0-41c3-a61b-555495a82d55,sophie-müller#8968,+492261658229
+daac606e-2d07-4313-baef-b9c40d91686a,2025-01-03 12:39:44.864559+00,Lukas,Schmidt,Für jedes Problem ein Kasten.,18af7064-b8d0-41c3-a61b-555495a82d55,lukas-schmidt#0151,+494616588365
+eba1d5b8-f9e2-453d-b04c-fd6a92059fe4,2025-01-03 12:39:44.864559+00,Leon,Schulz,Prost! Prost! Prost!,1b033505-1b35-45c8-879b-522fd623f505,leon-schulz#3229,+493066062292
+8366876e-a403-4781-9302-33a7a060ed04,2025-01-03 12:39:44.864559+00,Felix,Meyer,Ein Bier ist nie genug.,1b033505-1b35-45c8-879b-522fd623f505,felix-meyer#9419,+494659344720
+8bd7775a-2207-4e3b-8574-42e9ed93f516,2025-01-03 12:39:44.864559+00,Mia,Schmidt,Kein Bier vor vier? Egal!,1c70c6e8-6e2b-4f70-a15d-c42ce439716f,mia-schmidt#4731,+492510913580
+1db3eeb6-4935-4e9e-86c6-b6b428c77858,2025-01-03 12:39:44.864559+00,Hannah,Schulz,Ein Bier ist nie genug.,1c70c6e8-6e2b-4f70-a15d-c42ce439716f,hannah-schulz#6366,+498230392001
+7570ed82-1262-4c43-a8a7-e61115d43a84,2025-01-03 12:39:44.864559+00,Clara,Hoffmann,"Cheers, Kameraden!",249c5293-5e40-4829-a256-3ce798a30670,clara-hoffmann#6405,+494002596332
+4a4e86ef-a740-460f-b0b0-c97714dadcd1,2025-01-03 12:39:44.864559+00,Leon,Meyer,Prost! Prost! Prost!,249c5293-5e40-4829-a256-3ce798a30670,leon-meyer#8483,+491192963405
+38a3c12f-690d-42d4-b93d-3952b02cc612,2025-01-03 12:39:44.864559+00,Emma,Hoffmann,Kein Bier vor vier? Egal!,40ef8a4a-a121-4dbf-b397-9ce8b5fd1c17,emma-hoffmann#8449,+494810700172
+754d9bc4-00b1-4423-806c-dfa54007c27f,2025-01-03 12:39:44.864559+00,Leon,Fischer,Ein Bier ist nie genug.,40ef8a4a-a121-4dbf-b397-9ce8b5fd1c17,leon-fischer#7244,+498422501778
+522db1d0-ffd9-474f-a5fc-4f4ed7a81b90,2025-01-03 12:39:44.864559+00,Emma,Becker,Durst wird durch Bier erst schön.,4277d3ff-77bb-4f5b-becc-b906748ea36d,emma-becker#7953,+492514959742
+2b218d28-97a1-4cec-9063-1aa1e0e99d62,2025-01-03 12:39:44.864559+00,Jonas,Fischer,Für jedes Problem ein Kasten.,4277d3ff-77bb-4f5b-becc-b906748ea36d,jonas-fischer#0315,+497318899406
+9493b11e-af0a-43b2-b0a4-08e75df60cd4,2025-01-03 12:39:44.864559+00,Leon,Wagner,Kein Bier vor vier? Egal!,5de2d2d1-7dc6-4d77-b2ca-9c06e7435f31,leon-wagner#0424,+491115316337
+3e5338d8-47f4-4e95-986e-30910d3b507d,2025-01-03 12:39:44.864559+00,Felix,Fischer,Prost! Prost! Prost!,5de2d2d1-7dc6-4d77-b2ca-9c06e7435f31,felix-fischer#2080,+493678700388
+60caa65a-68e5-479e-9dd2-94ba8696fb53,2025-01-03 12:39:44.864559+00,Clara,Fischer,Durst wird durch Bier erst schön.,61e4debd-e0e5-4195-b967-089e3fd9ee14,clara-fischer#1987,+494508746458
+4b472ac7-6810-441c-8b8e-3a002c96fa09,2025-01-03 12:39:44.864559+00,Leon,Hoffmann,"Cheers, Kameraden!",61e4debd-e0e5-4195-b967-089e3fd9ee14,leon-hoffmann#4812,+499557335285
+cd21dc8e-4820-4f62-a571-2e6810eb4735,2025-01-03 12:39:44.864559+00,Clara,Becker,"Trink, als gäbe es kein Morgen!",65d5adf6-630d-44f1-b88f-99ff6861c941,clara-becker#0803,+496509384848
+893cba8d-d1f6-4f59-95e8-3194e9b9d120,2025-01-03 12:39:44.864559+00,Sophie,Meyer,Für jedes Problem ein Kasten.,65d5adf6-630d-44f1-b88f-99ff6861c941,sophie-meyer#6635,+496245047808
+4e6b2e9f-07ec-4231-ba51-329801ce107d,2025-01-03 12:39:44.864559+00,Mia,Fischer,"Cheers, Kameraden!",75280804-4557-40c3-a289-3c3f0005d281,mia-fischer#8205,+496052876026
+c14d1b4d-8575-4670-9e20-c612cc47173d,2025-01-03 12:39:44.864559+00,Felix,Schulz,Prost! Prost! Prost!,75280804-4557-40c3-a289-3c3f0005d281,felix-schulz#8713,+499239697307
+4544e9a1-b526-4179-bf97-9cd792ee7492,2025-01-03 12:39:44.864559+00,Sophie,Becker,Ein Bier ist nie genug.,8b205da6-e9b2-455e-aec2-6059f4a41336,sophie-becker#8512,+495758745070
+93d0dcf2-d6d9-41c9-be82-931abb24aaba,2025-01-03 12:39:44.864559+00,Sophie,Wagner,"Trink, als gäbe es kein Morgen!",8b205da6-e9b2-455e-aec2-6059f4a41336,sophie-wagner#6282,+496404120221
+5e631eac-bf03-4701-828a-4bf23b88fadb,2025-01-03 12:39:44.864559+00,Felix,Müller,Lieber Hopfen als Sorgen!,d5ebad60-20a7-47f3-809d-85aa66863d27,felix-müller#5348,+498940439813
+43c09d6d-9057-4677-818e-58e9189b3c44,2025-01-03 12:39:44.864559+00,Mia,Becker,Lieber Hopfen als Sorgen!,d5ebad60-20a7-47f3-809d-85aa66863d27,mia-becker#2430,+495729367994
+f3e4828e-a222-4471-8d0b-79fcd51b022f,2025-01-03 12:39:44.864559+00,Emma,Schulz,"Trink, als gäbe es kein Morgen!",d649d5c8-bfec-4308-85cc-30b7b1d8088b,emma-schulz#9943,+497171957630
