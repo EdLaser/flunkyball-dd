@@ -9,3 +9,10 @@ export const calculateTeams = (number: number): [number, number] => {
   }
   return [0, number];
 };
+
+const groupAmount = {
+  8: 4,
+  16: 4,
+  32: 8,
+  46: 8,
+}
