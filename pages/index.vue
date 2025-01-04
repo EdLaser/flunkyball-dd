@@ -168,6 +168,10 @@ import { BeerIcon, Users, Trophy } from "lucide-vue-next";
 import RainbowButton from "~/components/inspira/RainbowButton.vue";
 import PastTournamenCard from "~/components/tournament/PastTournamenCard.vue";
 
+useHead({
+  title: "Flunkyball Turniere Dresden",
+});
+
 const {
   data: upcomingTournaments,
   status: upcomingStatus,

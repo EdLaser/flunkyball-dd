@@ -14,6 +14,10 @@
 </template>
 
 <script lang="ts" setup>
+useHead({
+  title: "Turniere",
+});
+
 definePageMeta({
   title: "Turniere",
   name: "Turniere",

@@ -189,6 +189,10 @@ import * as z from "zod";
 import { toTypedSchema } from "@vee-validate/zod";
 import { useForm } from "vee-validate";
 
+useHead({
+  title: "Registrieren",
+});
+
 definePageMeta({
   title: "Registrieren",
   description: "Registriere dich für unsere Flunkyball Turniere.",

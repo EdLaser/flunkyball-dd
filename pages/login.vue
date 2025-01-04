@@ -87,6 +87,10 @@
 import { Beer } from "lucide-vue-next";
 import { toast } from "vue-sonner";
 
+useHead({
+  title: "Anmelden",
+});
+
 definePageMeta({
   title: "Login",
   name: "Einloggen",

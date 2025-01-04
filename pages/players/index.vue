@@ -25,8 +25,9 @@
         variant="outline"
         @click="() => (direction = direction === 'asc' ? 'desc' : 'asc')"
         v-auto-animate
+        v-if="orderBy"
       >
-        <component :is="direction === 'asc' ? ArrowUp10 : ArrowDown10" />
+        <component :is="direction === 'asc' ? ArrowDown10 : ArrowUp10" />
       </Button>
     </div>
     <div class="grid md:grid-cols-2 gap-4" v-auto-animate>
@@ -50,6 +51,11 @@ const query = ref("");
 const orderBy = ref<"" | "victory" | "matches">("");
 const direction = ref<"asc" | "desc">("asc");
 
+useHead({
+  title: "Alle Spieler",
+});
+
+
 definePageMeta({
   name: "Spieler",
   title: "Alle Spieler",
@@ -71,7 +77,6 @@ const filteredPlayers = computed(() => {
 
 const orderedAndFilteredPlayers = computed(() => {
   if (!filteredPlayers.value) return [];
-  if (!orderBy.value) return filteredPlayers.value;
   if (orderBy.value === "victory") {
     return filteredPlayers.value.sort((a, b) => {
       return direction.value === "asc" ? b.wins - a.wins : a.wins - b.wins;

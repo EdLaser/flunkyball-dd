@@ -160,10 +160,9 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
 import { z } from "zod";
-import { Dialog } from "@/components/ui/dialog";
 import {
+  Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
@@ -200,6 +199,10 @@ import { MapPin, Plus, Edit, Trash2 } from "lucide-vue-next";
 import { toast } from "vue-sonner";
 import { useForm } from "vee-validate";
 import { toTypedSchema } from "@vee-validate/zod";
+
+useHead({
+  title: "Orte (Orga)",
+});
 
 definePageMeta({
   middleware: "auth",
@@ -243,59 +246,21 @@ const locationSchema = z.object({
 // Type from Zod
 type LocationType = z.infer<typeof locationSchema>;
 
-// Mock data
-const initialLocations: Array<LocationType> = [
-  {
-    name: "Eiffel Tower",
-    street: "Champ de Mars",
-    city: "Paris",
-    postal_code: "75007",
-    house_number: "5",
-    description: "An iconic wrought-iron lattice tower in Paris.",
-  },
-  {
-    name: "Louvre Museum",
-    street: "Rue de Rivoli",
-    city: "Paris",
-    postal_code: "75001",
-    house_number: "99",
-    description: "The world's largest art museum and a historic monument.",
-  },
-  {
-    name: "Château de Chambord",
-    street: "Place Saint-Louis",
-    city: "Chambord",
-    postal_code: "41250",
-    house_number: "1",
-    description: "A magnificent Renaissance-style château in the Loire Valley.",
-  },
-  {
-    name: "Mont Saint-Michel",
-    street: "Le Mont-Saint-Michel",
-    city: "Mont-Saint-Michel",
-    postal_code: "50170",
-    house_number: "2",
-    description:
-      "A stunning island commune with an abbey and medieval architecture.",
-  },
-  {
-    name: "Cathédrale Notre-Dame de Strasbourg",
-    street: "Place de la Cathédrale",
-    city: "Strasbourg",
-    postal_code: "67000",
-    house_number: "10",
-    description: "A Gothic cathedral with intricate details and a tall spire.",
-  },
-];
-
 const { data: locations } = await useFetch("/api/orga/locations");
 
 const form = useForm({
   validationSchema: toTypedSchema(locationSchema),
 });
 
-const onSubmit = form.handleSubmit((values) => {
+const onSubmit = form.handleSubmit(async (values) => {
   console.log("Form submitted!", values);
+
+  const result = await $fetch("/api/orga/new-location", {
+    method: "POST",
+    body: {
+      location: values,
+    },
+  });
 });
 
 function deleteLocation(index: number) {

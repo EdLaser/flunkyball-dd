@@ -150,6 +150,10 @@ import {
 import NumberTicker from "~/components/inspira/NumberTicker.vue";
 import { LineChart } from "~/components/ui/chart-line";
 
+useHead({
+  title: "Übersicht",
+});
+
 const { data: allTournaments } = await useFetch(
   "/api/tournaments/all-tournaments",
   {

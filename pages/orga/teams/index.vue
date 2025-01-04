@@ -20,6 +20,10 @@
 import TeamsTable from "~/components/team/TeamsTable.vue";
 import AddTeamDialog from "~/components/team/AddTeamDialog.vue";
 
+useHead({
+  title: "Teams (Orga)",
+});
+
 definePageMeta({
   middleware: "auth",
   title: "Teams (Orga)",

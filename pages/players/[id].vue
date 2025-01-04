@@ -22,6 +22,10 @@
 <script lang="ts" setup>
 const route = useRoute();
 
+useHead({
+  title: `${decodeURIComponent(route.params.id as string)}`,
+});
+
 const { data: playerDetails, refresh } = await useFetch(
   () =>
     `/api/players/player-details/${encodeURIComponent(

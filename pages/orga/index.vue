@@ -2,7 +2,9 @@
   <div class="min-h-screen bg-background">
     <header class="bg-primary text-primary-foreground shadow-md">
       <div class="container mx-auto py-6 px-4">
-        <h1 class="text-3xl font-bold text-white">Flunkyball Organization Dashboard</h1>
+        <h1 class="text-3xl font-bold text-white">
+          Flunkyball Organization Dashboard
+        </h1>
       </div>
     </header>
     <ActionGridButton
@@ -132,6 +134,10 @@
 </template>
 
 <script setup lang="ts">
+useHead({
+  title: "Dashboard",
+});
+
 definePageMeta({
   middleware: "auth",
   layout: "dashboard",
@@ -167,7 +173,6 @@ import {
 import TournamentList from "~/components/tournament/TournamentList.vue";
 import TeamList from "~/components/team/TeamList.vue";
 import StatCard from "@/components/StatCard.vue";
-import { vAutoAnimate } from "@formkit/auto-animate";
 
 const sideBarStore = useSideBarStore();
 
