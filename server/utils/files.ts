@@ -1,5 +1,6 @@
 import { serverSupabaseClient } from "#supabase/server";
 import { FileObject, UploadResult } from "~/types/FileUploads";
+import { createHash } from "crypto";
 const config = useRuntimeConfig();
 
 /**
@@ -24,9 +25,15 @@ export async function uploadToSupabase(
 
     const { data, error } = await supabase.storage
       .from(bucketName)
-      .upload(`${pathPrefix}uploads/${userPublicID}`, file.data, {
-        contentType: file.type,
-      });
+      .upload(
+        `${pathPrefix}/uploads/${createHash("sha512")
+          .update(userPublicID)
+          .digest("hex")}`,
+        file.data,
+        {
+          contentType: file.type,
+        }
+      );
 
     if (error) {
       return { success: false, message: "Upload to Supabase failed.", error };

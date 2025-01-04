@@ -30,6 +30,7 @@ export default defineEventHandler(async (event) => {
         },
         secure: {
           isStaff: true,
+          publicID: possibleStaff.public_id ?? "",
         },
         isStaff: true,
       });

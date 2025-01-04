@@ -13,6 +13,7 @@
         :games-played="playerDetails?.gamesPlayed ?? 0"
         :plays-in="playerDetails.team ?? ''"
         :wins="playerDetails?.wins ?? 0"
+        @do-refresh="refresh()"
       />
     </main>
   </div>
@@ -21,7 +22,7 @@
 <script lang="ts" setup>
 const route = useRoute();
 
-const { data: playerDetails } = await useFetch(
+const { data: playerDetails, refresh } = await useFetch(
   () =>
     `/api/players/player-details/${encodeURIComponent(
       route.params.id as string

@@ -65,6 +65,7 @@
             :title="player.firstName"
             :subtitle="`Wer ist ${player.firstName}`"
             :description="player.slogan ?? ''"
+            :image="player.avatarLink ?? undefined"
           />
         </div>
       </div>

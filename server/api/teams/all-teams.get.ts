@@ -36,7 +36,6 @@ export default defineEventHandler(async (event) => {
       },
     },
   });
-  console.log(allTeams)
 
   return (
     allTeams

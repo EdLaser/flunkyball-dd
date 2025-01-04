@@ -5,6 +5,7 @@ export default defineEventHandler(async (event) => {
       last_name: true,
       public_id: true,
       slogan: true,
+      avatar_link: true,
       teams: {
         select: {
           name: true,
@@ -38,5 +39,6 @@ export default defineEventHandler(async (event) => {
       (player.teams?._count?.matches_matches_away_team_idToteams ?? 0) +
       (player.teams?._count?.matches_matches_home_team_idToteams ?? 0),
     wins: player.teams?._count?.matches_matches_match_winnerToteams ?? 0,
+    avatarLink: player.avatar_link,
   }));
 });
