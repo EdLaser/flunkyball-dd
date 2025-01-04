@@ -37,9 +37,15 @@
               </TableCell>
               <TableCell>
                 <div class="flex space-x-2">
-                  <Button variant="outline" size="icon">
-                    <Edit class="h-4 w-4" />
-                  </Button>
+                  <Popover>
+                    <PopoverTrigger as-child>
+                      <Button variant="outline" size="icon">
+                        <Edit class="h-4 w-4" />
+                      </Button>
+                    </PopoverTrigger>
+                    <PopoverContent> Some popover content </PopoverContent>
+                  </Popover>
+
                   <Button
                     variant="outline"
                     size="icon"
@@ -184,7 +190,6 @@ import {
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
 import {
-  Form,
   FormField,
   FormItem,
   FormLabel,
