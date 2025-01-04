@@ -71,88 +71,86 @@
             </DialogDescription>
           </DialogHeader>
 
-          <Form>
-            <form @submit.prevent="onSubmit()" class="space-y-4">
-              <!-- Location Name -->
-              <FormField v-slot="{ componentField }" name="name">
-                <FormItem>
-                  <FormLabel>Name</FormLabel>
+          <form @submit.prevent="onSubmit()" class="space-y-4">
+            <!-- Location Name -->
+            <FormField v-slot="{ componentField }" name="name">
+              <FormItem>
+                <FormLabel>Name</FormLabel>
+                <FormControl>
+                  <Input v-bind="componentField" />
+                </FormControl>
+              </FormItem>
+            </FormField>
+
+            <div class="grid grid-cols-3 md:grid-cols-5 gap-3">
+              <FormField v-slot="{ componentField }" name="street">
+                <FormItem class="col-span-2 md:col-span-4">
+                  <FormLabel>Straße</FormLabel>
                   <FormControl>
                     <Input v-bind="componentField" />
                   </FormControl>
                 </FormItem>
               </FormField>
 
-              <div class="grid grid-cols-3 md:grid-cols-5 gap-3">
-                <FormField v-slot="{ componentField }" name="street">
-                  <FormItem class="col-span-2 md:col-span-4">
-                    <FormLabel>Straße</FormLabel>
-                    <FormControl>
-                      <Input v-bind="componentField" />
-                    </FormControl>
-                  </FormItem>
-                </FormField>
-
-                <FormField v-slot="{ componentField }" name="house_number">
-                  <FormItem class="col-span-1 md:col-span-1">
-                    <FormLabel>Nr.</FormLabel>
-                    <FormControl>
-                      <Input v-bind="componentField" />
-                    </FormControl>
-                  </FormItem>
-                </FormField>
-              </div>
-
-              <div class="grid grid-cols-2 gap-3">
-                <FormField v-slot="{ componentField }" name="postal_code">
-                  <FormItem>
-                    <FormLabel>PLZ</FormLabel>
-                    <FormControl>
-                      <Input v-bind="componentField" />
-                    </FormControl>
-                  </FormItem>
-                </FormField>
-
-                <FormField v-slot="{ componentField }" name="city">
-                  <FormItem>
-                    <FormLabel>Stadt</FormLabel>
-                    <FormControl>
-                      <Input v-bind="componentField" />
-                    </FormControl>
-                  </FormItem>
-                </FormField>
-              </div>
-
-              <!-- Directions -->
-              <FormField v-slot="{ componentField }" name="directions">
-                <FormItem>
-                  <FormLabel>Wegbeschreibung</FormLabel>
+              <FormField v-slot="{ componentField }" name="house_number">
+                <FormItem class="col-span-1 md:col-span-1">
+                  <FormLabel>Nr.</FormLabel>
                   <FormControl>
-                    <Textarea v-bind="componentField" />
+                    <Input v-bind="componentField" />
                   </FormControl>
-                  <FormDescription>
-                    Gib eine kurze Wegbeschreibung (optional) an.
-                  </FormDescription>
+                </FormItem>
+              </FormField>
+            </div>
+
+            <div class="grid grid-cols-2 gap-3">
+              <FormField v-slot="{ componentField }" name="postal_code">
+                <FormItem>
+                  <FormLabel>PLZ</FormLabel>
+                  <FormControl>
+                    <Input v-bind="componentField" />
+                  </FormControl>
                 </FormItem>
               </FormField>
 
-              <!-- Description -->
-              <FormField v-slot="{ componentField }" name="description">
+              <FormField v-slot="{ componentField }" name="city">
                 <FormItem>
-                  <FormLabel>Weitere Details</FormLabel>
+                  <FormLabel>Stadt</FormLabel>
                   <FormControl>
-                    <Textarea v-bind="componentField" />
+                    <Input v-bind="componentField" />
                   </FormControl>
-                  <FormDescription>
-                    Beschreibe kurz die Location (optional).
-                  </FormDescription>
                 </FormItem>
               </FormField>
-              <div class="flex justify-end w-full">
-                <Button type="submit"> <Plus />Hinzufügen </Button>
-              </div>
-            </form>
-          </Form>
+            </div>
+
+            <!-- Directions -->
+            <FormField v-slot="{ componentField }" name="directions">
+              <FormItem>
+                <FormLabel>Wegbeschreibung</FormLabel>
+                <FormControl>
+                  <Textarea v-bind="componentField" />
+                </FormControl>
+                <FormDescription>
+                  Gib eine kurze Wegbeschreibung (optional) an.
+                </FormDescription>
+              </FormItem>
+            </FormField>
+
+            <!-- Description -->
+            <FormField v-slot="{ componentField }" name="description">
+              <FormItem>
+                <FormLabel>Weitere Details</FormLabel>
+                <FormControl>
+                  <Textarea v-bind="componentField" />
+                </FormControl>
+                <FormDescription>
+                  Beschreibe kurz die Location (optional).
+                </FormDescription>
+              </FormItem>
+            </FormField>
+            <div class="flex justify-end w-full">
+              <Button type="submit"> <Plus />Hinzufügen </Button>
+            </div>
+          </form>
         </DialogContent>
       </Dialog>
     </div>
@@ -261,6 +259,16 @@ const onSubmit = form.handleSubmit(async (values) => {
       location: values,
     },
   });
+
+  if (result) {
+    toast("Location Erstellt", {
+      description: "Die Location wurde erstellt.",
+    });
+  } else {
+    toast("Fehler", {
+      description: "Die Location konnte nicht erstellt werden.",
+    });
+  }
 });
 
 function deleteLocation(index: number) {

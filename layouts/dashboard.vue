@@ -111,6 +111,7 @@
     <main
       class="flex-1 overflow-y-auto transition-all duration-200"
       :class="isSidebarOpen ? 'md:ml-64' : 'ml-0'"
+      ref="mainRef"
     >
       <slot />
     </main>
@@ -134,7 +135,8 @@ import { useSideBarStore } from "~/stores/SideBar";
 
 const sideBarStore = useSideBarStore();
 
-const { isSidebarOpen, isMobile, sidebarRef } = storeToRefs(sideBarStore);
+const { isSidebarOpen, isMobile, sidebarRef, mainRef } =
+  storeToRefs(sideBarStore);
 
 const { loggedIn, user, clear, fetch } = useUserSession();
 watch(loggedIn, async (nowLoggedIn, wasLoggedIn) => {
