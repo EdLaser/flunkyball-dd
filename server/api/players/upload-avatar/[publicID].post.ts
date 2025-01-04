@@ -1,4 +1,4 @@
-import { uploadToSupabase } from "~/server/utils/files";
+import { getImagePublicLink, uploadToSupabase } from "~/server/utils/files";
 import { FileObject } from "~/types/FileUploads";
 
 export default defineEventHandler(async (event) => {
@@ -48,10 +48,35 @@ export default defineEventHandler(async (event) => {
       message: "No file uploaded.",
     });
   } else {
-    const file: FileObject = form[0]; // Ensure type adherence
+    const file: FileObject = {
+      filename: form[0].filename ?? "",
+      data: form[0].data,
+      type: form[0].type ?? "",
+    };
 
     // Use the reusable upload function
     const result = await uploadToSupabase(file, event, session.user?.publicID);
+
+    if (result.success && result.link) {
+      await usePrisma(event).players.update({
+        data: {
+          avatar_link: result.link,
+        },
+        where: {
+          public_id: session.secure.publicID,
+        },
+      });
+    } else if (result.success && !result.link) {
+      const link = await getImagePublicLink(result.data?.path, event);
+      await usePrisma(event).players.update({
+        data: {
+          avatar_link: link,
+        },
+        where: {
+          public_id: session.secure.publicID,
+        },
+      });
+    }
 
     return result;
   }

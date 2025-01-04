@@ -36,6 +36,7 @@ export async function uploadToSupabase(
       success: true,
       message: "File uploaded successfully to Supabase!",
       data,
+      link: await getImagePublicLink(data.path, event),
     };
   } catch (error) {
     return {
@@ -45,3 +46,10 @@ export async function uploadToSupabase(
     };
   }
 }
+
+export const getImagePublicLink = async (path: string, event: any) => {
+  const supabase = await serverSupabaseClient(event);
+  const link = supabase.storage.from("avatars").getPublicUrl(path);
+
+  return link.data.publicUrl;
+};
