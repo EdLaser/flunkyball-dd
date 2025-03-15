@@ -104,7 +104,7 @@
                   </Avatar>
                   <div>
                     <NuxtLink
-                      :to="`/teams/${encodeURIComponent(team.name)}`"
+                      :to="`/teams/${encodeURIComponent(team.publicID ?? '')}`"
                       class="font-semibold text-primary"
                     >
                       {{ team.name }}
