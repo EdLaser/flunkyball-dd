@@ -142,12 +142,19 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 
+const route = useRoute();
+
+useHead({
+  title: `Turnier Details: ${decodeURIComponent(
+    route.params.title as string
+  )}`,
+});
+
 definePageMeta({
   title: "Turnier Details",
   description: "Details zum Turnier",
 });
 
-const route = useRoute();
 const nuxtApp = useNuxtApp();
 
 const {

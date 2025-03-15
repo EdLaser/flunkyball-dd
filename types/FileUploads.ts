@@ -8,5 +8,6 @@ export interface UploadResult {
   success: boolean;
   message: string;
   data?: Record<string, any>; // Response data from Supabase (optional)
+  link?: string;
   error?: any; // Error details (optional)
 }

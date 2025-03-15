@@ -10,6 +10,7 @@ export default defineEventHandler(async (event) => {
       slogan: true,
       phone: true,
       public_id: true,
+      avatar_link: true,
       teams: {
         select: {
           name: true,
@@ -43,6 +44,7 @@ export default defineEventHandler(async (event) => {
     gamesPlayed: gamesPlayed,
     wins:
       playerDetails?.teams?._count?.matches_matches_match_winnerToteams ?? 0,
+    avatarLink: playerDetails?.avatar_link,
   };
 
   return transformed;

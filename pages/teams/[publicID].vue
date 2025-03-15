@@ -6,6 +6,10 @@
 const route = useRoute();
 const nuxtApp = useNuxtApp();
 
+useHead({
+  title: `Team ${decodeURIComponent(route.params.publicID as string)}`,
+});
+
 const { data: team } = await useFetch(
   () => `/api/teams/${encodeURIComponent(route.params.publicID as string)}`,
   {

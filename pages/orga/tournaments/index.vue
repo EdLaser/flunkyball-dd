@@ -31,10 +31,13 @@ import {
   Card,
   CardHeader,
   CardContent,
-  CardFooter,
   CardTitle,
   CardDescription,
 } from "@/components/ui/card";
+
+useHead({
+  title: "Turniere (Orga)",
+});
 
 definePageMeta({
   middleware: "auth",

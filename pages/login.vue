@@ -85,8 +85,11 @@
 
 <script setup lang="ts">
 import { Beer } from "lucide-vue-next";
-import { routeLocationKey } from "vue-router";
 import { toast } from "vue-sonner";
+
+useHead({
+  title: "Anmelden",
+});
 
 definePageMeta({
   title: "Login",
@@ -137,7 +140,7 @@ const handleLogin = async () => {
 
   if (success) {
     toast.success("Erfolgreich eingeloggt!");
-    if (!route.query) await navigateTo(loginAsStaff ? "/orga" : "/");
+    return navigateTo(loginAsStaff ? "/orga" : "/");
   } else {
     toast.error("Ein Fehler ist aufgetreten!");
   }

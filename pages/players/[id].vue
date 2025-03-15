@@ -13,6 +13,7 @@
         :games-played="playerDetails?.gamesPlayed ?? 0"
         :plays-in="playerDetails.team ?? ''"
         :wins="playerDetails?.wins ?? 0"
+        @do-refresh="refresh()"
       />
     </main>
   </div>
@@ -22,7 +23,11 @@
 const route = useRoute();
 const nuxtApp = useNuxtApp();
 
-const { data: playerDetails } = await useFetch(
+useHead({
+  title: `${decodeURIComponent(route.params.id as string)}`,
+});
+
+const { data: playerDetails, refresh } = await useFetch(
   () =>
     `/api/players/player-details/${encodeURIComponent(
       route.params.id as string

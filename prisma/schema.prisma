@@ -9,16 +9,17 @@ datasource db {
 
 /// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
 model players {
-  id         String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  created_at DateTime @default(now()) @db.Timestamptz(6)
-  first_name String
-  last_name  String?
-  slogan     String?
-  plays_in   String?  @db.Uuid
-  public_id  String?  @unique
-  phone      String?  @unique
-  teams      teams?   @relation(fields: [plays_in], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  users      users[]
+  id          String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  created_at  DateTime @default(now()) @db.Timestamptz(6)
+  first_name  String
+  last_name   String?
+  slogan      String?
+  plays_in    String?  @db.Uuid
+  public_id   String?  @unique
+  phone       String?  @unique
+  avatar_link String?  @unique
+  teams       teams?   @relation(fields: [plays_in], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  users       users[]
 }
 
 /// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.

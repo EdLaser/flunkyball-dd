@@ -37,9 +37,15 @@
               </TableCell>
               <TableCell>
                 <div class="flex space-x-2">
-                  <Button variant="outline" size="icon">
-                    <Edit class="h-4 w-4" />
-                  </Button>
+                  <Popover>
+                    <PopoverTrigger as-child>
+                      <Button variant="outline" size="icon">
+                        <Edit class="h-4 w-4" />
+                      </Button>
+                    </PopoverTrigger>
+                    <PopoverContent> Some popover content </PopoverContent>
+                  </Popover>
+
                   <Button
                     variant="outline"
                     size="icon"
@@ -71,88 +77,86 @@
             </DialogDescription>
           </DialogHeader>
 
-          <Form>
-            <form @submit.prevent="onSubmit()" class="space-y-4">
-              <!-- Location Name -->
-              <FormField v-slot="{ componentField }" name="name">
-                <FormItem>
-                  <FormLabel>Name</FormLabel>
+          <form @submit.prevent="onSubmit()" class="space-y-4">
+            <!-- Location Name -->
+            <FormField v-slot="{ componentField }" name="name">
+              <FormItem>
+                <FormLabel>Name</FormLabel>
+                <FormControl>
+                  <Input v-bind="componentField" />
+                </FormControl>
+              </FormItem>
+            </FormField>
+
+            <div class="grid grid-cols-3 md:grid-cols-5 gap-3">
+              <FormField v-slot="{ componentField }" name="street">
+                <FormItem class="col-span-2 md:col-span-4">
+                  <FormLabel>Straße</FormLabel>
                   <FormControl>
                     <Input v-bind="componentField" />
                   </FormControl>
                 </FormItem>
               </FormField>
 
-              <div class="grid grid-cols-3 md:grid-cols-5 gap-3">
-                <FormField v-slot="{ componentField }" name="street">
-                  <FormItem class="col-span-2 md:col-span-4">
-                    <FormLabel>Straße</FormLabel>
-                    <FormControl>
-                      <Input v-bind="componentField" />
-                    </FormControl>
-                  </FormItem>
-                </FormField>
-
-                <FormField v-slot="{ componentField }" name="house_number">
-                  <FormItem class="col-span-1 md:col-span-1">
-                    <FormLabel>Nr.</FormLabel>
-                    <FormControl>
-                      <Input v-bind="componentField" />
-                    </FormControl>
-                  </FormItem>
-                </FormField>
-              </div>
-
-              <div class="grid grid-cols-2 gap-3">
-                <FormField v-slot="{ componentField }" name="postal_code">
-                  <FormItem>
-                    <FormLabel>PLZ</FormLabel>
-                    <FormControl>
-                      <Input v-bind="componentField" />
-                    </FormControl>
-                  </FormItem>
-                </FormField>
-
-                <FormField v-slot="{ componentField }" name="city">
-                  <FormItem>
-                    <FormLabel>Stadt</FormLabel>
-                    <FormControl>
-                      <Input v-bind="componentField" />
-                    </FormControl>
-                  </FormItem>
-                </FormField>
-              </div>
-
-              <!-- Directions -->
-              <FormField v-slot="{ componentField }" name="directions">
-                <FormItem>
-                  <FormLabel>Wegbeschreibung</FormLabel>
+              <FormField v-slot="{ componentField }" name="house_number">
+                <FormItem class="col-span-1 md:col-span-1">
+                  <FormLabel>Nr.</FormLabel>
                   <FormControl>
-                    <Textarea v-bind="componentField" />
+                    <Input v-bind="componentField" />
                   </FormControl>
-                  <FormDescription>
-                    Gib eine kurze Wegbeschreibung (optional) an.
-                  </FormDescription>
+                </FormItem>
+              </FormField>
+            </div>
+
+            <div class="grid grid-cols-2 gap-3">
+              <FormField v-slot="{ componentField }" name="postal_code">
+                <FormItem>
+                  <FormLabel>PLZ</FormLabel>
+                  <FormControl>
+                    <Input v-bind="componentField" />
+                  </FormControl>
                 </FormItem>
               </FormField>
 
-              <!-- Description -->
-              <FormField v-slot="{ componentField }" name="description">
+              <FormField v-slot="{ componentField }" name="city">
                 <FormItem>
-                  <FormLabel>Weitere Details</FormLabel>
+                  <FormLabel>Stadt</FormLabel>
                   <FormControl>
-                    <Textarea v-bind="componentField" />
+                    <Input v-bind="componentField" />
                   </FormControl>
-                  <FormDescription>
-                    Beschreibe kurz die Location (optional).
-                  </FormDescription>
                 </FormItem>
               </FormField>
-              <div class="flex justify-end w-full">
-                <Button type="submit"> <Plus />Hinzufügen </Button>
-              </div>
-            </form>
-          </Form>
+            </div>
+
+            <!-- Directions -->
+            <FormField v-slot="{ componentField }" name="directions">
+              <FormItem>
+                <FormLabel>Wegbeschreibung</FormLabel>
+                <FormControl>
+                  <Textarea v-bind="componentField" />
+                </FormControl>
+                <FormDescription>
+                  Gib eine kurze Wegbeschreibung (optional) an.
+                </FormDescription>
+              </FormItem>
+            </FormField>
+
+            <!-- Description -->
+            <FormField v-slot="{ componentField }" name="description">
+              <FormItem>
+                <FormLabel>Weitere Details</FormLabel>
+                <FormControl>
+                  <Textarea v-bind="componentField" />
+                </FormControl>
+                <FormDescription>
+                  Beschreibe kurz die Location (optional).
+                </FormDescription>
+              </FormItem>
+            </FormField>
+            <div class="flex justify-end w-full">
+              <Button type="submit"> <Plus />Hinzufügen </Button>
+            </div>
+          </form>
         </DialogContent>
       </Dialog>
     </div>
@@ -161,8 +165,8 @@
 
 <script setup lang="ts">
 import { z } from "zod";
-import { Dialog } from "@/components/ui/dialog";
 import {
+  Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
@@ -186,7 +190,6 @@ import {
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
 import {
-  Form,
   FormField,
   FormItem,
   FormLabel,
@@ -199,6 +202,10 @@ import { MapPin, Plus, Edit, Trash2 } from "lucide-vue-next";
 import { toast } from "vue-sonner";
 import { useForm } from "vee-validate";
 import { toTypedSchema } from "@vee-validate/zod";
+
+useHead({
+  title: "Orte (Orga)",
+});
 
 definePageMeta({
   middleware: "auth",
@@ -252,8 +259,25 @@ const form = useForm({
   validationSchema: toTypedSchema(locationSchema),
 });
 
-const onSubmit = form.handleSubmit((values) => {
+const onSubmit = form.handleSubmit(async (values) => {
   console.log("Form submitted!", values);
+
+  const result = await $fetch("/api/orga/new-location", {
+    method: "POST",
+    body: {
+      location: values,
+    },
+  });
+
+  if (result) {
+    toast("Location Erstellt", {
+      description: "Die Location wurde erstellt.",
+    });
+  } else {
+    toast("Fehler", {
+      description: "Die Location konnte nicht erstellt werden.",
+    });
+  }
 });
 
 function deleteLocation(index: number) {

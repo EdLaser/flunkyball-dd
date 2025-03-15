@@ -3,6 +3,10 @@
 </template>
 
 <script lang="ts" setup>
+useHead({
+  title: "Einstellungen",
+});
+
 definePageMeta({
   middleware: "auth",
   title: "Einstellungen",

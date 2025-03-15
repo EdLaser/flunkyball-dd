@@ -192,6 +192,10 @@
 import { Beer, Trophy, Users } from "lucide-vue-next";
 import { toast } from "vue-sonner";
 
+useHead({
+  title: "Team registrieren",
+});
+
 definePageMeta({
   title: "Team regsitrieren",
   name: "Team registrieren",
