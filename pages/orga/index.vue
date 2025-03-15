@@ -75,11 +75,11 @@
       </div>
 
       <div class="grid gap-6 mt-8 md:grid-cols-2">
-        <Card>
+        <Card class="h-fit">
           <CardHeader>
             <CardTitle>Letzte Turniere</CardTitle>
-            <CardDescription class="flex justify-between"
-              >Die letzten 5 Turniere
+            <CardDescription class="flex justify-between">
+              Die letzten 5 Turniere
               <RefreshButton
                 @click="refreshRecentTournaments"
                 size="icon"
@@ -96,13 +96,13 @@
           </CardContent>
         </Card>
 
-        <Card>
+        <Card class="h-fit">
           <CardHeader>
-            <CardTitle>Top Teams</CardTitle>
-            <CardDescription>Highest ranked Flunkyball teams</CardDescription>
+            <CardTitle>Top 5 Teams</CardTitle>
+            <CardDescription>Beste Flunkyball Teams</CardDescription>
           </CardHeader>
           <CardContent>
-            <TeamList />
+            <TeamList :top="5" />
           </CardContent>
         </Card>
       </div>
@@ -118,9 +118,9 @@
               class="h-[300px] flex items-center justify-center bg-muted rounded-md"
             >
               <BarChart class="h-16 w-16 text-muted-foreground" />
-              <span class="ml-4 text-muted-foreground"
-                >Performance chart placeholder</span
-              >
+              <span class="ml-4 text-muted-foreground">
+                Performance chart placeholder
+              </span>
             </div>
           </CardContent>
         </Card>

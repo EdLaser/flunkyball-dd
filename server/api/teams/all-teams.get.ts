@@ -1,4 +1,11 @@
+import { z } from "zod";
+
+const topSchema = z.object({
+  top: z.coerce.number().optional()
+});
+
 export default defineEventHandler(async (event) => {
+  const { data } = await getValidatedQuery(event, topSchema.safeParse);
   const allTeams = await usePrisma(event).teams.findMany({
     select: {
       name: true,
@@ -35,29 +42,33 @@ export default defineEventHandler(async (event) => {
         },
       },
     },
+    orderBy: {
+      matches_matches_match_winnerToteams: {
+        _count: "desc",
+      },
+    },
+    ...(data?.top ? { take: data.top } : {}),
   });
 
   return (
-    allTeams
-      .map((team) => ({
-        name: team.name ?? "",
-        slogan: team.slogan ?? "",
-        publicID: team.public_id ?? "",
-        players: team.players.map((player) => ({
-          firstName: player.first_name ?? "",
-          lastName: player.last_name ?? "",
-          slogan: player.slogan ?? "",
-        })),
-        registeredTournaments: [
-          ...team.tournament_registrations.map(
-            (registration) => registration.tournaments.title
-          ),
-          ...team.pre_registrations.map(
-            (registration) => registration.tournaments.title
-          ),
-        ],
-        wins: team._count.matches_matches_match_winnerToteams,
-      }))
-      .sort((a, b) => b.wins - a.wins) ?? []
+    allTeams.map((team) => ({
+      name: team.name ?? "",
+      slogan: team.slogan ?? "",
+      publicID: team.public_id ?? "",
+      players: team.players.map((player) => ({
+        firstName: player.first_name ?? "",
+        lastName: player.last_name ?? "",
+        slogan: player.slogan ?? "",
+      })),
+      registeredTournaments: [
+        ...team.tournament_registrations.map(
+          (registration) => registration.tournaments.title
+        ),
+        ...team.pre_registrations.map(
+          (registration) => registration.tournaments.title
+        ),
+      ],
+      wins: team._count.matches_matches_match_winnerToteams,
+    })) ?? []
   );
 });
