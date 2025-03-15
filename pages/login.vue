@@ -22,7 +22,7 @@
             :class="{
               'text-white ': !loginAsStaff,
             }"
-            class="transition-colors duration-200 rounded-xl"
+            class="transition-colors duration-200"
             @click="toggleLoginAsStaff"
           >
             Spieler/in
@@ -32,7 +32,7 @@
             :class="{
               'text-white ': loginAsStaff,
             }"
-            class="transition-colors duration-200 rounded-xl"
+            class="transition-colors duration-200"
             @click="toggleLoginAsStaff"
           >
             Mitwirkende/r

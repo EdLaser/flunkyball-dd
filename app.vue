@@ -1,6 +1,6 @@
 <template>
   <div
-    class="transition-colors duration-300 bg-background"
+    class="transition-colors duration-300 bg-background transition-transform"
     :class="colorMode.preference"
     style="font-family: 'Fustat', sans-serif"
   >
