@@ -1,37 +1,37 @@
 <template>
   <div class="min-h-screen bg-background">
     <!-- Header -->
-    <header class="bg-primary text-primary-foreground shadow-md">
-      <div class="container mx-auto py-6 px-4">
+    <header class="shadow-md bg-primary text-primary-foreground">
+      <div class="container px-4 py-6 mx-auto">
         <h1 class="text-3xl font-bold">{{ tournament?.title }}</h1>
       </div>
     </header>
 
     <!-- Main Content -->
-    <main class="container mx-auto px-4 py-8">
+    <main class="container px-4 py-8 mx-auto">
       <div class="grid gap-6 md:grid-cols-3">
         <!-- Left Column (2/3) -->
-        <div class="md:col-span-2 space-y-6">
+        <div class="space-y-6 md:col-span-2">
           <!-- Tournament Details -->
           <Card>
             <CardHeader>
               <CardTitle>Turnier Details</CardTitle>
             </CardHeader>
             <CardContent>
-              <p class="text-muted-foreground mb-4">
+              <p class="mb-4 text-muted-foreground">
                 {{ tournament?.description }}
               </p>
               <div class="flex flex-col space-y-2">
                 <div class="flex items-center">
-                  <Calendar class="mr-2 h-4 w-4 text-primary" />
+                  <Calendar class="w-4 h-4 mr-2 text-primary" />
                   <span>{{ tournament?.tournamentDate }}</span>
                 </div>
                 <div class="flex items-center">
-                  <MapPin class="mr-2 h-4 w-4 text-primary" />
+                  <MapPin class="w-4 h-4 mr-2 text-primary" />
                   <span>{{ tournament?.location }}</span>
                 </div>
                 <div class="flex items-center">
-                  <Users class="mr-2 h-4 w-4 text-primary" />
+                  <Users class="w-4 h-4 mr-2 text-primary" />
                   <span
                     >{{
                       tournament?.tournamentRegistrations?.length
@@ -105,7 +105,7 @@
                   <div>
                     <NuxtLink
                       :to="`/teams/${encodeURIComponent(team.name)}`"
-                      class="font-semibold"
+                      class="font-semibold text-primary"
                     >
                       {{ team.name }}
                     </NuxtLink>

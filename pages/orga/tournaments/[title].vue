@@ -8,7 +8,15 @@
     </header>
 
     <!-- Main Content -->
-    <main class="container px-4 py-8 mx-auto">
+    <main class="container px-4 py-8 mx-auto space-y-4">
+      <div class="px-6 py-3 border rounded-full bg-card">
+        <Badge
+          v-if="tournament?.status"
+          class="capitalize"
+          :class="determineBadgeClass(tournament.status)"
+          >{{ tournament?.status }}
+        </Badge>
+      </div>
       <div class="grid gap-6 md:grid-cols-3">
         <!-- Left Column (2/3) -->
         <div class="space-y-6 md:col-span-2">
@@ -104,8 +112,10 @@
                   </Avatar>
                   <div>
                     <NuxtLink
-                      :to="`/orga/teams/${encodeURIComponent(team.publicID)}`"
-                      class="font-semibold"
+                      :to="`/orga/teams/${encodeURIComponent(
+                        team.publicID ?? ''
+                      )}`"
+                      class="font-semibold text-primary"
                     >
                       {{ team.name }}
                     </NuxtLink>
@@ -148,6 +158,19 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 
 const route = useRoute();
+
+const determineBadgeClass = (status: "finished" | "open" | "in_progress") => {
+  switch (status) {
+    case "finished":
+      return "bg-red-500 hover:bg-red-400";
+    case "open":
+      return "bg-green-500 hover:bg-green-400";
+    case "in_progress":
+      return "bg-yellow-500 hover:bg-yellow-400";
+    default:
+      return "";
+  }
+};
 
 useHead({
   title: `Turnier Details: ${decodeURIComponent(route.params.title as string)}`,

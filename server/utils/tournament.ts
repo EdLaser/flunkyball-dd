@@ -16,6 +16,7 @@ export const getTournamentDetails = async (title: string, event: any) => {
       title: true,
       description: true,
       tournament_date: true,
+      status: true,
       locations: {
         select: {
           name: true,
@@ -84,9 +85,10 @@ export const getTournamentDetails = async (title: string, event: any) => {
     },
   });
 
-  const tournaments = {
+  const tournament = {
     title: tournamentDetails?.title,
     description: tournamentDetails?.description,
+    status: tournamentDetails?.status,
     location: formatLocation(tournamentDetails?.locations ?? null),
     tournamentDate: transfromTournamentDate(
       tournamentDetails?.tournament_date ?? ""
@@ -122,7 +124,7 @@ export const getTournamentDetails = async (title: string, event: any) => {
     }),
   };
 
-  return tournaments ?? {};
+  return tournament ?? {};
 };
 
 export const getUpcomingTournaments = async (event: any) => {
