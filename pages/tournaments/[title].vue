@@ -103,7 +103,12 @@
                     </AvatarFallback>
                   </Avatar>
                   <div>
-                    <p class="font-semibold">{{ team.name }}</p>
+                    <NuxtLink
+                      :to="`/teams/${encodeURIComponent(team.name)}`"
+                      class="font-semibold"
+                    >
+                      {{ team.name }}
+                    </NuxtLink>
                     <p class="text-sm text-muted-foreground">
                       {{
                         team.players
@@ -145,9 +150,7 @@ import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 const route = useRoute();
 
 useHead({
-  title: `Turnier Details: ${decodeURIComponent(
-    route.params.title as string
-  )}`,
+  title: `Turnier Details: ${decodeURIComponent(route.params.title as string)}`,
 });
 
 definePageMeta({

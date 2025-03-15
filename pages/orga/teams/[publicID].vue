@@ -30,7 +30,7 @@ const route = useRoute();
 const nuxtApp = useNuxtApp();
 
 useHead({
-  title: `Team ${decodeURIComponent(route.params.name as string)}`,
+  title: `Team ${decodeURIComponent(route.params.publicID as string)}`,
 });
 
 definePageMeta({

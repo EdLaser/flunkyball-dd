@@ -33,6 +33,7 @@ export const getTournamentDetails = async (title: string, event: any) => {
             select: {
               name: true,
               slogan: true,
+              public_id: true,
               players: {
                 select: {
                   first_name: true,
@@ -95,6 +96,7 @@ export const getTournamentDetails = async (title: string, event: any) => {
         return {
           name: registration.teams.name,
           slogan: registration.teams.slogan,
+          publicID: registration.teams.public_id,
           players: registration.teams.players.map((player) => {
             return {
               firstName: player.first_name,
