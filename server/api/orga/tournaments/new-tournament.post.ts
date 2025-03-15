@@ -15,11 +15,12 @@ export default defineEventHandler(async (event) => {
     },
   });
   if (tournmanet) {
-    return new Response(JSON.stringify(tournmanet), { status: 201 });
+    setResponseStatus(event, 201);
+    return tournmanet;
   } else {
-    return new Response(
-      JSON.stringify({ message: "Error creating tournament" }),
-      { status: 500 }
-    );
+    throw createError({
+      statusCode: 500,
+      message: "Error creating tournament",
+    });
   }
 });

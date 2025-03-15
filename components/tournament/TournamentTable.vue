@@ -27,6 +27,7 @@ import {
   DropdownMenuContent,
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
+import { NuxtLink } from "#components";
 
 const props = defineProps<{
   data: Tournament[];
@@ -80,6 +81,16 @@ const columns: ColumnDef<Tournament>[] = [
   {
     accessorKey: "title",
     header: "Titel",
+    cell: ({ row }) => {
+      return h(
+        NuxtLink,
+        {
+          to: `/orga/tournaments/${encodeURIComponent(row.original.title)}`,
+          class: "text-blue-500 hover:text-blue-700",
+        },
+        () => row.original.title
+      );
+    },
   },
   {
     accessorKey: "tournamentDate",
@@ -136,22 +147,6 @@ const columns: ColumnDef<Tournament>[] = [
               ? "In Progress"
               : "",
         }
-      );
-    },
-  },
-  {
-    header: "Actions",
-    cell: ({ row }) => {
-      return h(
-        Button,
-        {
-          onClick: () => {
-            console.log("Edit tournament", row.original);
-          },
-          variant: "ghost",
-          class: "text-xs",
-        },
-        { default: () => "Alle Details" }
       );
     },
   },

@@ -42,6 +42,6 @@ export default defineEventHandler(async (event) => {
         publicID: newUser.players.public_id,
       },
     });
-    return new Response(null, { status: 200 });
+    return "OK"
   }
 });
