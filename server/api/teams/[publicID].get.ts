@@ -13,6 +13,14 @@ export default defineEventHandler(async (event) => {
     select: {
       name: true,
       slogan: true,
+      public_id: true,
+      players: {
+        select: {
+          first_name: true,
+          last_name: true,
+          public_id: true,
+        },
+      },
       _count: {
         select: {
           matches_matches_away_team_idToteams: true,
@@ -25,5 +33,25 @@ export default defineEventHandler(async (event) => {
       public_id: decodedId,
     },
   });
-  return team;
+  if (!team) {
+    throw createError({
+      statusCode: 404,
+      message: "Team not found.",
+    });
+  }
+  
+  return {
+    name: team?.name,
+    slogan: team?.slogan,
+    publicID: team?.public_id,
+    wins: team?._count.matches_matches_match_winnerToteams,
+    totalMatches:
+      (team?._count?.matches_matches_away_team_idToteams ?? 0) +
+      (team?._count?.matches_matches_home_team_idToteams ?? 0),
+    players: team?.players.map((player) => ({
+      firstName: player.first_name,
+      lastName: player.last_name,
+      publicID: player.public_id,
+    })),
+  };
 });

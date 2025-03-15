@@ -15,8 +15,8 @@
         <TableCell>{{ team.wins }}</TableCell>
         <TableCell>
           <div class="flex items-center">
-            <Avatar class="h-8 w-8 mr-2">
-              <AvatarFallback>
+            <Avatar class="h-8 w-8 mr-2 dark:bg-white/70 dark:text-black">
+              <AvatarFallback >
                 {{ team.name.slice(0, 2).toUpperCase() }}
               </AvatarFallback>
             </Avatar>
@@ -51,5 +51,12 @@ import {
 } from "@/components/ui/table";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 
-const { data: teams } = await useFetch("/api/teams/all-teams");
+const nuxtApp = useNuxtApp();
+
+const { data: teams } = await useFetch("/api/teams/all-teams", {
+  getCachedData(key) {
+    // TODO: Fix this to displayed the time when the data was cached
+    return getCachedDataOrFetch(key, nuxtApp);
+  },
+});
 </script>

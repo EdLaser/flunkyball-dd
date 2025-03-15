@@ -47,7 +47,7 @@ const columns: ColumnDef<Team>[] = [
     accessorKey: "name",
     cell: ({ row }) => {
       return h("div", { class: "flex items-center" }, [
-        h(Avatar, { class: "h-8 w-8 mr-2" }, () => [
+        h(Avatar, { class: "h-8 w-8 mr-2 dark:bg-white/70 dark:text-black" }, () => [
           h(AvatarFallback, null, () => {
             const name = row.getValue("name") as string;
             return name.slice(0, 2).toUpperCase();
