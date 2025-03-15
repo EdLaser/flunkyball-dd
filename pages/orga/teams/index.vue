@@ -20,6 +20,8 @@
 import TeamsTable from "~/components/team/TeamsTable.vue";
 import AddTeamDialog from "~/components/team/AddTeamDialog.vue";
 
+const nuxtApp = useNuxtApp();
+
 definePageMeta({
   middleware: "auth",
   title: "Teams (Orga)",
@@ -37,5 +39,10 @@ definePageMeta({
   },
 });
 
-const { data: teams } = await useFetch("/api/teams/all-teams");
+const { data: teams } = await useFetch("/api/teams/all-teams", {
+  getCachedData(key) {
+    // TODO: Fix this to displayed the time when the data was cached
+    return getCachedDataOrFetch(key, nuxtApp);
+  },
+});
 </script>

@@ -20,11 +20,17 @@
 
 <script lang="ts" setup>
 const route = useRoute();
+const nuxtApp = useNuxtApp();
 
 const { data: playerDetails } = await useFetch(
   () =>
     `/api/players/player-details/${encodeURIComponent(
       route.params.id as string
-    )}`
+    )}`, {
+      getCachedData(key) {
+    // TODO: Fix this to displayed the time when the data was cached
+    return getCachedDataOrFetch(key, nuxtApp);
+  },
+    }
 );
 </script>

@@ -184,7 +184,6 @@
 <script setup lang="ts">
 import { UserCheck, Beer, User, UserSearch } from "lucide-vue-next";
 import { vAutoAnimate } from "@formkit/auto-animate/vue";
-import { toast } from "vue-sonner";
 import * as z from "zod";
 import { toTypedSchema } from "@vee-validate/zod";
 import { useForm } from "vee-validate";

@@ -2,7 +2,9 @@
   <div class="min-h-screen bg-background">
     <header class="bg-primary text-primary-foreground shadow-md">
       <div class="container mx-auto py-6 px-4">
-        <h1 class="text-3xl font-bold text-white">Flunkyball Organization Dashboard</h1>
+        <h1 class="text-3xl font-bold text-white">
+          Flunkyball Organization Dashboard
+        </h1>
       </div>
     </header>
     <ActionGridButton
@@ -168,6 +170,8 @@ import TournamentList from "~/components/tournament/TournamentList.vue";
 import TeamList from "~/components/team/TeamList.vue";
 import StatCard from "@/components/StatCard.vue";
 
+const nuxtApp = useNuxtApp();
+
 const sideBarStore = useSideBarStore();
 
 const { isSidebarOpen } = storeToRefs(sideBarStore);
@@ -176,25 +180,45 @@ const {
   data: pastAndUpcomingTournaments,
   status: statusTotalTournaments,
   refresh: refreshTotalTournaments,
-} = await useFetch("/api/orga/tournaments/total-tournaments");
+} = await useFetch("/api/orga/tournaments/total-tournaments", {
+  getCachedData(key) {
+    // TODO: Fix this to displayed the time when the data was cached
+    return getCachedDataOrFetch(key, nuxtApp);
+  },
+});
 
 const {
   data: recentTournaments,
   status: statusRecentTournaments,
   refresh: refreshRecentTournaments,
-} = await useFetch("/api/orga/tournaments/recent-tournaments");
+} = await useFetch("/api/orga/tournaments/recent-tournaments", {
+  getCachedData(key) {
+    // TODO: Fix this to displayed the time when the data was cached
+    return getCachedDataOrFetch(key, nuxtApp);
+  },
+});
 
 const {
   data: totalTeams,
   status: statusTotalTeams,
   refresh: refreshTotalTeams,
-} = await useFetch("/api/teams/total-teams");
+} = await useFetch("/api/teams/total-teams", {
+  getCachedData(key) {
+    // TODO: Fix this to displayed the time when the data was cached
+    return getCachedDataOrFetch(key, nuxtApp);
+  },
+});
 
 const {
   data: locations,
   status: statusLocations,
   refresh: refreshLocations,
-} = await useFetch("/api/orga/locations");
+} = await useFetch("/api/orga/locations", {
+  getCachedData(key) {
+    // TODO: Fix this to displayed the time when the data was cached
+    return getCachedDataOrFetch(key, nuxtApp);
+  },
+});
 
 const refreshAll = () => {
   refreshTotalTournaments();

@@ -21,10 +21,6 @@ export default defineNuxtConfig({
     AVATAR_BUCKET_NAME: process.env.AVATAR_BUCKET_NAME,
   },
 
-  colorMode: {
-    preference: "system", // default value of $colorMode.preference
-    fallback: "light", // fallback value if not system preference found
-  },
   supabase: {
     redirect: false,
   },

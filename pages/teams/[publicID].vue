@@ -4,8 +4,15 @@
 
 <script lang="ts" setup>
 const route = useRoute();
+const nuxtApp = useNuxtApp();
 
 const { data: team } = await useFetch(
-  () => `/api/teams/${encodeURIComponent(route.params.publicID as string)}`
+  () => `/api/teams/${encodeURIComponent(route.params.publicID as string)}`,
+  {
+    getCachedData(key) {
+      // TODO: Fix this to displayed the time when the data was cached
+      return getCachedDataOrFetch(key, nuxtApp);
+    },
+  }
 );
 </script>

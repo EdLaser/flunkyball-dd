@@ -19,6 +19,8 @@ definePageMeta({
   name: "Turniere",
 });
 
+const nuxtApp = useNuxtApp();
+
 const { data: tournaments } = await useFetch(
   "/api/tournaments/all-tournaments",
   {
@@ -36,6 +38,10 @@ const { data: tournaments } = await useFetch(
           }
         ),
       })),
+    getCachedData(key) {
+      // TODO: Fix this to displayed the time when the data was cached
+      return getCachedDataOrFetch(key, nuxtApp);
+    },
   }
 );
 </script>

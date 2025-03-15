@@ -148,13 +148,19 @@ definePageMeta({
 });
 
 const route = useRoute();
+const nuxtApp = useNuxtApp();
 
 const {
   data: tournament,
   status,
   error,
   refresh,
-} = await useFetch(() => `/api/tournament-details/${route.params.title}`);
+} = await useFetch(() => `/api/tournament-details/${route.params.title}`, {
+  getCachedData(key) {
+    // TODO: Fix this to displayed the time when the data was cached
+    return getCachedDataOrFetch(key, nuxtApp);
+  },
+});
 
 if (tournament.value == null) {
   await refresh();

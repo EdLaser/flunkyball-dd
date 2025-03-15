@@ -21,7 +21,7 @@
       </Select>
       <Button
         size="icon"
-        class="col-span-2 h-full"
+        class="col-span-2"
         variant="outline"
         @click="() => (direction = direction === 'asc' ? 'desc' : 'asc')"
         v-auto-animate
@@ -46,6 +46,9 @@
 import PlayerInfoCard from "@/components/player/InfoCard.vue";
 import { vAutoAnimate } from "@formkit/auto-animate";
 import { ArrowUp10, ArrowDown10 } from "lucide-vue-next";
+
+const nuxtApp = useNuxtApp();
+
 const query = ref("");
 const orderBy = ref<"" | "victory" | "matches">("");
 const direction = ref<"asc" | "desc">("asc");
@@ -55,7 +58,12 @@ definePageMeta({
   title: "Alle Spieler",
 });
 
-const { data: players } = await useFetch("/api/players/all-players");
+const { data: players } = await useFetch("/api/players/all-players", {
+  getCachedData(key) {
+    // TODO: Fix this to displayed the time when the data was cached
+    return getCachedDataOrFetch(key, nuxtApp);
+  },
+});
 
 const filteredPlayers = computed(() => {
   if (!players.value) return [];
