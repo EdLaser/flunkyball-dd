@@ -50,8 +50,8 @@
   }
 
   .dark {
-    --background: 195 5% 9%;
-    --background-secondary: 180 2% 15%;
+    --background: 210 9% 31%;
+    --background-secondary: 210 10% 23%;
     --foreground: 0 0% 98%;
 
     --muted: 0 0% 14.9%;
@@ -66,7 +66,7 @@
     --border: 0 0% 14.9%;
     --input: 0 0% 14.9%;
 
-    --primary: 312 60% 50%;
+    --primary: 216 75% 50%;
     --primary-foreground: 0 0% 9%;
 
     --secondary: 0 0% 14.9%;

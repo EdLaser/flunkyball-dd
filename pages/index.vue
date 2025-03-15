@@ -148,7 +148,7 @@
           zeig deine Wurfkünste!
         </p>
         <Button
-          class="p-6 md:p-8 rounded-lg flex items-center justify-center mx-auto text-2xl"
+          class="p-6 md:p-8 flex items-center justify-center mx-auto text-2xl dark:text-white"
         >
           Melde dein Team an
         </Button>

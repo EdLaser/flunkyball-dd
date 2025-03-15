@@ -16,7 +16,7 @@
           : userLinks.concat(loggedOutLinks)"
         variant="outline"
         :size="link.title ? 'default' : 'icon'"
-        class="flex items-center p-2 h-fit w-auto"
+        class="flex items-center"
         @click="navigateTo(link.to)"
       >
         <component :is="link.icon" class="h-4 w-4" />
@@ -25,7 +25,7 @@
       <Button
         v-if="loggedIn"
         variant="outline"
-        class="flex items-center p-2 h-fit w-auto"
+        class="flex items-center"
         @click="handleLogout()"
       >
         <LogOut class="md:mr-2 h-4 w-4" />

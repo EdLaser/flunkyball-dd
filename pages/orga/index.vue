@@ -167,7 +167,6 @@ import {
 import TournamentList from "~/components/tournament/TournamentList.vue";
 import TeamList from "~/components/team/TeamList.vue";
 import StatCard from "@/components/StatCard.vue";
-import { vAutoAnimate } from "@formkit/auto-animate";
 
 const sideBarStore = useSideBarStore();
 
