@@ -1,51 +1,54 @@
 <template>
   <nav
-    class="flex items-center bg-background-secondary md:items-end justify-between space-y-2 h-fit md:h-16 px-3 md:px-8 pt-3 pb-3"
+    class="flex items-center justify-between px-3 pt-3 pb-3 space-y-2 bg-background-secondary md:items-end h-fit md:h-16 md:px-8"
     v-auto-animate
   >
-    <RouteBreadCrumb />
-    <div
-      class="flex h-full items-center md:flex-row gap-1 md:gap-3 text-xs md:text-base"
-    >
-      <ColorModeSwitch />
-      <Button
-        v-for="link in loggedIn
-          ? session.isStaff
-            ? staffLinks
-            : userLinks
-          : userLinks.concat(loggedOutLinks)"
-        variant="outline"
-        :size="link.title ? 'default' : 'icon'"
-        class="flex items-center"
-        @click="navigateTo(link.to)"
+    <ClientOnly>
+      <RouteBreadCrumb />
+      <div
+        class="flex items-center h-full gap-1 text-xs md:flex-row md:gap-3 md:text-base"
       >
-        <component :is="link.icon" class="h-4 w-4" />
-        <span v-if="link.title" class="hidden md:block">{{ link.title }}</span>
-      </Button>
-      <Button
-        v-if="loggedIn"
-        variant="outline"
-        class="flex items-center"
-        @click="handleLogout()"
-      >
-        <LogOut class="md:mr-2 h-4 w-4" />
-        <span class="hidden md:block">Logout</span>
-      </Button>
-      <NuxtLink
-        v-if="user"
-        class="h-fit w-auto"
-        :to="`/players/${encodeURIComponent(user.publicID)}`"
-      >
-        <Avatar
-          v-if="loggedIn"
-          class="bg-background p-2 rounded-full text-primary shadow-sm hover:bg-accent hover:text-accent-foreground cursor-pointer"
+        <ColorModeSwitch />
+        <Button
+          v-for="link in loggedIn
+            ? session.isStaff
+              ? staffLinks
+              : userLinks
+            : userLinks.concat(loggedOutLinks)"
+          variant="outline"
+          :size="link.title && !isMobile ? 'default' : 'icon'"
+          class="flex items-center"
+          @click="navigateTo(link.to)"
         >
-          <AvatarFallback>
-            {{ user?.firstName.slice(0, 2).toUpperCase() }}
-          </AvatarFallback>
-        </Avatar>
-      </NuxtLink>
-    </div>
+          <component :is="link.icon" class="w-4 h-4" />
+          <span v-if="link.title && !isMobile">{{ link.title }}</span>
+        </Button>
+        <Button
+          v-if="loggedIn"
+          variant="outline"
+          :size="isMobile ? 'icon' : 'default'"
+          class="flex items-center"
+          @click="handleLogout()"
+        >
+          <LogOut class="w-4 h-4 md:mr-2" />
+          <span v-if="!isMobile">Logout</span>
+        </Button>
+        <NuxtLink
+          v-if="user"
+          class="w-auto h-fit"
+          :to="`/players/${encodeURIComponent(user.publicID)}`"
+        >
+          <Avatar
+            v-if="loggedIn"
+            class="p-2 rounded-full shadow-sm cursor-pointer w-9 h-9 bg-background text-primary hover:bg-accent hover:text-accent-foreground"
+          >
+            <AvatarFallback>
+              {{ user?.firstName.slice(0, 2).toUpperCase() }}
+            </AvatarFallback>
+          </Avatar>
+        </NuxtLink>
+      </div>
+    </ClientOnly>
   </nav>
   <slot />
 </template>
@@ -61,8 +64,15 @@ import {
   Users,
 } from "lucide-vue-next";
 import { vAutoAnimate } from "@formkit/auto-animate";
+import { useWindowSize } from "@vueuse/core";
 
 const { loggedIn, session, user, clear, fetch } = useUserSession();
+
+const { width } = useWindowSize();
+
+const isMobile = computed(() => {
+  return width.value < 768;
+});
 
 watch(loggedIn, async (nowLoggedIn, wasLoggedIn) => {
   if (!wasLoggedIn && nowLoggedIn) {
