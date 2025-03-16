@@ -1,7 +1,7 @@
 <template>
   <div class="min-h-screen bg-background">
-    <header class="bg-primary text-primary-foreground shadow-md">
-      <div class="container mx-auto py-6 px-4">
+    <header class="shadow-md bg-primary text-primary-foreground">
+      <div class="container px-4 py-6 mx-auto">
         <h1 class="text-3xl font-bold text-white">
           Flunkyball Organization Dashboard
         </h1>
@@ -9,16 +9,16 @@
     </header>
     <ActionGridButton
       v-if="!isSidebarOpen"
-      class="absolute bottom-4 md:bottom-6 left-8 md:left-10 z-20 ml-7 rounded-full"
+      class="absolute z-20 rounded-full bottom-4 md:bottom-6 left-8 md:left-10 ml-7"
       size="icon"
       @click="refreshAll()"
     >
       <RefreshCcw
-        class="h-4 w-4"
+        class="w-4 h-4"
         :class="{ 'animate-spin': refreshAllPending }"
       />
     </ActionGridButton>
-    <main class="container mx-auto px-4 py-8">
+    <main class="container px-4 py-8 mx-auto">
       <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
         <div class="flex flex-col">
           <RefreshButton
@@ -92,6 +92,7 @@
             <TournamentList
               v-if="recentTournaments && recentTournaments.length > 0"
               :tournaments="recentTournaments"
+              :is-orga="true"
             />
           </CardContent>
         </Card>
@@ -117,7 +118,7 @@
             <div
               class="h-[300px] flex items-center justify-center bg-muted rounded-md"
             >
-              <BarChart class="h-16 w-16 text-muted-foreground" />
+              <BarChart class="w-16 h-16 text-muted-foreground" />
               <span class="ml-4 text-muted-foreground">
                 Performance chart placeholder
               </span>
@@ -126,7 +127,7 @@
         </Card>
       </div>
 
-      <div class="mt-8 flex justify-end">
+      <div class="flex justify-end mt-8">
         <NewTournamentDialog />
       </div>
     </main>

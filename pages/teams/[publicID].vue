@@ -1,11 +1,11 @@
 <template>
   <div>
-    <header class="bg-primary text-primary-foreground shadow-md">
-      <div class="container mx-auto py-6 px-4">
+    <header class="shadow-md bg-primary text-primary-foreground">
+      <div class="container px-4 py-6 mx-auto">
         <h1 class="text-3xl font-bold">Team Details</h1>
       </div>
     </header>
-    <main class="container mx-auto px-4 py-8 space-y-8">
+    <main class="container px-4 py-8 mx-auto space-y-8">
       <TeamInfoCard
         v-if="team"
         :team="team"
@@ -13,7 +13,7 @@
         :wins="team.wins"
       />
       <p class="text-xl font-semibold text-foreground">Spieler</p>
-      <div class="grid lg:grid-cols-2 gap-3" v-if="team && team.players">
+      <div class="grid gap-3 lg:grid-cols-2" v-if="team && team.players">
         <PlayerInfoCard
           v-for="player in team.players"
           :player="player"

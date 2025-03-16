@@ -15,7 +15,13 @@
           <!-- Tournament Details -->
           <Card>
             <CardHeader>
-              <CardTitle>Turnier Details</CardTitle>
+              <CardTitle class="flex justify-between">
+                Turnier Details
+                <TournamentStatusBadge
+                  v-if="tournament?.status"
+                  :status="tournament.status"
+                />
+              </CardTitle>
             </CardHeader>
             <CardContent>
               <p class="mb-4 text-muted-foreground">

@@ -20,7 +20,6 @@ import {
 import { valueUpdater } from "~/lib/utils";
 import { Button } from "../ui/button";
 import { ArrowDownAZ, ArrowUpAZ, ArrowUpDown, Filter } from "lucide-vue-next";
-import { Badge } from "@/components/ui/badge";
 import DropdownMenu from "../ui/dropdown-menu/DropdownMenu.vue";
 import {
   DropdownMenuCheckboxItem,
@@ -28,6 +27,7 @@ import {
   DropdownMenuTrigger,
 } from "../ui/dropdown-menu";
 import { NuxtLink } from "#components";
+import TournamentStatusBadge from "./TournamentStatusBadge.vue";
 
 const props = defineProps<{
   data: Tournament[];
@@ -61,19 +61,6 @@ const toggleSorting = (column: Column<Tournament>) => {
     column.toggleSorting(false);
   } else {
     column.toggleSorting(true);
-  }
-};
-
-const determineBadgeClass = (status: Tournament["status"]) => {
-  switch (status) {
-    case "finished":
-      return "bg-red-500 hover:bg-red-500/70";
-    case "open":
-      return "bg-green-500 hover:bg-green-500/70";
-    case "in_progress":
-      return "bg-yellow-500 hover:bg-yellow-500/70";
-    default:
-      return "";
   }
 };
 
@@ -132,21 +119,11 @@ const columns: ColumnDef<Tournament>[] = [
       const status = row.getValue("status") as Tournament["status"];
 
       return h(
-        Badge,
+        TournamentStatusBadge,
         {
-          variant: "default",
-          class: determineBadgeClass(status),
+          status,
         },
-        {
-          default: () =>
-            status === "finished"
-              ? "Vorbei"
-              : status === "open"
-              ? "Offen"
-              : status === "in_progress"
-              ? "In Progress"
-              : "",
-        }
+        () => ""
       );
     },
   },
@@ -181,7 +158,7 @@ const columnFilters = ref<ColumnFiltersState>([]);
 
 <template>
   <div class="space-y-4">
-    <div class="grid grid-cols-3 md:grid-cols-5 gap-2">
+    <div class="grid grid-cols-3 gap-2 md:grid-cols-5">
       <Input
         class="cols-span-2 md:col-span-4"
         placeholder="Filter Tournaments..."
@@ -190,8 +167,8 @@ const columnFilters = ref<ColumnFiltersState>([]);
       />
       <DropdownMenu>
         <DropdownMenuTrigger asChild>
-          <Button variant="outline" class="w-full col-span-1 h-full">
-            <Filter class="mr-2 h-4 w-4" /> Filter
+          <Button variant="outline" class="w-full h-full col-span-1">
+            <Filter class="w-4 h-4 mr-2" /> Filter
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">

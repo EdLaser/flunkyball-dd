@@ -9,26 +9,42 @@
 
     <!-- Main Content -->
     <main class="container px-4 py-8 mx-auto space-y-4">
-      <div class="px-6 py-3 border rounded-full bg-card">
-        <Badge
-          v-if="tournament?.status"
-          class="capitalize"
-          :class="determineBadgeClass(tournament.status)"
-          >{{ tournament?.status }}
-        </Badge>
-      </div>
+      <Card>
+        <CardHeader> <CardTitle> Actions </CardTitle> </CardHeader>
+        <CardContent>
+          <div class="flex gap-4">
+            <Button @click="calculateTeams" variant="outline">
+              <Users2 class="w-4 h-4 mr-2" /> Teams kalkulieren
+            </Button>
+            <Button variant="outline" @click="calculateStage('group')">
+              <Swords class="w-4 h-4 mr-2" /> Gruppenphase erstellen
+            </Button>
+            <Button variant="outline">
+              <Trophy class="w-4 h-4 mr-2" /> Finalspiele erstellen
+            </Button>
+          </div>
+        </CardContent>
+      </Card>
+
       <div class="grid gap-6 md:grid-cols-3">
         <!-- Left Column (2/3) -->
         <div class="space-y-6 md:col-span-2">
           <!-- Tournament Details -->
           <Card>
             <CardHeader>
-              <CardTitle>Turnier Details</CardTitle>
+              <CardTitle class="flex justify-between">
+                Turnier Details
+                <TournamentStatusBadge
+                  v-if="tournament?.status"
+                  :status="tournament.status"
+                />
+              </CardTitle>
             </CardHeader>
             <CardContent>
               <p class="mb-4 text-muted-foreground">
                 {{ tournament?.description }}
               </p>
+
               <div class="flex flex-col space-y-2">
                 <div class="flex items-center">
                   <Calendar class="w-4 h-4 mr-2 text-primary" />
@@ -149,28 +165,19 @@
 </template>
 
 <script setup lang="ts">
-// Import your Vue-compatible Lucide icons instead of 'lucide-react'
-import { Calendar, MapPin, Users } from "lucide-vue-next";
-
-// Import your UI components
+import {
+  Calendar,
+  MapPin,
+  Users,
+  Swords,
+  Trophy,
+  Users2,
+} from "lucide-vue-next";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 
 const route = useRoute();
-
-const determineBadgeClass = (status: "finished" | "open" | "in_progress") => {
-  switch (status) {
-    case "finished":
-      return "bg-red-500 hover:bg-red-400";
-    case "open":
-      return "bg-green-500 hover:bg-green-400";
-    case "in_progress":
-      return "bg-yellow-500 hover:bg-yellow-400";
-    default:
-      return "";
-  }
-};
 
 useHead({
   title: `Turnier Details: ${decodeURIComponent(route.params.title as string)}`,
@@ -195,7 +202,25 @@ const {
   },
 });
 
-if (tournament.value == null) {
-  await refresh();
-}
+const calculateTeams = async () => {
+  const response = await $fetch(
+    `/api/orga/tournaments/${route.params.title as string}/teams`
+  );
+
+  const [teams, needsDivision] = response;
+};
+
+const calculateStage = async (stage: string) => {
+  const response = await $fetch(
+    `/api/orga/tournaments/${route.params.title as string}/stages`,
+    {
+      method: "POST",
+      body: {
+        stage,
+      },
+    }
+  );
+
+  console.log("Response:", response);
+};
 </script>

@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 const topSchema = z.object({
-  top: z.coerce.number().optional()
+  top: z.coerce.number().optional(),
 });
 
 export default defineEventHandler(async (event) => {
@@ -19,15 +19,6 @@ export default defineEventHandler(async (event) => {
         },
       },
       tournament_registrations: {
-        select: {
-          tournaments: {
-            select: {
-              title: true,
-            },
-          },
-        },
-      },
-      pre_registrations: {
         select: {
           tournaments: {
             select: {
@@ -60,14 +51,7 @@ export default defineEventHandler(async (event) => {
         lastName: player.last_name ?? "",
         slogan: player.slogan ?? "",
       })),
-      registeredTournaments: [
-        ...team.tournament_registrations.map(
-          (registration) => registration.tournaments.title
-        ),
-        ...team.pre_registrations.map(
-          (registration) => registration.tournaments.title
-        ),
-      ],
+      registeredTournaments: team.tournament_registrations,
       wins: team._count.matches_matches_match_winnerToteams,
     })) ?? []
   );

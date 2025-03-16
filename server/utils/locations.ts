@@ -1,5 +1,3 @@
-import { locations } from "@prisma/client";
-
 export const formatLocation = (location: any) => {
   if (!location) {
     return "Nicht gefunden";
