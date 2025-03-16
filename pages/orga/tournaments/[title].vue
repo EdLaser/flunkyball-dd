@@ -67,6 +67,10 @@
             </CardContent>
           </Card>
 
+          <StagesGroupStageCard
+            :groupsWithTeams="groupsWithTeams"
+          />
+
           <!-- Tournament Schedule -->
           <Card>
             <CardHeader>
@@ -190,6 +194,13 @@ definePageMeta({
 
 const nuxtApp = useNuxtApp();
 
+const groupsWithTeams = ref<
+  Array<{
+    group: string;
+    teams: number;
+  }>
+>([]);
+
 const {
   data: tournament,
   status,
@@ -221,6 +232,6 @@ const calculateStage = async (stage: string) => {
     }
   );
 
-  console.log("Response:", response);
+  groupsWithTeams.value = response;
 };
 </script>

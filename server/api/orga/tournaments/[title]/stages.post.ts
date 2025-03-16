@@ -30,6 +30,6 @@ export default defineEventHandler(async (event) => {
   if (stage === "group") {
     return TournamentSerice.calculateGroupPhase([teams, needsDivision]);
   } else {
-    return "OK";
+    return [];
   }
 });
