@@ -79,7 +79,6 @@
             :isFinal="hasGroupPhase"
           />
 
-          <!-- Tournament Schedule -->
           <Card>
             <CardHeader>
               <CardTitle>Spiele</CardTitle>

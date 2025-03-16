@@ -18,7 +18,7 @@ export default defineEventHandler(async (event) => {
     });
   }
 
-  const { teams, registrations } = await $fetch(
+  const { teams, registrations, stages } = await $fetch(
     `/api/orga/tournaments/${title}/teams`
   );
 
@@ -29,6 +29,22 @@ export default defineEventHandler(async (event) => {
       teams[0],
       teams[1],
     ]);
+
+    let groupStage = stages.find((stage) => stage.stage_name === "group");
+
+    if (!groupStage) {
+      groupStage = await usePrisma(event).stages.create({
+        data: {
+          stage_name: "group",
+          sequence: 1,
+          tournaments: {
+            connect: {
+              title,
+            },
+          },
+        },
+      });
+    }
 
     const calculatedGroups: GroupWithTeams[] = groupPhase.map((group) => ({
       group: group.group,
@@ -77,14 +93,16 @@ export default defineEventHandler(async (event) => {
         })),
       });
 
-      // const matches = GroupService.generateMatches(calculatedGroups);
-      // await usePrisma(event).matches.createMany({
-      //   data: matches.map((match) => ({
-      //     homeTeam: match.homeTeam,
-      //     awayTeam: match.awayTeam,
-          
-      //   })),
-      // });
+      const matches = GroupService.generateMatches(calculatedGroups);
+
+      await usePrisma(event).matches.createMany({
+        data: matches.map((match) => ({
+          home_team_id: "",
+          away_team_id: "",
+          stage_id: groupStage.stage_id,
+          group_id: "",
+        })),
+      });
     }
     return calculatedGroups;
   } else {
