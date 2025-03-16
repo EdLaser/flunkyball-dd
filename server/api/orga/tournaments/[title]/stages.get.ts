@@ -1,4 +1,4 @@
-import { getStageSchema } from "~/server/utils/request-schemas.ts";
+import { getStageSchema } from "~/server/utils/request-schemas";
 
 export default defineEventHandler(async (event) => {
   const { title } = await handleTournamentParameter(event);

@@ -75,11 +75,11 @@ model matches {
   group_id                          String?   @db.Uuid
   home_team_id                      String    @db.Uuid
   away_team_id                      String    @db.Uuid
-  match_winner                      String    @db.Uuid
+  match_winner                      String?   @db.Uuid
   teams_matches_away_team_idToteams teams     @relation("matches_away_team_idToteams", fields: [away_team_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
   groups                            groups?   @relation(fields: [group_id], references: [group_id], onDelete: NoAction, onUpdate: NoAction)
   teams_matches_home_team_idToteams teams     @relation("matches_home_team_idToteams", fields: [home_team_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  teams_matches_match_winnerToteams teams     @relation("matches_match_winnerToteams", fields: [match_winner], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  teams_matches_match_winnerToteams teams?    @relation("matches_match_winnerToteams", fields: [match_winner], references: [id], onDelete: NoAction, onUpdate: NoAction)
   stages                            stages    @relation(fields: [stage_id], references: [stage_id], onDelete: NoAction, onUpdate: NoAction)
 }
 

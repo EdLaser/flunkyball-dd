@@ -13,7 +13,17 @@
         <CardHeader> <CardTitle> Actions </CardTitle> </CardHeader>
         <CardContent>
           <div class="flex flex-wrap gap-4">
-            <Button variant="outline" @click="calculateStage('group')">
+            <Button
+              variant="outline"
+              @click="calculateStage('group')"
+            >
+              <Swords class="w-4 h-4 mr-2" /> Gruppenphase generieren
+            </Button>
+            <Button
+              variant="outline"
+              @click="createStage('group')"
+              v-if="!hasGroupPhase"
+            >
               <Swords class="w-4 h-4 mr-2" /> Gruppenphase erstellen
             </Button>
             <Button variant="outline">
@@ -66,7 +76,7 @@
 
           <StagesGroupStageCard
             :groupsWithTeams="groupsWithTeams"
-            :isFinal="isFinalized"
+            :isFinal="hasGroupPhase"
           />
 
           <!-- Tournament Schedule -->
@@ -143,14 +153,7 @@
 </template>
 
 <script setup lang="ts">
-import {
-  Calendar,
-  MapPin,
-  Users,
-  Swords,
-  Trophy,
-  Users2,
-} from "lucide-vue-next";
+import { Calendar, MapPin, Users, Swords, Trophy } from "lucide-vue-next";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import type { GroupWithTeams } from "~/types/Stages";
@@ -182,9 +185,11 @@ const {
   },
 });
 
-const isFinalized = computed(() => {
+console.log("Tournament Data:", tournament.value);
+
+const hasGroupPhase = computed(() => {
   if (!tournament.value?.stages) return false;
-  return tournament.value?.stages?.length > 0;
+  return tournament.value.stages.some((stage) => stage.stageName === "group");
 });
 
 const calculateStage = async (stage: string) => {
@@ -199,5 +204,32 @@ const calculateStage = async (stage: string) => {
   );
 
   groupsWithTeams.value = response;
+};
+
+const createStage = async (stage: string) => {
+  const response = await $fetch(
+    `/api/orga/tournaments/${route.params.title as string}/stage`,
+    {
+      method: "POST",
+      body: {
+        stage,
+      },
+    }
+  );
+
+  console.log(response);
+};
+
+const getStage = async (stage: string) => {
+  const response = await $fetch(
+    `/api/orga/tournaments/${route.params.title as string}/stages`,
+    {
+      query: {
+        stage,
+      },
+    }
+  );
+
+  console.log(response);
 };
 </script>

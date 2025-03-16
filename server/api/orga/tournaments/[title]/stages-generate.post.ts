@@ -1,11 +1,7 @@
-import { z } from "zod";
+import { GroupService } from "~/server/services/GroupService";
 import { TournamentSerice } from "~/server/services/TournamentService";
-import { handleTournamentParameter } from "~/server/utils/request-schemas.ts";
+import { handleTournamentParameter } from "~/server/utils/request-schemas";
 import { GroupWithTeams } from "~/types/Stages";
-
-const stageSchema = z.object({
-  stage: z.enum(["group", "finals"]),
-});
 
 export default defineEventHandler(async (event) => {
   const { title } = await handleTournamentParameter(event);
@@ -80,6 +76,15 @@ export default defineEventHandler(async (event) => {
           lastName: player.last_name,
         })),
       });
+
+      // const matches = GroupService.generateMatches(calculatedGroups);
+      // await usePrisma(event).matches.createMany({
+      //   data: matches.map((match) => ({
+      //     homeTeam: match.homeTeam,
+      //     awayTeam: match.awayTeam,
+          
+      //   })),
+      // });
     }
     return calculatedGroups;
   } else {
