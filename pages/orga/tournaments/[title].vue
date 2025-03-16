@@ -12,10 +12,7 @@
       <Card>
         <CardHeader> <CardTitle> Actions </CardTitle> </CardHeader>
         <CardContent>
-          <div class="flex gap-4">
-            <Button @click="calculateTeams" variant="outline">
-              <Users2 class="w-4 h-4 mr-2" /> Teams kalkulieren
-            </Button>
+          <div class="flex flex-wrap gap-4">
             <Button variant="outline" @click="calculateStage('group')">
               <Swords class="w-4 h-4 mr-2" /> Gruppenphase erstellen
             </Button>
@@ -69,6 +66,7 @@
 
           <StagesGroupStageCard
             :groupsWithTeams="groupsWithTeams"
+            :isFinal="isFinalized"
           />
 
           <!-- Tournament Schedule -->
@@ -125,31 +123,7 @@
                   :key="team.name ?? team.slogan + team.players"
                   class="flex items-center space-x-2"
                 >
-                  <Avatar>
-                    <AvatarFallback>
-                      {{ team.name?.substring(0, 2).toUpperCase() ?? "AN" }}
-                    </AvatarFallback>
-                  </Avatar>
-                  <div>
-                    <NuxtLink
-                      :to="`/orga/teams/${encodeURIComponent(
-                        team.publicID ?? ''
-                      )}`"
-                      class="font-semibold text-primary"
-                    >
-                      {{ team.name }}
-                    </NuxtLink>
-                    <p class="text-sm text-muted-foreground">
-                      {{
-                        team.players
-                          .map(
-                            (player) =>
-                              `${player.firstName} ${player.lastName ?? ""}`
-                          )
-                          .join(", ")
-                      }}
-                    </p>
-                  </div>
+                  <TeamAvatar :team="team" />
                 </li>
               </ul>
               <p v-else>Keine Teams angemeldet.</p>
@@ -179,7 +153,7 @@ import {
 } from "lucide-vue-next";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import type { GroupWithTeams } from "~/types/Stages";
 
 const route = useRoute();
 
@@ -194,12 +168,7 @@ definePageMeta({
 
 const nuxtApp = useNuxtApp();
 
-const groupsWithTeams = ref<
-  Array<{
-    group: string;
-    teams: number;
-  }>
->([]);
+const groupsWithTeams = ref<Array<GroupWithTeams>>([]);
 
 const {
   data: tournament,
@@ -213,17 +182,14 @@ const {
   },
 });
 
-const calculateTeams = async () => {
-  const response = await $fetch(
-    `/api/orga/tournaments/${route.params.title as string}/teams`
-  );
-
-  const [teams, needsDivision] = response;
-};
+const isFinalized = computed(() => {
+  if (!tournament.value?.stages) return false;
+  return tournament.value?.stages?.length > 0;
+});
 
 const calculateStage = async (stage: string) => {
   const response = await $fetch(
-    `/api/orga/tournaments/${route.params.title as string}/stages`,
+    `/api/orga/tournaments/${route.params.title as string}/stages-generate`,
     {
       method: "POST",
       body: {

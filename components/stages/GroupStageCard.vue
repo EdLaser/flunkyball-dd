@@ -2,32 +2,37 @@
   <Card>
     <CardHeader>
       <CardTitle>Gruppenphase</CardTitle>
-      <CardDescription> Guppen innerhalb der Gruppenphase </CardDescription>
+      <CardDescription class="flex justify-between">
+        Guppen innerhalb der Gruppenphase
+        <Button  v-if="!isFinal" @click="confirmGroups"> <Beer class="w-4 h-4 mr-1" /> Finalisieren  </Button>
+      </CardDescription>
     </CardHeader>
     <CardContent>
-      <div class="grid gap-4 md:grid-cols-2">
-        <div
-          v-for="(group, index) in props.groupsWithTeams"
-          :key="index"
-          class="flex items-center justify-between p-4 border rounded-md bg-muted"
-        >
-          <div class="flex items-center">
-            <span class="text-lg font-semibold">{{ group.group }}</span>
-            <span class="text-sm text-muted-foreground">
-              {{ group.teams }} Teams
-            </span>
-          </div>
-        </div>
+      <div class="grid gap-4" v-auto-animate>
+        <Card v-for="item in groupsWithTeams" class="">
+          <CardHeader>
+            <CardTitle>{{ item.group }}</CardTitle>
+            <CardDescription> {{ item.teams.length }} Teams</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div class="grid grid-cols-1 gap-1 md:grid-cols-2">
+              <TeamAvatar v-for="team in item.teams" :team="team" />
+            </div>
+          </CardContent>
+        </Card>
       </div>
     </CardContent>
   </Card>
 </template>
 
 <script lang="ts" setup>
+import { vAutoAnimate } from "@formkit/auto-animate";
+import { Beer } from "lucide-vue-next";
+import type { GroupWithTeams } from "~/types/Stages";
 const props = defineProps<{
-  groupsWithTeams: Array<{
-    group: string;
-    teams: number;
-  }>;
+  groupsWithTeams: Array<GroupWithTeams>;
+  isFinal: boolean;
 }>();
+
+const confirmGroups = async () => {};
 </script>

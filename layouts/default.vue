@@ -26,12 +26,11 @@
         <Button
           v-if="loggedIn"
           variant="outline"
-          :size="isMobile ? 'icon' : 'default'"
+          size="icon"
           class="flex items-center"
           @click="handleLogout()"
         >
-          <LogOut class="w-4 h-4 md:mr-2" />
-          <span v-if="!isMobile">Logout</span>
+          <LogOut class="w-4 h-4" />
         </Button>
         <NuxtLink
           v-if="user"

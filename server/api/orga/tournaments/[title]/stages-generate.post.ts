@@ -1,0 +1,88 @@
+import { z } from "zod";
+import { TournamentSerice } from "~/server/services/TournamentService";
+import { handleTournamentParameter } from "~/server/utils/request-schemas.ts";
+import { GroupWithTeams } from "~/types/Stages";
+
+const stageSchema = z.object({
+  stage: z.enum(["group", "finals"]),
+});
+
+export default defineEventHandler(async (event) => {
+  const { title } = await handleTournamentParameter(event);
+
+  const { data, success } = await readValidatedBody(
+    event,
+    stageSchema.safeParse
+  );
+
+  if (!success) {
+    throw createError({
+      statusCode: 400,
+      statusMessage: "Invalid stage title",
+    });
+  }
+
+  const { teams, registrations } = await $fetch(
+    `/api/orga/tournaments/${title}/teams`
+  );
+
+  const { stage } = data;
+
+  if (stage === "group") {
+    const groupPhase = TournamentSerice.calculateGroupPhase([
+      teams[0],
+      teams[1],
+    ]);
+
+    const calculatedGroups: GroupWithTeams[] = groupPhase.map((group) => ({
+      group: group.group,
+      teams: [],
+    }));
+
+    while (registrations.length > 0) {
+      // Get the max number of teams per group to ensure even distribution
+      // Use maxTeams value from each group in groupPhase
+      const groupMaxTeams = Object.fromEntries(
+        groupPhase.map((group) => [group.group, group.teams])
+      );
+
+      // Find groups that haven't reached their max capacity
+      const availableGroups = calculatedGroups.filter(
+        (group) => group.teams.length < groupMaxTeams[group.group]
+      );
+
+      // If all groups are full, break out of the loop
+      if (availableGroups.length === 0) break;
+
+      // Pick a random group from available ones
+      const randomGroupIndex = Math.floor(
+        Math.random() * availableGroups.length
+      );
+      const selectedGroup = availableGroups[randomGroupIndex];
+
+      // Find the actual index in calculatedGroups
+      const actualGroupIndex = calculatedGroups.findIndex(
+        (group) => group.group === selectedGroup.group
+      );
+
+      // Pick a random team from registrations
+      const randomRegistrationIndex = Math.floor(
+        Math.random() * registrations.length
+      );
+      const randomTeam = registrations.splice(randomRegistrationIndex, 1)[0];
+
+      // Add the team to the selected group
+      calculatedGroups[actualGroupIndex].teams.push({
+        name: randomTeam.name,
+        publicID: randomTeam.public_id,
+        players: randomTeam.players.map((player) => ({
+          firstName: player.first_name,
+          lastName: player.last_name,
+        })),
+      });
+    }
+    return calculatedGroups;
+  } else {
+    return [];
+  }
+});

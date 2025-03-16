@@ -20,6 +20,22 @@ export default defineEventHandler(async (event) => {
     },
     select: {
       status: true,
+      tournament_registrations: {
+        select: {
+          teams: {
+            select: {
+              name: true,
+              public_id: true,
+              players: {
+                select: {
+                  first_name: true,
+                  last_name: true,
+                },
+              },
+            },
+          },
+        },
+      },
       _count: {
         select: {
           tournament_registrations: true,
@@ -39,5 +55,16 @@ export default defineEventHandler(async (event) => {
     tournament._count.tournament_registrations
   );
 
-  return teams;
+  const registrations = tournament.tournament_registrations.map((team) => {
+    return {
+      name: team.teams.name,
+      public_id: team.teams.public_id,
+      players: team.teams.players
+    };
+  });
+
+  return {
+    teams,
+    registrations,
+  };
 });

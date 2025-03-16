@@ -61,6 +61,7 @@ model groups {
   group_name    String
   stage_id      String      @db.Uuid
   tournament_id String      @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  is_finalized  Boolean?    @default(false)
   stages        stages      @relation(fields: [stage_id], references: [stage_id], onDelete: NoAction, onUpdate: NoAction)
   tournaments   tournaments @relation(fields: [tournament_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
   matches       matches[]

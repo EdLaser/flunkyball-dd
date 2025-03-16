@@ -7,6 +7,10 @@ export const tournamentTitleSchema = z.object({
     .transform((val) => decodeURIComponent(val)),
 });
 
+export const getStageSchema = z.object({
+  stage: z.enum(["group", "finals"]).optional(),
+});
+
 export const handleTournamentParameter = async (event: any) => {
   const { data, success } = await getValidatedRouterParams(
     event,
