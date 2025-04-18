@@ -1,4 +1,3 @@
-import { GroupService } from "~/server/services/GroupService";
 import { TournamentSerice } from "~/server/services/TournamentService";
 import { handleTournamentParameter } from "~/server/utils/request-schemas";
 import { GroupWithTeams } from "~/types/Stages";
@@ -93,17 +92,6 @@ export default defineEventHandler(async (event) => {
           lastName: player.last_name,
         })),
       });
-
-      const matches = GroupService.generateMatches(calculatedGroups);
-
-      // await usePrisma(event).matches.createMany({
-      //   data: matches.map((match) => ({
-      //     home_team_id: "",
-      //     away_team_id: "",
-      //     stage_id: groupStage.stage_id,
-      //     group_id: "",
-      //   })),
-      // });
     }
     return calculatedGroups;
   } else {
