@@ -103,13 +103,13 @@
 
     <!-- Main content -->
     <!--  Give some left margin if the sidebar is open on larger screens -->
-    <main
+    <div
       class="flex-1 overflow-y-auto transition-all duration-200"
       :class="isSidebarOpen ? 'md:ml-64' : 'ml-0'"
       ref="mainRef"
     >
       <slot />
-    </main>
+    </div>
   </div>
 </template>
 

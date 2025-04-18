@@ -7,7 +7,7 @@
         </h1>
       </div>
     </header>
-    <ActionGridButton
+    <Button
       v-if="!isSidebarOpen"
       class="absolute z-20 rounded-full bottom-4 md:bottom-6 left-8 md:left-10 ml-7"
       size="icon"
@@ -17,7 +17,7 @@
         class="w-4 h-4"
         :class="{ 'animate-spin': refreshAllPending }"
       />
-    </ActionGridButton>
+    </Button>
     <main class="container px-4 py-8 mx-auto">
       <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
         <div class="flex flex-col">

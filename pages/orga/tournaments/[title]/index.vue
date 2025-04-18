@@ -140,6 +140,8 @@ useHead({
 
 definePageMeta({
   title: "Turnier Details",
+  middleware: "auth",
+  layout: "dashboard",
   description: "Details zum Turnier",
 });
 
