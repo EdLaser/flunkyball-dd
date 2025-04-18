@@ -30,6 +30,7 @@ model teams {
   slogan                              String
   created_at                          DateTime                   @default(now()) @db.Timestamptz(6)
   public_id                           String?                    @unique
+  group_registrations                 group_registrations[]
   matches_matches_away_team_idToteams matches[]                  @relation("matches_away_team_idToteams")
   matches_matches_home_team_idToteams matches[]                  @relation("matches_home_team_idToteams")
   matches_matches_match_winnerToteams matches[]                  @relation("matches_match_winnerToteams")
@@ -48,6 +49,7 @@ model tournaments {
   created_at               DateTime                   @default(now()) @db.Timestamptz(6)
   status                   tournament_stauts          @default(open)
   location_id              String?                    @db.Uuid
+  group_registrations      group_registrations[]
   groups                   groups[]
   pre_registrations        pre_registrations[]
   stages                   stages[]
@@ -57,15 +59,16 @@ model tournaments {
 
 /// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
 model groups {
-  group_id      String      @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  created_at    DateTime    @default(now()) @db.Timestamptz(6)
-  group_name    String
-  stage_id      String      @db.Uuid
-  tournament_id String      @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  is_finalized  Boolean?    @default(false)
-  stages        stages      @relation(fields: [stage_id], references: [stage_id], onDelete: NoAction, onUpdate: NoAction)
-  tournaments   tournaments @relation(fields: [tournament_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  matches       matches[]
+  group_id            String                @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  created_at          DateTime              @default(now()) @db.Timestamptz(6)
+  group_name          String
+  stage_id            String                @db.Uuid
+  tournament_id       String                @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  is_finalized        Boolean?              @default(false)
+  group_registrations group_registrations[]
+  stages              stages                @relation(fields: [stage_id], references: [stage_id], onDelete: NoAction, onUpdate: NoAction)
+  tournaments         tournaments           @relation(fields: [tournament_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  matches             matches[]
 }
 
 /// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
@@ -149,6 +152,18 @@ model users {
   hashed_password String
   player_id       String   @db.Uuid
   players         players  @relation(fields: [player_id], references: [id], onDelete: Cascade)
+}
+
+/// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
+model group_registrations {
+  group_registration_id String      @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  group_id              String      @db.Uuid
+  team_public_id        String
+  tournament_id         String      @db.Uuid
+  created_at            DateTime    @default(now()) @db.Timestamptz(6)
+  groups                groups      @relation(fields: [group_id], references: [group_id], onDelete: NoAction, onUpdate: NoAction)
+  teams                 teams       @relation(fields: [team_public_id], references: [public_id], onDelete: NoAction, onUpdate: NoAction)
+  tournaments           tournaments @relation(fields: [tournament_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
 }
 
 enum tournament_stauts {

@@ -19,7 +19,10 @@ const createGroupsSchema = z.array(
 );
 
 const finalizeQuery = z.object({
-  finalize: z.boolean().optional(),
+  finalize: z
+    .string()
+    .optional()
+    .refine((val) => val === "true"),
 });
 
 export default defineEventHandler(async (event) => {
@@ -29,6 +32,23 @@ export default defineEventHandler(async (event) => {
     event,
     finalizeQuery.safeParse
   );
+
+  if (query?.finalize) {
+    const { tournamentId } = await $fetch(
+      `/api/orga/tournaments/${title}/registrations`
+    );
+
+    const finalized = await usePrisma(event).groups.updateMany({
+      where: {
+        tournament_id: tournamentId,
+      },
+      data: {
+        is_finalized: true,
+      },
+    });
+
+    return finalized.count;
+  }
 
   const { data: body, success: successBody } = await readValidatedBody(
     event,
@@ -78,14 +98,25 @@ export default defineEventHandler(async (event) => {
     }
   }
   try {
-    const groupStage = await usePrisma(event).groups.createMany({
-      data: body.map((group) => ({
-        group_name: group.group,
-        stage_id: groupStageId,
-        tournament_id: tournamentId,
-        is_finalized: query?.finalize,
-      })),
-    });
+    let groupStage = [];
+    for (let i = 0; i < body.length; i++) {
+      const group = body[i];
+
+      const createdGroup = await usePrisma(event).groups.create({
+        data: {
+          group_name: group.group,
+          stage_id: groupStageId,
+          tournament_id: tournamentId,
+          group_registrations: {
+            create: group.teams.map((team) => ({
+              team_public_id: team.publicID,
+              tournament_id: tournamentId,
+            })),
+          },
+        },
+      });
+      groupStage.push(createdGroup);
+    }
     return groupStage;
   } catch {
     throw createError({

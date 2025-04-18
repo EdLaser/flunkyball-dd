@@ -1,7 +1,7 @@
 <template>
   <Button
-    @click="props.action"
-    class="flex items-center"
+    @click="props.action()"
+    class="flex items-center whitespace-nowrap"
     :size="text ? 'sm' : 'icon'"
     :variant="props.variant ?? 'outline'"
     :disabled="props.disabled"
@@ -16,7 +16,7 @@ import type { ButtonVariants } from "./ui/button";
 const props = defineProps<{
   icon: any;
   text: string;
-  action: () => any;
+  action: Function;
   disabled?: boolean;
   variant?: ButtonVariants["variant"];
 }>();

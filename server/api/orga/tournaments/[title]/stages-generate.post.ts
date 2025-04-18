@@ -49,6 +49,7 @@ export default defineEventHandler(async (event) => {
     const calculatedGroups: GroupWithTeams[] = groupPhase.map((group) => ({
       group: group.group,
       teams: [],
+      isFinalized: false,
     }));
 
     while (registrations.length > 0) {

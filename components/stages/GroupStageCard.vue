@@ -1,21 +1,34 @@
 <template>
-  <Card>
+  <Card v-auto-animate>
     <CardHeader>
-      <CardTitle>Gruppenphase</CardTitle>
-      <CardDescription class="flex gap-2.5 overflow-x-scroll">
-        <ButtonWithAction
-          v-for="action in actionItems"
-          :key="action.text"
-          :icon="action.icon"
-          :disabled="action.disabled"
-          :text="action.text"
-          :action="action.action"
-        />
-      </CardDescription>
+      <CardTitle class="flex items-center justify-between">
+        Gruppenphase <Loader2 v-if="loadingGroupStage" class="animate-spin" />
+      </CardTitle>
+      <ClientOnly>
+        <CardDescription class="max-w-xs">
+          <div class="flex overflow-x-auto pb-2 -mx-1 px-1 scrollbar-thin">
+            <div class="flex gap-2 py-1">
+              <ButtonWithAction
+                v-for="action in actionItems"
+                :key="action.text"
+                :icon="action.icon"
+                :disabled="action.disabled"
+                :text="action.text"
+                :action="action.action"
+              />
+            </div>
+          </div>
+        </CardDescription>
+      </ClientOnly>
     </CardHeader>
     <CardContent>
       <div class="grid gap-4" v-auto-animate>
-        <Card v-for="item in groupStage">
+        <Card
+          v-for="item in groupStage"
+          :class="{
+            'border-dashed': !item.isFinalized,
+          }"
+        >
           <CardHeader>
             <CardTitle>{{ item.group }}</CardTitle>
             <CardDescription> {{ item.teams.length }} Teams</CardDescription>
@@ -33,7 +46,7 @@
 
 <script lang="ts" setup>
 import { vAutoAnimate } from "@formkit/auto-animate";
-import { Beer, Swords, Hammer } from "lucide-vue-next";
+import { Beer, Swords, Hammer, Loader2, Save } from "lucide-vue-next";
 
 const props = defineProps<{
   hasGroupPhase: boolean;
@@ -41,7 +54,7 @@ const props = defineProps<{
 }>();
 
 const groupStageStore = useGroupStageStore();
-const { groupStage } = storeToRefs(groupStageStore);
+const { groupStage, loadingGroupStage } = storeToRefs(groupStageStore);
 
 const actionItems = computed(() => {
   const items = [
@@ -51,9 +64,15 @@ const actionItems = computed(() => {
       action: groupStageStore.calculateGroupStage,
     },
     {
+      text: "Speichern",
+      icon: Save,
+      action: groupStageStore.confirmGroupStage,
+      disabled: groupStage.value.length === 0,
+    },
+    {
       text: "Finalisieren",
       icon: Beer,
-      action: groupStageStore.confirmGroupStage,
+      action: () => groupStageStore.confirmGroupStage(true),
       disabled: !canBeFinalized.value,
     },
   ];

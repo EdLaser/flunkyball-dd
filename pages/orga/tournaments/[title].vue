@@ -143,6 +143,12 @@ definePageMeta({
   description: "Details zum Turnier",
 });
 
+const groupStageStore = useGroupStageStore();
+
+onMounted(() => {
+  groupStageStore.fetchGroupStage();
+});
+
 const {
   data: tournament,
   status,

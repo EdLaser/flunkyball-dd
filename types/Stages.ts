@@ -5,4 +5,5 @@ export type GroupWithTeams = {
     publicID: string | null;
     players: { firstName: string; lastName: string | null }[];
   }[];
+  isFinalized: boolean | null;
 };
