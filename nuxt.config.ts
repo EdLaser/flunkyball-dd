@@ -17,6 +17,12 @@ export default defineNuxtConfig({
     pageTransition: { name: "page", mode: "out-in" },
   },
 
+  nitro: {
+    compressPublicAssets: {
+      brotli: true,
+    }
+  },
+
   runtimeConfig: {
     AVATAR_BUCKET_NAME: process.env.AVATAR_BUCKET_NAME,
   },

@@ -1,13 +1,13 @@
 <template>
   <div class="flex h-screen bg-background">
-    <ActionGridButton
+    <Button
       @click="sideBarStore.toggleSidebar"
       size="icon"
       v-if="!isSidebarOpen"
       class="absolute bottom-4 md:bottom-6 left-5 md:left-6 z-20 rounded-full"
     >
       <PanelLeftOpen class="h-4 w-4 md:h-5 md:w-5" />
-    </ActionGridButton>
+    </Button>
     <aside
       class="fixed inset-y-0 left-0 z-10 bg-muted p-4 transition-transform duration-200 border-r-2"
       :class="isSidebarOpen ? 'translate-x-0 w-64' : '-translate-x-full w-64'"
@@ -76,21 +76,16 @@
 
       <div class="absolute bottom-4 left-4 right-4 grid grid-cols-4 gap-2">
         <div class="div flex flex-col items-end w-full gap-2 col-span-4">
-          <ActionGridButton :onClick="sideBarStore.toggleSidebar">
+          <Button size="icon" :onClick="sideBarStore.toggleSidebar">
             <PanelLeftClose class="h-4 w-4" />
-          </ActionGridButton>
-          <ColorModeSwitch
-            class="text-white bg-gradient-to-br rounded-full from-blue-500 to-pink-500 shadow-lg transition-all duration-200 ease-in-out hover:scale-105 hover:shadow-xl hover:from-purple-600 hover:to-pink-600 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-opacity-50"
-          />
+          </Button>
+          <ColorModeSwitch />
         </div>
         <NuxtLink
           v-if="user"
           :to="`/players/${encodeURIComponent(user.publicID)}`"
         >
-          <Avatar
-            v-if="loggedIn"
-            class="text-white bg-gradient-to-br rounded-full from-blue-500 to-pink-500 shadow-lg transition-all duration-200 ease-in-out hover:scale-105 hover:shadow-xl hover:from-purple-600 hover:to-pink-600 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-opacity-50"
-          >
+          <Avatar v-if="loggedIn" class="bg-primary/40">
             <AvatarFallback>
               {{ user?.firstName.slice(0, 2).toUpperCase() }}
             </AvatarFallback>
@@ -98,10 +93,10 @@
         </NuxtLink>
         <div class="flex flex-col col-span-4 justify-between gap-2">
           <NewStaffMember />
-          <ActionGridButton :onClick="handleLogout" size="default">
+          <Button :onClick="handleLogout" size="default">
             <LogOut class="mr-2 h-4 w-4" />
             Logout
-          </ActionGridButton>
+          </Button>
         </div>
       </div>
     </aside>

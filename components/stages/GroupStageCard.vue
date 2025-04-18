@@ -2,14 +2,20 @@
   <Card>
     <CardHeader>
       <CardTitle>Gruppenphase</CardTitle>
-      <CardDescription class="flex justify-between">
-        Guppen innerhalb der Gruppenphase
-        <Button  v-if="!isFinal" @click="confirmGroups"> <Beer class="w-4 h-4 mr-1" /> Finalisieren  </Button>
+      <CardDescription class="flex gap-2.5 overflow-x-scroll">
+        <ButtonWithAction
+          v-for="action in actionItems"
+          :key="action.text"
+          :icon="action.icon"
+          :disabled="action.disabled"
+          :text="action.text"
+          :action="action.action"
+        />
       </CardDescription>
     </CardHeader>
     <CardContent>
       <div class="grid gap-4" v-auto-animate>
-        <Card v-for="item in groupsWithTeams" class="">
+        <Card v-for="item in groupStage">
           <CardHeader>
             <CardTitle>{{ item.group }}</CardTitle>
             <CardDescription> {{ item.teams.length }} Teams</CardDescription>
@@ -27,12 +33,44 @@
 
 <script lang="ts" setup>
 import { vAutoAnimate } from "@formkit/auto-animate";
-import { Beer } from "lucide-vue-next";
-import type { GroupWithTeams } from "~/types/Stages";
+import { Beer, Swords, Hammer } from "lucide-vue-next";
+
 const props = defineProps<{
-  groupsWithTeams: Array<GroupWithTeams>;
-  isFinal: boolean;
+  hasGroupPhase: boolean;
+  groupStageHasMatches: boolean;
 }>();
 
-const confirmGroups = async () => {};
+const groupStageStore = useGroupStageStore();
+const { groupStage } = storeToRefs(groupStageStore);
+
+const actionItems = computed(() => {
+  const items = [
+    {
+      text: "Generieren",
+      icon: Swords,
+      action: groupStageStore.calculateGroupStage,
+    },
+    {
+      text: "Finalisieren",
+      icon: Beer,
+      action: groupStageStore.confirmGroupStage,
+      disabled: !canBeFinalized.value,
+    },
+  ];
+  if (!props.hasGroupPhase) {
+    items.push({
+      text: "Erstellen",
+      icon: Hammer,
+      action: groupStageStore.createGroupStage,
+    });
+  }
+  return items;
+});
+
+const canBeFinalized = computed(() => {
+  return (
+    groupStage.value.length > 0 &&
+    groupStage.value.every((group) => group.teams.length > 0)
+  );
+});
 </script>

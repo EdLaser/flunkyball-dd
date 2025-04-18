@@ -9,30 +9,6 @@
 
     <!-- Main Content -->
     <main class="container px-4 py-8 mx-auto space-y-4">
-      <Card>
-        <CardHeader> <CardTitle> Actions </CardTitle> </CardHeader>
-        <CardContent>
-          <div class="flex flex-wrap gap-4">
-            <Button
-              variant="outline"
-              @click="calculateStage('group')"
-            >
-              <Swords class="w-4 h-4 mr-2" /> Gruppenphase generieren
-            </Button>
-            <Button
-              variant="outline"
-              @click="createStage('group')"
-              v-if="!hasGroupPhase"
-            >
-              <Swords class="w-4 h-4 mr-2" /> Gruppenphase erstellen
-            </Button>
-            <Button variant="outline">
-              <Trophy class="w-4 h-4 mr-2" /> Finalspiele erstellen
-            </Button>
-          </div>
-        </CardContent>
-      </Card>
-
       <div class="grid gap-6 md:grid-cols-3">
         <!-- Left Column (2/3) -->
         <div class="space-y-6 md:col-span-2">
@@ -75,8 +51,8 @@
           </Card>
 
           <StagesGroupStageCard
-            :groupsWithTeams="groupsWithTeams"
-            :isFinal="hasGroupPhase"
+            :has-group-phase="amountGroupStageMatches !== -1"
+            :group-stage-has-matches="amountGroupStageMatches > 0"
           />
 
           <Card>
@@ -152,10 +128,9 @@
 </template>
 
 <script setup lang="ts">
-import { Calendar, MapPin, Users, Swords, Trophy } from "lucide-vue-next";
+import { Calendar, MapPin, Users } from "lucide-vue-next";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import type { GroupWithTeams } from "~/types/Stages";
 
 const route = useRoute();
 
@@ -168,67 +143,24 @@ definePageMeta({
   description: "Details zum Turnier",
 });
 
-const nuxtApp = useNuxtApp();
-
-const groupsWithTeams = ref<Array<GroupWithTeams>>([]);
-
 const {
   data: tournament,
   status,
   error,
   refresh,
 } = await useFetch(() => `/api/tournament-details/${route.params.title}`, {
-  getCachedData(key) {
+  getCachedData(key, nuxtApp) {
     // TODO: Fix this to displayed the time when the data was cached
     return getCachedDataOrFetch(key, nuxtApp);
   },
 });
 
-console.log("Tournament Data:", tournament.value);
-
-const hasGroupPhase = computed(() => {
-  if (!tournament.value?.stages) return false;
-  return tournament.value.stages.some((stage) => stage.stageName === "group");
+const amountGroupStageMatches = computed(() => {
+  if (!tournament.value?.stages) return -1;
+  const groupStage = tournament.value.stages.find(
+    (stage) => stage.stageName === "group"
+  );
+  if (!groupStage) return -1;
+  return groupStage.matches.length;
 });
-
-const calculateStage = async (stage: string) => {
-  const response = await $fetch(
-    `/api/orga/tournaments/${route.params.title as string}/stages-generate`,
-    {
-      method: "POST",
-      body: {
-        stage,
-      },
-    }
-  );
-
-  groupsWithTeams.value = response;
-};
-
-const createStage = async (stage: string) => {
-  const response = await $fetch(
-    `/api/orga/tournaments/${route.params.title as string}/stage`,
-    {
-      method: "POST",
-      body: {
-        stage,
-      },
-    }
-  );
-
-  console.log(response);
-};
-
-const getStage = async (stage: string) => {
-  const response = await $fetch(
-    `/api/orga/tournaments/${route.params.title as string}/stages`,
-    {
-      query: {
-        stage,
-      },
-    }
-  );
-
-  console.log(response);
-};
 </script>

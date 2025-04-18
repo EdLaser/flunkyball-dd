@@ -2,7 +2,7 @@ import { getStageSchema } from "~/server/utils/request-schemas";
 
 export default defineEventHandler(async (event) => {
   const { title } = await handleTournamentParameter(event);
-  const { data } = await getValidatedRouterParams(
+  const { data } = await getValidatedQuery(
     event,
     getStageSchema.safeParse
   );
@@ -20,8 +20,8 @@ export default defineEventHandler(async (event) => {
               select: {
                 group_name: true,
                 matches: {
-                  distinct: []
-                }
+                  distinct: [],
+                },
               },
             },
           },
@@ -31,5 +31,30 @@ export default defineEventHandler(async (event) => {
         },
       },
     });
+
+    return stage;
+  } else {
+    const stages = await usePrisma(event).tournaments.findUnique({
+      where: {
+        title: title,
+      },
+      select: {
+        stages: {
+          select: {
+            stage_name: true,
+            groups: {
+              select: {
+                group_name: true,
+                matches: {
+                  distinct: [],
+                },
+              },
+            },
+          },
+        },
+      },
+    });
+
+    return stages;
   }
 });

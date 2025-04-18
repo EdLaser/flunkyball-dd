@@ -95,14 +95,14 @@ export default defineEventHandler(async (event) => {
 
       const matches = GroupService.generateMatches(calculatedGroups);
 
-      await usePrisma(event).matches.createMany({
-        data: matches.map((match) => ({
-          home_team_id: "",
-          away_team_id: "",
-          stage_id: groupStage.stage_id,
-          group_id: "",
-        })),
-      });
+      // await usePrisma(event).matches.createMany({
+      //   data: matches.map((match) => ({
+      //     home_team_id: "",
+      //     away_team_id: "",
+      //     stage_id: groupStage.stage_id,
+      //     group_id: "",
+      //   })),
+      // });
     }
     return calculatedGroups;
   } else {
