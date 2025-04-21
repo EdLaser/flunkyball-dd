@@ -142,7 +142,7 @@ const handleSubmit = async () => {
       }),
     });
 
-    if (result.status === 200) {
+    if (result.id) {
       toast("Turnier erfolgreich erstellt!", { duration: 5000 });
       title.value = "";
       description.value = "";

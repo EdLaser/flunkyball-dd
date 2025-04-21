@@ -54,38 +54,6 @@
             :has-group-phase="amountGroupStageMatches !== -1"
             :group-stage-has-matches="amountGroupStageMatches > 0"
           />
-
-          <Card>
-            <CardHeader>
-              <CardTitle>Spiele</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div
-                class="space-y-4"
-                v-if="
-                  tournament?.stages?.length && tournament?.stages?.length > 0
-                "
-              >
-                <div
-                  v-for="(stage, index) in tournament?.stages"
-                  v-if="tournament?.stages"
-                  :key="index"
-                  class="w-full"
-                >
-                  <MatchCard
-                    v-for="(match, index) in stage.matches"
-                    :key="`${index}-${match.awayTeam}`"
-                    :stageName="stage.stageName"
-                    :awayTeamName="match.awayTeam"
-                    :homeTeamName="match.homeTeam"
-                    :winnerTeamName="match.winner"
-                    :group="match.groupName"
-                  />
-                </div>
-              </div>
-              <p v-else>Keine Spiele vorhanden.</p>
-            </CardContent>
-          </Card>
         </div>
 
         <!-- Right Column (1/3) -->

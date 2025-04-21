@@ -116,7 +116,7 @@ export const getTournamentDetails = async (title: string, event: any) => {
               match.teams_matches_away_team_idToteams.name ?? "Anonymus",
             homeTeam:
               match.teams_matches_home_team_idToteams.name ?? "Anonymus",
-            winner: match.teams_matches_match_winnerToteams.name,
+            winner: match.teams_matches_match_winnerToteams?.name,
             groupName: match.groups?.group_name,
           };
         }),
@@ -201,7 +201,9 @@ export const getPastTournaments = async (event: any) => {
   if (pastTournamentWinners) {
     const tournaments = pastTournamentWinners.map((tournament) => {
       const winner =
-        tournament.stages.length > 0
+        tournament.stages.length > 0 &&
+        tournament.stages[0].matches.length > 0 &&
+        tournament.stages[0].matches[0].teams_matches_match_winnerToteams
           ? tournament.stages[0].matches[0].teams_matches_match_winnerToteams
               .name
           : null;

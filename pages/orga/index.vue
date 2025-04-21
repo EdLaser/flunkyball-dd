@@ -175,8 +175,6 @@ import TournamentList from "~/components/tournament/TournamentList.vue";
 import TeamList from "~/components/team/TeamList.vue";
 import StatCard from "@/components/StatCard.vue";
 
-const nuxtApp = useNuxtApp();
-
 const sideBarStore = useSideBarStore();
 
 const { isSidebarOpen } = storeToRefs(sideBarStore);
@@ -186,7 +184,7 @@ const {
   status: statusTotalTournaments,
   refresh: refreshTotalTournaments,
 } = await useFetch("/api/orga/tournaments/total-tournaments", {
-  getCachedData(key) {
+  getCachedData(key, nuxtApp) {
     // TODO: Fix this to displayed the time when the data was cached
     return getCachedDataOrFetch(key, nuxtApp);
   },
@@ -197,7 +195,7 @@ const {
   status: statusRecentTournaments,
   refresh: refreshRecentTournaments,
 } = await useFetch("/api/orga/tournaments/recent-tournaments", {
-  getCachedData(key) {
+  getCachedData(key, nuxtApp) {
     // TODO: Fix this to displayed the time when the data was cached
     return getCachedDataOrFetch(key, nuxtApp);
   },
@@ -208,7 +206,7 @@ const {
   status: statusTotalTeams,
   refresh: refreshTotalTeams,
 } = await useFetch("/api/teams/total-teams", {
-  getCachedData(key) {
+  getCachedData(key, nuxtApp) {
     // TODO: Fix this to displayed the time when the data was cached
     return getCachedDataOrFetch(key, nuxtApp);
   },
@@ -219,7 +217,7 @@ const {
   status: statusLocations,
   refresh: refreshLocations,
 } = await useFetch("/api/orga/locations", {
-  getCachedData(key) {
+  getCachedData(key, nuxtApp) {
     // TODO: Fix this to displayed the time when the data was cached
     return getCachedDataOrFetch(key, nuxtApp);
   },

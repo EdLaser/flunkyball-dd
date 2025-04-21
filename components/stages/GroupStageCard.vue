@@ -2,7 +2,7 @@
   <Card v-auto-animate>
     <CardHeader>
       <CardTitle class="flex items-center justify-between">
-        Gruppenphase <Loader2 v-if="loadingGroupStage" class="animate-spin" />
+        <NuxtLink class="text-primary" :to="`/orga/tournaments/${tournamentTitle}/group-phase`">Gruppenphase</NuxtLink>  <Loader2 v-if="loadingGroupStage" class="animate-spin" />
       </CardTitle>
       <ClientOnly>
         <CardDescription class="max-w-xs">
@@ -55,6 +55,8 @@ const props = defineProps<{
 
 const groupStageStore = useGroupStageStore();
 const { groupStage, loadingGroupStage } = storeToRefs(groupStageStore);
+
+const tournamentTitle = useRoute().params.title as string;
 
 const actionItems = computed(() => {
   const items = [

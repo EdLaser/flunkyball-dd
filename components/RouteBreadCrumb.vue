@@ -84,7 +84,7 @@ const childRoutes = computed(() =>
             }`"
             class="capitalize"
           >
-            {{ path }}
+            {{ decodeURIComponent(path) }}
           </BreadcrumbLink>
           <BreadcrumbPage class="capitalize" v-else>{{
             decodeURIComponent(path)
