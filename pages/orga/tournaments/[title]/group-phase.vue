@@ -33,7 +33,7 @@
             <Button @click="generateMatches"> Spiele generieren <Hammer /> </Button>
           </div>
         </TabsContent>
-        <TabsContent value="ranking"> Change your password here. </TabsContent>
+        <TabsContent value="ranking"> <OverviewRankingTable /> </TabsContent>
       </Tabs>
     </main>
   </div>

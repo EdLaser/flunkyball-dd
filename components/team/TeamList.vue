@@ -34,7 +34,7 @@
           }}
         </TableCell>
         <TableCell>
-          {{ team.registeredTournaments.join(", ") }}
+          {{ team.registeredTournaments.join(", ") || "Keine" }}
         </TableCell>
       </TableRow>
     </TableBody>
@@ -61,9 +61,13 @@ const { data: teams } = await useLazyFetch("/api/teams/all-teams", {
   query: {
     top: props.top,
   },
-  getCachedData(key) {
-    // TODO: Fix this to displayed the time when the data was cached
-    return getCachedDataOrFetch(key, nuxtApp);
+  transform: (data) => {
+    return data.map((team) => ({
+      ...team,
+      registeredTournaments: team.registeredTournaments.map(
+        (tournament) => tournament.title
+      ),
+    }));
   },
 });
 </script>

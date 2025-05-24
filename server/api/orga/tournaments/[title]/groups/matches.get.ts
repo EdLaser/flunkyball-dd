@@ -19,18 +19,21 @@ export default defineEventHandler(async (event) => {
             select: {
               name: true,
               id: true,
+              public_id: true,
             },
           },
           teams_matches_home_team_idToteams: {
             select: {
               name: true,
               id: true,
+              public_id: true,
             },
           },
           teams_matches_match_winnerToteams: {
             select: {
               name: true,
               id: true,
+              public_id: true,
             },
           },
         },
@@ -47,15 +50,18 @@ export default defineEventHandler(async (event) => {
         homeTeam: {
           name: match.teams_matches_home_team_idToteams.name,
           id: match.teams_matches_home_team_idToteams.id,
+          publicId: match.teams_matches_home_team_idToteams.public_id,
         },
         awayTeam: {
           name: match.teams_matches_away_team_idToteams.name,
           id: match.teams_matches_away_team_idToteams.id,
+          publicId: match.teams_matches_away_team_idToteams.public_id,
         },
         winnerTeam: match.teams_matches_match_winnerToteams
           ? {
               name: match.teams_matches_match_winnerToteams.name,
               id: match.teams_matches_match_winnerToteams.id,
+              publicId: match.teams_matches_match_winnerToteams.public_id,
             }
           : null,
       })),

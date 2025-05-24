@@ -51,7 +51,11 @@ export default defineEventHandler(async (event) => {
         lastName: player.last_name ?? "",
         slogan: player.slogan ?? "",
       })),
-      registeredTournaments: team.tournament_registrations,
+      registeredTournaments: team.tournament_registrations.map(
+        (registration) => ({
+          title: registration.tournaments.title ?? "",
+        })
+      ),
       wins: team._count.matches_matches_match_winnerToteams,
     })) ?? []
   );

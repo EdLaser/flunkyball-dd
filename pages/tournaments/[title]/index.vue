@@ -56,12 +56,10 @@
                   class="text-primary"
                   :to="`/tournaments/${route.params.title as string}/group-phase`"
                   >Gruppenphase</NuxtLink
-                ></CardTitle
-              >
+                >
+              </CardTitle>
             </CardHeader>
-            <CardContent> 
-              
-            </CardContent>
+            <CardContent> </CardContent>
           </Card>
         </div>
 
