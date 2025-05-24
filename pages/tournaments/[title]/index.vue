@@ -49,36 +49,18 @@
             </CardContent>
           </Card>
 
-          <!-- Tournament Schedule -->
           <Card>
             <CardHeader>
-              <CardTitle>Spiele</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div
-                class="space-y-4"
-                v-if="
-                  tournament?.stages?.length && tournament?.stages?.length > 0
-                "
+              <CardTitle
+                ><NuxtLink
+                  class="text-primary"
+                  :to="`/tournaments/${route.params.title as string}/group-phase`"
+                  >Gruppenphase</NuxtLink
+                ></CardTitle
               >
-                <div
-                  v-for="(stage, index) in tournament?.stages"
-                  v-if="tournament?.stages"
-                  :key="index"
-                  class="w-full"
-                >
-                  <MatchCard
-                    v-for="(match, index) in stage.matches"
-                    :key="`${index}-${match.awayTeam}`"
-                    :stageName="stage.stageName"
-                    :awayTeamName="match.awayTeam"
-                    :homeTeamName="match.homeTeam"
-                    :winnerTeamName="match.winner"
-                    :group="match.groupName"
-                  />
-                </div>
-              </div>
-              <p v-else>Keine Spiele vorhanden.</p>
+            </CardHeader>
+            <CardContent> 
+              
             </CardContent>
           </Card>
         </div>
@@ -93,13 +75,19 @@
             <CardContent>
               <ul
                 class="space-y-4"
+                v-auto-animate
                 v-if="
                   tournament?.tournamentRegistrations &&
                   tournament?.tournamentRegistrations.length > 0
                 "
               >
                 <li
-                  v-for="team in tournament?.tournamentRegistrations"
+                  v-for="team in tournament.tournamentRegistrations.slice(
+                    0,
+                    showMoreTeams
+                      ? tournament.tournamentRegistrations.length
+                      : 8
+                  )"
                   :key="team.name ?? team.slogan + team.players"
                   class="flex items-center space-x-2"
                 >
@@ -127,6 +115,15 @@
                     </p>
                   </div>
                 </li>
+                <li>
+                  <Button
+                    class="text-sm text-primary hover:underline"
+                    variant="link"
+                    @click="toggleShowMoreTeams()"
+                  >
+                    {{ showMoreTeams ? "Weniger" : "Weitere" }} Teams anzeigen
+                  </Button>
+                </li>
               </ul>
               <p v-else>Keine Teams angemeldet.</p>
             </CardContent>
@@ -135,7 +132,7 @@
           <!-- Register Button -->
           <Card>
             <CardContent class="pt-6">
-              <Button class="w-full">An Turnier Teilnehmen</Button>
+              <Button class="w-full">An Turnier Teilnehmen <Swords /></Button>
             </CardContent>
           </Card>
         </div>
@@ -146,14 +143,18 @@
 
 <script setup lang="ts">
 // Import your Vue-compatible Lucide icons instead of 'lucide-react'
-import { Calendar, MapPin, Users } from "lucide-vue-next";
+import { Calendar, MapPin, Users, Swords } from "lucide-vue-next";
 
 // Import your UI components
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { useToggle } from "@vueuse/core";
+import { vAutoAnimate } from "@formkit/auto-animate";
 
 const route = useRoute();
+
+const [showMoreTeams, toggleShowMoreTeams] = useToggle(false);
 
 useHead({
   title: `Turnier Details: ${decodeURIComponent(route.params.title as string)}`,
@@ -164,19 +165,12 @@ definePageMeta({
   description: "Details zum Turnier",
 });
 
-const nuxtApp = useNuxtApp();
-
 const {
   data: tournament,
   status,
   error,
   refresh,
-} = await useFetch(() => `/api/tournament-details/${route.params.title}`, {
-  getCachedData(key) {
-    // TODO: Fix this to displayed the time when the data was cached
-    return getCachedDataOrFetch(key, nuxtApp);
-  },
-});
+} = await useFetch(() => `/api/tournament-details/${route.params.title}`);
 
 if (tournament.value == null) {
   await refresh();
