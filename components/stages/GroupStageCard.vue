@@ -2,10 +2,15 @@
   <Card v-auto-animate>
     <CardHeader>
       <CardTitle class="flex items-center justify-between">
-        <NuxtLink class="text-primary" :to="`/orga/tournaments/${tournamentTitle}/group-phase`">Gruppenphase</NuxtLink>  <Loader2 v-if="loadingGroupStage" class="animate-spin" />
+        <NuxtLink
+          class="text-primary"
+          :to="`/orga/tournaments/${tournamentTitle}/group-phase`"
+          >Gruppenphase</NuxtLink
+        >
+        <Loader2 v-if="loadingGroupStage" class="animate-spin" />
       </CardTitle>
       <ClientOnly>
-        <CardDescription class="max-w-xs">
+        <CardDescription class="max-w-xs sm:max-w-sm lg:max-w-md">
           <div class="flex overflow-x-auto pb-2 -mx-1 px-1 scrollbar-thin">
             <div class="flex gap-2 py-1">
               <ButtonWithAction
@@ -58,24 +63,29 @@ const { groupStage, loadingGroupStage } = storeToRefs(groupStageStore);
 
 const tournamentTitle = useRoute().params.title as string;
 
+const groupStageIsFinalized = computed(() => {
+  return groupStage.value.every((group) => group.isFinalized);
+});
+
 const actionItems = computed(() => {
   const items = [
     {
       text: "Generieren",
       icon: Swords,
       action: groupStageStore.calculateGroupStage,
+      disabled: groupStage.value.length > 0,
     },
     {
       text: "Speichern",
       icon: Save,
       action: groupStageStore.confirmGroupStage,
-      disabled: groupStage.value.length === 0,
+      disabled: groupStage.value.length === 0 || groupStageIsFinalized.value,
     },
     {
       text: "Finalisieren",
       icon: Beer,
       action: () => groupStageStore.confirmGroupStage(true),
-      disabled: !canBeFinalized.value,
+      disabled: !canBeFinalized.value || groupStageIsFinalized.value,
     },
   ];
   if (!props.hasGroupPhase) {
@@ -83,6 +93,7 @@ const actionItems = computed(() => {
       text: "Erstellen",
       icon: Hammer,
       action: groupStageStore.createGroupStage,
+      disabled: groupStage.value.length > 0,
     });
   }
   return items;

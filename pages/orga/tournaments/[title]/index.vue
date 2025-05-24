@@ -82,13 +82,6 @@
               <p v-else>Keine Teams angemeldet.</p>
             </CardContent>
           </Card>
-
-          <!-- Register Button -->
-          <Card>
-            <CardContent class="pt-6">
-              <Button class="w-full">An Turnier Teilnehmen</Button>
-            </CardContent>
-          </Card>
         </div>
       </div>
     </main>

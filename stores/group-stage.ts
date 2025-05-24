@@ -68,7 +68,7 @@ export const useGroupStageStore = defineStore("GroupStage", () => {
 
   const createGroupStage = async () => {
     try {
-      const response = await $fetch(
+      await $fetch(
         `/api/orga/tournaments/${route.params.title as string}/stage`,
         {
           method: "POST",

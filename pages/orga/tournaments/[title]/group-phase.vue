@@ -3,18 +3,35 @@
     <!-- Header -->
     <header class="shadow-md bg-primary text-primary-foreground">
       <div class="container px-4 py-6 mx-auto">
-        <h1 class="text-3xl font-bold">Gruppenphase {{ tournament?.title }}</h1>
+        <h1 class="text-3xl font-bold">Gruppenphase {{ title }}</h1>
       </div>
     </header>
 
     <main class="container px-4 py-8 mx-auto space-y-4">
-      <Tabs default-value="matches" class="w-full">
-        <TabsList>
-          <TabsTrigger value="matches"> Spiele </TabsTrigger>
-          <TabsTrigger value="ranking"> Ranking </TabsTrigger>
+      <Tabs default-value="matches">
+        <TabsList class="w-fit">
+          <TabsTrigger class="text-2xl font-bold" value="matches">
+            Spiele <Swords class="inline-flex" />
+          </TabsTrigger>
+          <TabsTrigger class="text-2xl font-bold" value="ranking">
+            Ranking <Trophy class="inline-flex" />
+          </TabsTrigger>
         </TabsList>
         <TabsContent value="matches">
-          Make changes to your account here.
+          <div
+            class="space-y-4"
+            v-if="tournament?.some((group) => group.matches.length)"
+          >
+            <MatchGroupStageMatchesCard
+              :matches="group.matches"
+              :group="group.groupName"
+              v-for="group in tournament"
+              :key="group.groupName"
+            />
+          </div>
+          <div v-else>
+            <Button @click="generateMatches"> Spiele generieren <Hammer /> </Button>
+          </div>
         </TabsContent>
         <TabsContent value="ranking"> Change your password here. </TabsContent>
       </Tabs>
@@ -23,6 +40,7 @@
 </template>
 
 <script lang="ts" setup>
+import { Swords, Trophy, Hammer } from "lucide-vue-next";
 const title = useRoute().params.title as string;
 
 useHead({
@@ -39,9 +57,20 @@ const {
   status,
   error,
   refresh,
-} = await useFetch(() => `/api/tournament-details/${title}`, {
+} = await useFetch(() => `/api/orga/tournaments/${title}/groups/matches`, {
   getCachedData(key, nuxtApp) {
     return getCachedDataOrFetch(key, nuxtApp);
   },
 });
+
+const generateMatches = async () => {
+  try {
+    await $fetch(`/api/orga/tournaments/${title}/groups/matches`, {
+      method: "POST",
+    });
+    await refresh();
+  } catch (err) {
+    console.error("Error generating matches:", err);
+  }
+};
 </script>
