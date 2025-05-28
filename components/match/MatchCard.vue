@@ -18,7 +18,7 @@
         Winner: {{ winnerTeamName.name }}
       </div>
       <div v-else-if="session.isStaff" class="mt-4 flex items-center gap-4">
-        <Select>
+        <Select v-mode="selectedWInnerId">
           <SelectTrigger
             class="w-full rounded-full"
             :class="{ 'success-ring': showSuccess }"
@@ -35,8 +35,9 @@
           </SelectContent>
         </Select>
         <InspiraConfettiButton
-          @click="crownWinner(awayTeamName.id, props.matchId)"
-          class="rounded-full bg-primary h-9 w-10 flex items-center justify-center text-white "
+          :disabled="!selectedWInnerId"
+          @click="crownWinner(props.matchId)"
+          class="rounded-full bg-primary h-9 w-10 flex items-center justify-center text-white"
         >
           <Crown />
         </InspiraConfettiButton>
@@ -53,6 +54,8 @@ const { session } = useUserSession();
 
 const title = useRoute().params.title as string;
 
+const selectedWInnerId = ref<string | null>(null);
+
 const props = defineProps<MatchProps>();
 interface TeamInfo {
   name: string;
@@ -68,7 +71,7 @@ interface MatchProps {
 
 const showSuccess = ref(false);
 
-const crownWinner = async (teamId: string, matchId: string) => {
+const crownWinner = async (matchId: string) => {
   try {
     const result = await $fetch(
       `/api/orga/tournaments/${title}/groups/match-winner`,
@@ -76,7 +79,7 @@ const crownWinner = async (teamId: string, matchId: string) => {
         method: "POST",
         body: {
           matchId,
-          teamId,
+          teamId: selectedWInnerId.value,
         },
       }
     );
