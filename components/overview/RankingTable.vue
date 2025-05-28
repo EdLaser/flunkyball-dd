@@ -66,31 +66,6 @@ const props = defineProps<{
 
 const columns: ColumnDef<Team>[] = [
   {
-    header: "#",
-    cell: ({ row }) => {
-      // Get all rows in current sorted state
-      const rows = table.getRowModel().rows;
-      const currentTeam = row.original;
-
-      // Find the first row with the same stats
-      let sameStatsIndex = 0;
-      for (let i = 0; i < rows.length; i++) {
-        const team = rows[i].original;
-        if (
-          team.wins === currentTeam.wins &&
-          team.matches === currentTeam.matches
-        ) {
-          sameStatsIndex = i;
-          break;
-        }
-      }
-
-      // Rank is the position of the first team with same stats + 1
-      const rank = sameStatsIndex + 1;
-      return h("span", { class: "font-semibold" }, rank);
-    },
-  },
-  {
     accessorKey: "name",
     header: "Team",
     cell: ({ row }) => {

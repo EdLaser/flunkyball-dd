@@ -20,12 +20,12 @@
         <TabsContent value="matches">
           <div
             class="space-y-4"
-            v-if="tournament?.some((group) => group.matches.length)"
+            v-if="matches?.some((group) => group.matches.length)"
           >
             <MatchGroupStageMatchesCard
               :matches="group.matches"
               :group="group.groupName"
-              v-for="group in tournament"
+              v-for="group in matches"
               :key="group.groupName"
             />
           </div>
@@ -63,53 +63,57 @@ interface Team {
 }
 
 const rankedTeams = computed(() => {
-  const rankedTeams = [] as Team[];
-  tournament?.value?.map((group) => {
-    for (let i = 0; i < group.matches.length; i++) {
-      const match = group.matches[i];
+  if (!matches.value) return [] as Team[];
 
-      if (
-        rankedTeams.findIndex((team) => team.name === match.homeTeam?.name) ===
-        -1
-      ) {
-        rankedTeams.push({
-          name: match.homeTeam?.name,
-          publicID: match.homeTeam?.publicId ?? "",
-          wins: 0,
-          matches: 0,
-        });
-      } else {
-        if (match.winnerTeam && match.winnerTeam.name) {
-          const winnerTeamIndex = rankedTeams.findIndex(
-            (team) => team.name === match.winnerTeam?.name
-          );
-          if (winnerTeamIndex === -1) {
-            rankedTeams.push({
-              name: match.winnerTeam.name,
-              publicID: match.winnerTeam.publicId ?? "",
-              wins: 1,
-              matches: 1,
-            });
-          } else {
-            rankedTeams[winnerTeamIndex].matches++;
-            rankedTeams[winnerTeamIndex].wins++;
-          }
+  const teamsMap = new Map<string, Team>();
+
+  matches.value.forEach((group) => {
+    group.matches.forEach((match) => {
+      // Process home team
+      if (match.homeTeam?.name) {
+        if (!teamsMap.has(match.homeTeam.name)) {
+          teamsMap.set(match.homeTeam.name, {
+            name: match.homeTeam.name,
+            publicID: match.homeTeam.publicId ?? "",
+            wins: 0,
+            matches: 1, // Count this match
+          });
+        } else {
+          teamsMap.get(match.homeTeam.name)!.matches++;
         }
       }
-    }
-  }) || [];
 
-  return rankedTeams;
+      // Process away team
+      if (match.awayTeam?.name) {
+        if (!teamsMap.has(match.awayTeam.name)) {
+          teamsMap.set(match.awayTeam.name, {
+            name: match.awayTeam.name,
+            publicID: match.awayTeam.publicId ?? "",
+            wins: 0,
+            matches: 1, // Count this match
+          });
+        } else {
+          teamsMap.get(match.awayTeam.name)!.matches++;
+        }
+      }
+
+      // Process winner team (if any)
+      if (match.winnerTeam?.name) {
+        const winnerTeam = teamsMap.get(match.winnerTeam.name);
+        if (winnerTeam) {
+          winnerTeam.wins++;
+        }
+      }
+    });
+  });
+
+  return Array.from(teamsMap.values());
 });
 
 const {
-  data: tournament,
+  data: matches,
   status,
   error,
   refresh,
-} = await useFetch(() => `/api/tournaments/${title}/groups/matches`, {
-  getCachedData(key, nuxtApp) {
-    return getCachedDataOrFetch(key, nuxtApp);
-  },
-});
+} = await useFetch(() => `/api/tournaments/${title}/groups/matches`);
 </script>

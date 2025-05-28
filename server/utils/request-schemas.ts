@@ -15,7 +15,6 @@ export const stageSchema = z.object({
   stage: z.enum(["group", "finals"]),
 });
 
-
 export const handleTournamentParameter = async (event: any) => {
   const { data, success } = await getValidatedRouterParams(
     event,
