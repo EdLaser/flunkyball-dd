@@ -11,14 +11,25 @@
         </div>
       </div>
       <div
-        v-if="winnerTeamName"
-        class="mt-4 text-center text-primary font-semibold text-xl flex items-center justify-center"
+        v-if="winnerTeamName && !editWinner"
+        class="mt-4 text-center text-primary font-semibold text-xl flex items-center justify-center gap-2"
       >
         <Crown class="mr-2" />
         Winner: {{ winnerTeamName.name }}
+        <Button
+          v-if="session.isStaff"
+          variant="outline"
+          size="icon"
+          @click="toggleEditWinner()"
+        >
+          <Pencil />
+        </Button>
       </div>
-      <div v-else-if="session.isStaff" class="mt-4 flex items-center gap-4">
-        <Select v-model="selectedWInnerId">
+      <div
+        v-else-if="session.isStaff && editWinner"
+        class="mt-4 flex items-center gap-4"
+      >
+        <Select v-model="selectedWinnerId">
           <SelectTrigger
             class="w-full rounded-full"
             :class="{ 'success-ring': showSuccess }"
@@ -36,9 +47,10 @@
         </Select>
         <ClientOnly>
           <Button
-            :disabled="!selectedWInnerId"
+            :disabled="!selectedWinnerId"
             @click="crownWinner(props.matchId)"
             size="icon"
+            variant="outline"
           >
             <Crown />
           </Button>
@@ -50,15 +62,19 @@
 </template>
 
 <script lang="ts" setup>
-import { Crown } from "lucide-vue-next";
+import { useToggle } from "@vueuse/core";
+import { Crown, Pencil } from "lucide-vue-next";
 
 const { session } = useUserSession();
 
+const props = defineProps<MatchProps>();
+
 const title = useRoute().params.title as string;
 
-const selectedWInnerId = ref("");
+const selectedWinnerId = ref(props.winnerTeamName?.id || "");
 
-const props = defineProps<MatchProps>();
+const [editWinner, toggleEditWinner] = useToggle(false);
+
 interface TeamInfo {
   name: string;
   id: string;
@@ -81,7 +97,7 @@ const crownWinner = async (matchId: string) => {
         method: "POST",
         body: {
           matchId,
-          teamId: selectedWInnerId.value,
+          teamId: selectedWinnerId.value,
         },
       }
     );
