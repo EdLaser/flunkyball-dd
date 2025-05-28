@@ -9,7 +9,7 @@
 
     <main class="container px-4 py-8 mx-auto space-y-4">
       <Tabs default-value="matches">
-        <TabsList class="w-fit">
+        <TabsList class="w-full">
           <TabsTrigger class="text-2xl font-bold" value="matches">
             Spiele <Swords class="inline-flex" />
           </TabsTrigger>
@@ -70,11 +70,7 @@ const {
   status,
   error,
   refresh,
-} = await useFetch(() => `/api/orga/tournaments/${title}/groups/matches`, {
-  getCachedData(key, nuxtApp) {
-    return getCachedDataOrFetch(key, nuxtApp);
-  },
-});
+} = await useFetch(() => `/api/orga/tournaments/${title}/groups/matches`);
 
 const rankedTeams = computed(() => {
   if (!matches.value) return [];
@@ -126,8 +122,6 @@ const rankedTeams = computed(() => {
     };
   });
 });
-
-console.log("Ranked Teams:", rankedTeams.value);
 
 const generateMatches = async () => {
   try {

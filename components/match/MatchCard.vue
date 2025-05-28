@@ -2,17 +2,17 @@
   <Card>
     <CardContent>
       <div class="flex justify-between items-center mt-4">
-        <div class="flex-1 text-left text-sm md:text-xl font-semibold">
+        <div class="flex-1 text-left text-sm md:text-base lg:text-lg font-semibold">
           {{ awayTeamName.name }}
         </div>
         <div class="mx-2 text-lg">vs</div>
-        <div class="flex-1 text-right text-sm md:text-xl font-semibold">
+        <div class="flex-1 text-right text-sm md:text-base lg:text-lg font-semibold">
           {{ homeTeamName.name }}
         </div>
       </div>
       <div
         v-if="winnerTeamName && !editWinner"
-        class="mt-4 text-center text-primary font-semibold text-xl flex items-center justify-center gap-2"
+        class="mt-4 text-center text-primary font-semibold text-lg flex items-center justify-center gap-2"
       >
         <Crown class="mr-2" />
         Winner: {{ winnerTeamName.name }}

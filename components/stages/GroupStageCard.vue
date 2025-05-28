@@ -4,13 +4,17 @@
       <CardTitle class="flex items-center justify-between">
         <NuxtLink
           class="text-primary"
-          :to="`/orga/tournaments/${tournamentTitle}/group-phase`"
-          >Gruppenphase</NuxtLink
+          :to="`${session.isStaff ? '/orga' : ''}/tournaments/${tournamentTitle}/group-phase`"
+        >
+          Gruppenphase</NuxtLink
         >
         <Loader2 v-if="loadingGroupStage" class="animate-spin" />
       </CardTitle>
       <ClientOnly>
-        <CardDescription class="max-w-xs sm:max-w-sm lg:max-w-md">
+        <CardDescription
+          v-if="session.isStaff"
+          class="max-w-xs sm:max-w-sm lg:max-w-md"
+        >
           <div class="flex overflow-x-auto pb-2 -mx-1 px-1 scrollbar-thin">
             <div class="flex gap-2 py-1">
               <ButtonWithAction
@@ -54,12 +58,14 @@ import { vAutoAnimate } from "@formkit/auto-animate";
 import { Beer, Swords, Hammer, Loader2, Save } from "lucide-vue-next";
 
 const props = defineProps<{
-  hasGroupPhase: boolean;
-  groupStageHasMatches: boolean;
+  hasGroupPhase?: boolean;
+  groupStageHasMatches?: boolean;
 }>();
 
 const groupStageStore = useGroupStageStore();
 const { groupStage, loadingGroupStage } = storeToRefs(groupStageStore);
+
+const { session } = useUserSession();
 
 const tournamentTitle = useRoute().params.title as string;
 

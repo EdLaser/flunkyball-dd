@@ -114,8 +114,6 @@ const rankedTeams = computed(() => {
   });
 });
 
-console.log("Ranked Teams:", rankedTeams.value);
-
 const {
   data: matches,
   status,

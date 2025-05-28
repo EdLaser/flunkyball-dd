@@ -49,19 +49,7 @@
             </CardContent>
           </Card>
 
-          <Card>
-            <CardHeader>
-              <CardTitle>
-                <NuxtLink
-                  class="text-primary"
-                  :to="`/tournaments/${route.params.title as string}/group-phase`"
-                >
-                  Gruppenphase
-                </NuxtLink>
-              </CardTitle>
-            </CardHeader>
-            <CardContent> </CardContent>
-          </Card>
+          <StagesGroupStageCard />
         </div>
 
         <!-- Right Column (1/3) -->
@@ -155,8 +143,16 @@ const route = useRoute();
 
 const [showMoreTeams, toggleShowMoreTeams] = useToggle(false);
 
+const tournamentTitle = route.params.title as string;
+
+const groupStageStore = useGroupStageStore();
+
 useHead({
-  title: `Turnier Details: ${decodeURIComponent(route.params.title as string)}`,
+  title: `Turnier Details: ${decodeURIComponent(tournamentTitle)}`,
+});
+
+onMounted(() => {
+  groupStageStore.fetchGroupStage();
 });
 
 definePageMeta({
@@ -169,7 +165,7 @@ const {
   status,
   error,
   refresh,
-} = await useFetch(() => `/api/tournament-details/${route.params.title}`);
+} = await useFetch(() => `/api/tournament-details/${tournamentTitle}`);
 
 if (tournament.value == null) {
   await refresh();

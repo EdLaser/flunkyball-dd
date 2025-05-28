@@ -5,7 +5,6 @@ const groupIdSchema = z.object({
 });
 
 export default defineEventHandler(async (event) => {
-  const { title } = await handleTournamentParameter(event);
   const { data, success } = await readValidatedBody(
     event,
     groupIdSchema.safeParse

@@ -12,7 +12,7 @@ export const useGroupStageStore = defineStore("GroupStage", () => {
     loadingGroupStage.value = true;
     try {
       const response = await $fetch(
-        `/api/orga/tournaments/${route.params.title as string}/groups`
+        `/api/tournaments/${route.params.title as string}/groups`
       );
       groupStage.value = response.map((group) => {
         return {
