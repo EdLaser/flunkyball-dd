@@ -37,6 +37,9 @@ export default defineEventHandler(async (event) => {
             },
           },
         },
+        orderBy: {
+          match_id: "asc",
+        },
       },
       stage_id: true,
     },
