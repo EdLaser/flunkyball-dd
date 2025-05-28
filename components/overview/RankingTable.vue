@@ -54,6 +54,7 @@ import {
   type ColumnDef,
 } from "@tanstack/vue-table";
 import { valueUpdater } from "~/lib/utils";
+import { Crown } from "lucide-vue-next";
 
 interface Team {
   name: string;
@@ -63,7 +64,7 @@ interface Team {
 }
 const props = defineProps<{
   teams: Array<Team>;
-    groupName: string;
+  groupName: string;
 }>();
 
 const columns: ColumnDef<Team>[] = [
@@ -79,11 +80,20 @@ const columns: ColumnDef<Team>[] = [
           to: `/teams/${encodeURIComponent(team.publicID ?? "")}`,
           class: "font-semibold text-primary",
         },
-        () => team.name || "Unbekanntes Team"
+        () =>
+          h(
+            "span",
+            { class: "inline-block align-middle flex items-center gap-1" },
+            [
+              team.name,
+              winners.value.some((t) => t.publicID === team.publicID)
+                ? h(Crown, { class: "w-4 h-4 text-yellow-500 ml-1" })
+                : null,
+            ]
+          )
       );
     },
   },
-
   {
     accessorKey: "wins",
     header: "Siege",
@@ -118,5 +128,16 @@ table.setSorting([
   { id: "matches", desc: true },
 ]);
 
-console.log("RankingTable initialized with teams:", props.teams);
+const winners = computed(() => {
+  const sortedTeams = [...props.teams].sort((a, b) => {
+    if (a.wins !== b.wins) {
+      return b.wins - a.wins; // Sort by wins descending
+    }
+    return b.matches - a.matches; // If wins are equal, sort by matches descending
+  });
+  console.log("Sorted teams:", sortedTeams);
+  return sortedTeams.splice(0, 2); // Return top 3 teams
+});
+
+console.log("Winners computed:", winners.value);
 </script>
