@@ -18,7 +18,7 @@
         Winner: {{ winnerTeamName.name }}
       </div>
       <div v-else-if="session.isStaff" class="mt-4 flex items-center gap-4">
-        <Select v-mode="selectedWInnerId">
+        <Select v-model="selectedWInnerId">
           <SelectTrigger
             class="w-full rounded-full"
             :class="{ 'success-ring': showSuccess }"
@@ -34,13 +34,15 @@
             </SelectItem>
           </SelectContent>
         </Select>
-        <InspiraConfettiButton
-          :disabled="!selectedWInnerId"
-          @click="crownWinner(props.matchId)"
-          class="rounded-full bg-primary h-9 w-10 flex items-center justify-center text-white"
-        >
-          <Crown />
-        </InspiraConfettiButton>
+        <ClientOnly>
+          <Button
+            :disabled="!selectedWInnerId"
+            @click="crownWinner(props.matchId)"
+            size="icon"
+          >
+            <Crown />
+          </Button>
+        </ClientOnly>
       </div>
       <div v-else class="mt-4 text-center text-gray-500">No winner yet</div>
     </CardContent>
@@ -54,7 +56,7 @@ const { session } = useUserSession();
 
 const title = useRoute().params.title as string;
 
-const selectedWInnerId = ref<string | null>(null);
+const selectedWInnerId = ref("");
 
 const props = defineProps<MatchProps>();
 interface TeamInfo {

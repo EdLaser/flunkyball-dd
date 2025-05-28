@@ -51,12 +51,13 @@
 
           <Card>
             <CardHeader>
-              <CardTitle
-                ><NuxtLink
+              <CardTitle>
+                <NuxtLink
                   class="text-primary"
                   :to="`/tournaments/${route.params.title as string}/group-phase`"
-                  >Gruppenphase</NuxtLink
                 >
+                  Gruppenphase
+                </NuxtLink>
               </CardTitle>
             </CardHeader>
             <CardContent> </CardContent>

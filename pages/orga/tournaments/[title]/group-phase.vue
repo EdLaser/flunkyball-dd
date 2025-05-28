@@ -30,10 +30,14 @@
             />
           </div>
           <div v-else>
-            <Button @click="generateMatches"> Spiele generieren <Hammer /> </Button>
+            <Button @click="generateMatches">
+              Spiele generieren <Hammer />
+            </Button>
           </div>
         </TabsContent>
-        <TabsContent value="ranking"> <OverviewRankingTable /> </TabsContent>
+        <TabsContent value="ranking">
+          <OverviewRankingTable :teams="rankedTeams" />
+        </TabsContent>
       </Tabs>
     </main>
   </div>
@@ -41,6 +45,14 @@
 
 <script lang="ts" setup>
 import { Swords, Trophy, Hammer } from "lucide-vue-next";
+
+interface Team {
+  name: string;
+  publicID?: string;
+  wins: number;
+  matches: number;
+}
+
 const title = useRoute().params.title as string;
 
 useHead({
@@ -61,6 +73,46 @@ const {
   getCachedData(key, nuxtApp) {
     return getCachedDataOrFetch(key, nuxtApp);
   },
+});
+
+const rankedTeams = computed(() => {
+  const rankedTeams = [] as Team[];
+  tournament?.value?.map((group) => {
+    for (let i = 0; i < group.matches.length; i++) {
+      const match = group.matches[i];
+
+      if (
+        rankedTeams.findIndex((team) => team.name === match.homeTeam?.name) ===
+        -1
+      ) {
+        rankedTeams.push({
+          name: match.homeTeam?.name,
+          publicID: match.homeTeam?.publicId ?? "",
+          wins: 0,
+          matches: 0,
+        });
+      } else {
+        if (match.winnerTeam && match.winnerTeam.name) {
+          const winnerTeamIndex = rankedTeams.findIndex(
+            (team) => team.name === match.winnerTeam?.name
+          );
+          if (winnerTeamIndex === -1) {
+            rankedTeams.push({
+              name: match.winnerTeam.name,
+              publicID: match.winnerTeam.publicId ?? "",
+              wins: 1,
+              matches: 1,
+            });
+          } else {
+            rankedTeams[winnerTeamIndex].matches++;
+            rankedTeams[winnerTeamIndex].wins++;
+          }
+        }
+      }
+    }
+  }) || [];
+
+  return rankedTeams;
 });
 
 const generateMatches = async () => {
