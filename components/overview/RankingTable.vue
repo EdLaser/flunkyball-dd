@@ -1,5 +1,6 @@
 <template>
   <div class="rounded-md border">
+    <h2 class="px-3 pt-3 font-semibold text-lg">{{ groupName }}</h2>
     <Table>
       <TableHeader>
         <TableRow
@@ -62,6 +63,7 @@ interface Team {
 }
 const props = defineProps<{
   teams: Array<Team>;
+    groupName: string;
 }>();
 
 const columns: ColumnDef<Team>[] = [

@@ -25,6 +25,7 @@
             <MatchGroupStageMatchesCard
               :matches="group.matches"
               :group="group.groupName"
+              :group-id="group.groupId"
               v-for="group in matches"
               :key="group.groupName"
             />
@@ -36,7 +37,7 @@
           </div>
         </TabsContent>
         <TabsContent value="ranking">
-          <OverviewRankingTable :teams="rankedTeams" />
+          <OverviewRannkingPerGroup :group-with-ranking="rankedTeams" />
         </TabsContent>
       </Tabs>
     </main>
@@ -44,7 +45,7 @@
 </template>
 
 <script lang="ts" setup>
-import { Swords, Trophy, Hammer } from "lucide-vue-next";
+import { Swords, Trophy } from "lucide-vue-next";
 const title = useRoute().params.title as string;
 
 useHead({
@@ -63,41 +64,40 @@ interface Team {
 }
 
 const rankedTeams = computed(() => {
-  if (!matches.value) return [] as Team[];
+  if (!matches.value) return [];
 
-  const teamsMap = new Map<string, Team>();
+  // Aggregate teams per group
+  return matches.value.map((group) => {
+    const teamsMap = new Map<string, Team>();
 
-  matches.value.forEach((group) => {
     group.matches.forEach((match) => {
-      // Process home team
+      // Home team
       if (match.homeTeam?.name) {
         if (!teamsMap.has(match.homeTeam.name)) {
           teamsMap.set(match.homeTeam.name, {
             name: match.homeTeam.name,
             publicID: match.homeTeam.publicId ?? "",
             wins: 0,
-            matches: 1, // Count this match
+            matches: 1,
           });
         } else {
           teamsMap.get(match.homeTeam.name)!.matches++;
         }
       }
-
-      // Process away team
+      // Away team
       if (match.awayTeam?.name) {
         if (!teamsMap.has(match.awayTeam.name)) {
           teamsMap.set(match.awayTeam.name, {
             name: match.awayTeam.name,
             publicID: match.awayTeam.publicId ?? "",
             wins: 0,
-            matches: 1, // Count this match
+            matches: 1,
           });
         } else {
           teamsMap.get(match.awayTeam.name)!.matches++;
         }
       }
-
-      // Process winner team (if any)
+      // Winner
       if (match.winnerTeam?.name) {
         const winnerTeam = teamsMap.get(match.winnerTeam.name);
         if (winnerTeam) {
@@ -105,10 +105,16 @@ const rankedTeams = computed(() => {
         }
       }
     });
-  });
 
-  return Array.from(teamsMap.values());
+    return {
+      groupName: group.groupName,
+      groupId: group.groupId,
+      teams: Array.from(teamsMap.values()),
+    };
+  });
 });
+
+console.log("Ranked Teams:", rankedTeams.value);
 
 const {
   data: matches,

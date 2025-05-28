@@ -12,6 +12,7 @@ export default defineEventHandler(async (event) => {
     },
     select: {
       group_name: true,
+      group_id: true,
       matches: {
         select: {
           match_id: true,
@@ -48,6 +49,7 @@ export default defineEventHandler(async (event) => {
   return groupStage.map((group) => {
     return {
       groupName: group.group_name,
+      groupId: group.group_id,
       matches: group.matches.map((match) => ({
         matchId: match.match_id,
         homeTeam: {
