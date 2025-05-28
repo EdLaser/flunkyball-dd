@@ -38,5 +38,11 @@ export default defineEventHandler(async (event) => {
     },
   });
 
-  console.log("Group Phase:", groupPhase);
+  console.log(
+    "Group Phase:",
+    groupPhase.map((item) => ({
+      winner: item.match_winner,
+      count: item._count.match_winner,
+    }))
+  );
 });
