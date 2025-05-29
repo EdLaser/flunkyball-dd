@@ -27,6 +27,10 @@ export class TournamentSerice {
     return [0, players];
   }
 
+  static amountOfGroupGames(teams: number): number {
+    return (teams * (teams - 1)) / 2;
+  }
+
   static calculateGroupPhase([teams, needsDvision]: [number, number]): {
     group: string;
     teams: number;
@@ -49,17 +53,23 @@ export class TournamentSerice {
     return groupPhase;
   }
 
-  static calculateFinalStages(teams: number): {
+  static calculateFinalStages(
+    amountOfGroups: number,
+    advancingTeamsPerGroup: number
+  ): {
     stage: string;
     teams: number;
   }[] {
     const finalStages = [];
-    const knockoutRounds = Math.log2(teams);
+    const amountOfFinalTeams = amountOfGroups * advancingTeamsPerGroup;
+    const amountOfFinalStages = Math.log2(amountOfFinalTeams);
 
-    for (let i = 0; i < knockoutRounds; i++) {
+    for (let i = 1; i < amountOfFinalStages + 1; i++) {
       finalStages.push({
-        stage: `Knockout Round ${i + 1}`,
-        teams: Math.pow(2, knockoutRounds - i),
+        stage: `Final Stage ${i}`,
+        teams: amountOfFinalTeams / Math.pow(2, i - 1),
+        games: amountOfFinalTeams / Math.pow(2, i),
+        sequence: i + 1,
       });
     }
 

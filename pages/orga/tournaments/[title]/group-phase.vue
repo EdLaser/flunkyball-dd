@@ -6,7 +6,9 @@
         <h1 class="text-3xl font-bold">Gruppenphase {{ title }}</h1>
       </div>
     </header>
-
+    <div>
+      <Button @click="generateFinals"> Finalspiele generieren </Button>
+    </div>
     <main class="container px-4 py-8 mx-auto space-y-4">
       <Tabs default-value="matches">
         <TabsList class="w-full">
@@ -131,6 +133,20 @@ const generateMatches = async () => {
     await refresh();
   } catch (err) {
     console.error("Error generating matches:", err);
+  }
+};
+
+const generateFinals = async () => {
+  try {
+    await $fetch(`/api/orga/tournaments/${title}/stages-generate`, {
+      method: "POST",
+      body: {
+        stage: "finals",
+      },
+    });
+    await refresh();
+  } catch (err) {
+    console.error("Error generating finals:", err);
   }
 };
 </script>

@@ -35,7 +35,7 @@ export default defineEventHandler(async (event) => {
         match_winner: "desc",
       },
     },
-    take: 2,
+    take: 1,
   });
 
   console.log(

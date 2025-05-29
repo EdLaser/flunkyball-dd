@@ -17,13 +17,13 @@ export default defineEventHandler(async (event) => {
     });
   }
 
-  const { teams, registrations, stages } = await $fetch(
-    `/api/orga/tournaments/${title}/teams`
-  );
-
   const { stage } = data;
 
   if (stage === "group") {
+    const { teams, registrations, stages } = await $fetch(
+      `/api/orga/tournaments/${title}/teams`
+    );
+
     const groupPhase = TournamentSerice.calculateGroupPhase([
       teams[0],
       teams[1],
@@ -94,7 +94,26 @@ export default defineEventHandler(async (event) => {
       });
     }
     return calculatedGroups;
-  } else {
-    return [];
+  } else if (stage === "finals") {
+    const groupStage = await $fetch(
+      `/api/orga/tournaments/${title}/groups`
+    );
+
+    if (!groupStage || groupStage.length === 0) {
+      throw createError({
+        statusCode: 400,
+        statusMessage:
+          "No group stage found. Please finish the group stage first.",
+      });
+    }
+
+    const advancingTeamsPerGroup = 2; // Assuming 2 teams advance from each group
+    const amountOfGroups = groupStage.length;
+    const finalStages = TournamentSerice.calculateFinalStages(
+      amountOfGroups,
+      advancingTeamsPerGroup
+    );
+
+    return finalStages
   }
 });

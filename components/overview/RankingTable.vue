@@ -136,7 +136,7 @@ const winners = computed(() => {
     return b.matches - a.matches; // If wins are equal, sort by matches descending
   });
   console.log("Sorted teams:", sortedTeams);
-  return sortedTeams.splice(0, 2); // Return top 3 teams
+  return sortedTeams.splice(0, 1); // Return top 1 team
 });
 
 console.log("Winners computed:", winners.value);
