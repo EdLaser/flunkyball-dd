@@ -48,4 +48,21 @@ export class TournamentSerice {
 
     return groupPhase;
   }
+
+  static calculateFinalStages(teams: number): {
+    stage: string;
+    teams: number;
+  }[] {
+    const finalStages = [];
+    const knockoutRounds = Math.log2(teams);
+
+    for (let i = 0; i < knockoutRounds; i++) {
+      finalStages.push({
+        stage: `Knockout Round ${i + 1}`,
+        teams: Math.pow(2, knockoutRounds - i),
+      });
+    }
+
+    return finalStages;
+  }
 }
