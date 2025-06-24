@@ -1,6 +1,6 @@
 <template>
-  <Dialog>
-    <form @submit="onSubmit">
+  <form @submit="onSubmit" id="dialogForm">
+    <Dialog>
       <DialogTrigger as-child>
         <Button class="w-full">An Turnier Teilnehmen <Swords /></Button>
       </DialogTrigger>
@@ -65,11 +65,11 @@
           </FormField>
         </div>
         <DialogFooter as-child>
-          <Button type="submit"> Anmelden! <Beer /> </Button>
+          <Button type="submit" form="dialogForm"> Anmelden! <Beer /> </Button>
         </DialogFooter>
       </DialogContent>
-    </form>
-  </Dialog>
+    </Dialog>
+  </form>
 </template>
 
 <script lang="ts" setup>
