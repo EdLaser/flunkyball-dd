@@ -36,7 +36,7 @@ const allPlayers = ref<
   Array<{
     firstName: string;
     lastName: string | null;
-    publicId: string;
+    publicID: string;
     playsIn: string | null;
   }>
 >([]);
@@ -62,7 +62,7 @@ watch(showPlayers, async (value) => {
 
 const createTeam = async (values: { name: string; slogan: string }) => {
   try {
-    const team = await $fetch("/api/teams/new-team", {
+    const team = await $fetch("/api/orga/new-team", {
       method: "POST",
       body: JSON.stringify(values),
     });
@@ -138,11 +138,11 @@ const onSubmit = form.handleSubmit(async (values) => {
                         <SelectItem
                           v-for="player in allPlayers"
                           :key="player.firstName"
-                          :value="player.publicId"
+                          :value="player.publicID"
                         >
                           {{ player.firstName }} {{ player.lastName }}
                           <small>
-                            {{ player.publicId }}
+                            {{ player.publicID }}
                           </small>
                         </SelectItem>
                       </template>
@@ -171,11 +171,11 @@ const onSubmit = form.handleSubmit(async (values) => {
                         <SelectItem
                           v-for="player in allPlayers"
                           :key="player.firstName"
-                          :value="player.publicId"
+                          :value="player.publicID"
                         >
                           {{ player.firstName }} {{ player.lastName }}
                           <small>
-                            {{ player.publicId }}
+                            {{ player.publicID }}
                           </small>
                         </SelectItem>
                       </template>

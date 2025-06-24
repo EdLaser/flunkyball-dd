@@ -52,13 +52,13 @@
                       placeholder="Dein Team Name"
                       class="border-primary/60 focus:border-primary/80 col-span-4"
                       v-bind="componentField"
-                      required
                     />
                     <Button
                       @click="form.setFieldValue('name', getRandomTeamName())"
-                      class="col-span-1 text-xs h-full w-full"
+                      class="col-span-1"
                     >
                       Zufällig
+                      <Dices class="inline w-5 h-5 ml-1" />
                     </Button>
                   </div>
                 </FormControl>
@@ -76,7 +76,6 @@
                     placeholder="Dein Team Slogan"
                     class="border-primary/60 focus:border-primary/80"
                     v-bind="componentField"
-                    required
                   />
                 </FormControl>
                 <FormDescription class="text-secondary-foreground">
@@ -95,7 +94,6 @@
                       placeholder="Vorname Spieler 1"
                       class="border-primary/60 focus:border-primary/80"
                       v-bind="componentField"
-                      required
                     />
                   </FormControl>
                 </FormItem>
@@ -108,7 +106,18 @@
                       placeholder="Nachname Spieler 1"
                       class="border-primary/60 focus:border-primary/80"
                       v-bind="componentField"
-                      required
+                    />
+                  </FormControl>
+                </FormItem>
+              </FormField>
+              <FormField v-slot="{ componentField }" name="member1.slogan">
+                <FormItem class="col-span-full">
+                  <FormLabel class="font-semibold">Team Slogan</FormLabel>
+                  <FormControl>
+                    <Input
+                      placeholder="Spieler Slogan"
+                      class="border-primary/60 focus:border-primary/80"
+                      v-bind="componentField"
                     />
                   </FormControl>
                 </FormItem>
@@ -124,7 +133,6 @@
                       placeholder="Vorname Spieler 2"
                       class="border-primary/60 focus:border-primary/80"
                       v-bind="componentField"
-                      required
                     />
                   </FormControl>
                 </FormItem>
@@ -137,40 +145,35 @@
                       placeholder="Nachname Spieler 2"
                       class="border-primary/60 focus:border-primary/80"
                       v-bind="componentField"
-                      required
+                    />
+                  </FormControl>
+                </FormItem>
+              </FormField>
+              <FormField v-slot="{ componentField }" name="member2.slogan">
+                <FormItem class="col-span-full">
+                  <FormLabel class="font-semibold">Team Slogan</FormLabel>
+                  <FormControl>
+                    <Input
+                      placeholder="Spieler Slogan"
+                      class="border-primary/60 focus:border-primary/80"
+                      v-bind="componentField"
                     />
                   </FormControl>
                 </FormItem>
               </FormField>
             </div>
 
-            <!-- Email -->
-            <FormField v-slot="{ componentField }" name="email">
-              <FormItem>
-                <FormLabel class="font-semibold">Kontakt Email</FormLabel>
-                <FormControl>
-                  <Input
-                    type="email"
-                    placeholder="Kontakt Email"
-                    class="border-primary/60 focus:border-primary/80"
-                    v-bind="componentField"
-                    required
-                  />
-                </FormControl>
-                <FormDescription class="text-secondary-foreground">
-                  Wir nutze deine E-Mail für die Kommunikation.
-                </FormDescription>
-              </FormItem>
-            </FormField>
-
-            <!-- Submit Button -->
-            <Button
-              type="submit"
-              :disabled="isSubmitting"
-              class="w-full text-white text-xl"
-            >
-              {{ isSubmitting ? "Registering..." : "Register Team" }}
-            </Button>
+            <div class="flex justify-center">
+              <Button
+                type="submit"
+                size="lg"
+                :disabled="isSubmitting"
+                class="text-white text-xl"
+              >
+                {{ isSubmitting ? "Registering..." : "Register Team" }}
+                <Beer class="inline w-6 h-6 ml-2" />
+              </Button>
+            </div>
           </form>
         </CardContent>
       </Card>
@@ -189,7 +192,11 @@
 </template>
 
 <script setup lang="ts">
-import { Beer, Trophy, Users } from "lucide-vue-next";
+import { Beer, Trophy, Users, Dices } from "lucide-vue-next";
+import * as z from "zod";
+import { useForm } from "vee-validate";
+import { toTypedSchema } from "@vee-validate/zod";
+import { capitalize } from "vue";
 import { toast } from "vue-sonner";
 
 useHead({
@@ -197,15 +204,9 @@ useHead({
 });
 
 definePageMeta({
-  title: "Team regsitrieren",
+  title: "Team registrieren",
   name: "Team registrieren",
 });
-
-// Zod for validation
-import * as z from "zod";
-import { useForm } from "vee-validate";
-import { toTypedSchema } from "@vee-validate/zod";
-import { capitalize } from "vue";
 
 const isSubmitting = ref(false);
 
@@ -228,9 +229,9 @@ const teamSchema = toTypedSchema(
       lastName: z.string().min(2, {
         message: "Member name must be at least 2 characters.",
       }),
-    }),
-    email: z.string().email({
-      message: "Please enter a valid email address.",
+      slogan: z.string().max(100, {
+        message: "Member Slogan must be less than 100 characters.",
+      }),
     }),
     member2: z.object({
       firstName: z.string().min(2, {
@@ -238,6 +239,9 @@ const teamSchema = toTypedSchema(
       }),
       lastName: z.string().min(2, {
         message: "Member name must be at least 2 characters.",
+      }),
+      slogan: z.string().max(100, {
+        message: "Member Slogan must be less than 100 characters.",
       }),
     }),
   })
@@ -247,7 +251,23 @@ const form = useForm({
   validationSchema: teamSchema,
 });
 
-const onSubmit = form.handleSubmit((values) => {
-  console.log("Form submitted!", values);
+const onSubmit = form.handleSubmit(async (values) => {
+  try {
+    const res = await $fetch("/api/teams/new-team", {
+      method: "POST",
+      body: values,
+    });
+    if (!res.id) {
+      throw new Error("Team registration failed");
+    }
+    toast.success("Team registered successfully!", {
+      description: "PublicID: " + res.public_id,
+    });
+  } catch (error) {
+    console.error("Error registering team:", error);
+    return;
+  } finally {
+    isSubmitting.value = false;
+  }
 });
 </script>

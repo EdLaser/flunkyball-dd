@@ -19,7 +19,13 @@ import {
 } from "@tanstack/vue-table";
 import { valueUpdater } from "~/lib/utils";
 import { Button } from "../ui/button";
-import { ArrowDownAZ, ArrowUpAZ, ArrowUpDown, Filter } from "lucide-vue-next";
+import {
+  ArrowDownAZ,
+  ArrowUpAZ,
+  ArrowUpDown,
+  Filter,
+  Delete,
+} from "lucide-vue-next";
 import DropdownMenu from "../ui/dropdown-menu/DropdownMenu.vue";
 import {
   DropdownMenuCheckboxItem,
@@ -124,6 +130,34 @@ const columns: ColumnDef<Tournament>[] = [
           status,
         },
         () => ""
+      );
+    },
+  },
+  {
+    accessorKey: "actions",
+    header: "Aktionen",
+    cell: ({ row }) => {
+      return h(
+        Button,
+        {
+          variant: "destructive",
+          size: "icon",
+          onClick: async () => {
+            const res = await $fetch(
+              `/api/orga/tournaments/${encodeURIComponent(
+                row.original.title
+              )}/delete-tournament`,
+              {
+                method: "DELETE",
+              }
+            );
+            if (!res.success) {
+              console.error("Failed to delete tournament");
+              return;
+            }
+          },
+        },
+        () => h(Delete, { class: "w-4 h-4" })
       );
     },
   },
