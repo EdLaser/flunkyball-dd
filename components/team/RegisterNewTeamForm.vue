@@ -151,10 +151,10 @@ const onSubmit = form.handleSubmit(async (values) => {
       body: values,
     });
     if (result.public_id) {
-      toast.success("Team erfolgreich registriert!");
+      toast.success("SSpieler erfolgreich festgelegt!");
     } else {
       toast.error(
-        "Fehler bei der Teamregistrierung. Bitte versuche es erneut."
+        "Fehler bei der Spielerregistrierung. Bitte versuche es erneut."
       );
     }
   } catch (error: any) {

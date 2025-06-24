@@ -119,7 +119,13 @@
           <!-- Register Button -->
           <Card>
             <CardContent class="pt-6">
-              <Button class="w-full">An Turnier Teilnehmen <Swords /></Button>
+              <TeamRegisterTeamForTournamentDialog
+                :tournamentTitle="tournament?.title ?? ''"
+              >
+                <Button class="w-full">
+                  An Turnier Teilnehmen <Swords />
+                </Button>
+              </TeamRegisterTeamForTournamentDialog>
             </CardContent>
           </Card>
         </div>

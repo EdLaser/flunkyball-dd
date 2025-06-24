@@ -38,14 +38,10 @@ const newTeamSchema = z.object({
 const playersToTeamsSchema = z.object({
   teamPublicId: z.string().min(4),
   player1: z.object({
-    firstName: z.string().min(2),
-    lastName: z.string().min(2),
-    slogan: z.string().max(100),
+    publicID: z.string().min(4),
   }),
   player2: z.object({
-    firstName: z.string().min(2),
-    lastName: z.string().min(2),
-    slogan: z.string().max(100),
+    publicID: z.string().min(4),
   }),
 });
 
@@ -129,13 +125,6 @@ export default defineEventHandler(async (event) => {
       });
     }
 
-    if (team._count.players >= 2) {
-      throw createError({
-        statusCode: 400,
-        data: "Team hat bereits 2 Spieler.",
-      });
-    }
-
     try {
       const team = await usePrisma(event).teams.update({
         where: {
@@ -143,17 +132,9 @@ export default defineEventHandler(async (event) => {
         },
         data: {
           players: {
-            create: [
-              {
-                first_name: data.player1.firstName,
-                last_name: data.player1.lastName,
-                slogan: data.player1.slogan,
-              },
-              {
-                first_name: data.player2.firstName,
-                last_name: data.player2.lastName,
-                slogan: data.player2.slogan,
-              },
+            connect: [
+              { public_id: data.player1.publicID },
+              { public_id: data.player2.publicID },
             ],
           },
         },
