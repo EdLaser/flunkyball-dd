@@ -1,5 +1,9 @@
 import { z } from "zod";
 
+const createOrAssignTeamQuery = z.object({
+  "create-team": z.string().optional(),
+});
+
 const newTeamSchema = z.object({
   name: z.string().min(2, {
     message: "Team name must be at least 2 characters.",
@@ -31,45 +35,136 @@ const newTeamSchema = z.object({
   }),
 });
 
+const playersToTeamsSchema = z.object({
+  teamPublicId: z.string().min(4),
+  player1: z.object({
+    firstName: z.string().min(2),
+    lastName: z.string().min(2),
+    slogan: z.string().max(100),
+  }),
+  player2: z.object({
+    firstName: z.string().min(2),
+    lastName: z.string().min(2),
+    slogan: z.string().max(100),
+  }),
+});
+
 export default defineEventHandler(async (event) => {
-  const { data, success } = await readValidatedBody(
+  const { data: queryData } = await getValidatedQuery(
     event,
-    newTeamSchema.safeParse
+    createOrAssignTeamQuery.safeParse
   );
 
-  if (!success) {
-    throw createError({
-      statusCode: 400,
-      message: "Invalid input data",
-    });
-  }
-  try {
-    const team = await usePrisma(event).teams.create({
-      data: {
-        name: data.name,
-        slogan: data.slogan,
-        players: {
-          create: [
-            {
-              first_name: data.member1.firstName,
-              last_name: data.member1.lastName,
-              slogan: data.member1.slogan,
-            },
-            {
-              first_name: data.member2.firstName,
-              last_name: data.member2.lastName,
-              slogan: data.member2.slogan,
-            },
-          ],
+  if (queryData?.["create-team"]) {
+    const { data, success } = await readValidatedBody(
+      event,
+      newTeamSchema.safeParse
+    );
+
+    if (!success) {
+      throw createError({
+        statusCode: 400,
+        message: "Invalid input data",
+      });
+    }
+    try {
+      const team = await usePrisma(event).teams.create({
+        data: {
+          name: data.name,
+          slogan: data.slogan,
+          players: {
+            create: [
+              {
+                first_name: data.member1.firstName,
+                last_name: data.member1.lastName,
+                slogan: data.member1.slogan,
+              },
+              {
+                first_name: data.member2.firstName,
+                last_name: data.member2.lastName,
+                slogan: data.member2.slogan,
+              },
+            ],
+          },
+        },
+      });
+      return team;
+    } catch (error) {
+      console.error("Error creating team:", error);
+      throw createError({
+        statusCode: 500,
+        message: "Failed to create team: " + error,
+      });
+    }
+  } else {
+    const { data, success } = await readValidatedBody(
+      event,
+      playersToTeamsSchema.safeParse
+    );
+
+    if (!success) {
+      throw createError({
+        statusCode: 400,
+        message: "Invalid input data",
+      });
+    }
+    const team = await usePrisma(event).teams.findUnique({
+      where: {
+        public_id: data.teamPublicId,
+      },
+      select: {
+        public_id: true,
+        _count: {
+          select: {
+            players: true,
+          },
         },
       },
     });
-    return team;
-  } catch (error) {
-    console.error("Error creating team:", error);
-    throw createError({
-      statusCode: 500,
-      message: "Failed to create team: " + error,
-    });
+
+    if (!team) {
+      throw createError({
+        statusCode: 404,
+        data: "Team nicht gefunden.",
+      });
+    }
+
+    if (team._count.players >= 2) {
+      throw createError({
+        statusCode: 400,
+        data: "Team hat bereits 2 Spieler.",
+      });
+    }
+
+    try {
+      const team = await usePrisma(event).teams.update({
+        where: {
+          public_id: data.teamPublicId,
+        },
+        data: {
+          players: {
+            create: [
+              {
+                first_name: data.player1.firstName,
+                last_name: data.player1.lastName,
+                slogan: data.player1.slogan,
+              },
+              {
+                first_name: data.player2.firstName,
+                last_name: data.player2.lastName,
+                slogan: data.player2.slogan,
+              },
+            ],
+          },
+        },
+      });
+      return team;
+    } catch (error) {
+      console.error("Error assigning players to team:", error);
+      throw createError({
+        statusCode: 500,
+        message: "Failed to assign players to team: " + error,
+      });
+    }
   }
 });

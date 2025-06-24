@@ -119,7 +119,12 @@
                     </div>
                     <div class="cols-span-1">
                       <Label for="password"> Passwort </Label>
-                      <Input id="password" type="password" required v-model="password" />
+                      <Input
+                        id="password"
+                        type="password"
+                        required
+                        v-model="password"
+                      />
                     </div>
                   </div>
                 </template>
@@ -171,11 +176,11 @@
           </form>
         </Stepper>
       </CardContent>
-      <CardFooter class="flex justify-center">
+      <CardFooter class="flex justify-center items-center">
         <Beer class="text-primary mr-2" />
-        <span class="text-gray-600 dark:text-gray-100">
-          Join the Flunkyball community!
-        </span>
+        <NuxtLink to="/teams/register" class="text-gray-600 dark:text-gray-100 underline">
+          Zur Teamanmeldung
+        </NuxtLink>
       </CardFooter>
     </Card>
   </div>
@@ -187,6 +192,7 @@ import { vAutoAnimate } from "@formkit/auto-animate/vue";
 import * as z from "zod";
 import { toTypedSchema } from "@vee-validate/zod";
 import { useForm } from "vee-validate";
+import { toast } from "vue-sonner";
 
 useHead({
   title: "Registrieren",
@@ -231,9 +237,13 @@ const registerUser = async (player: {
     });
 
     if (res.publicID) {
+      toast.success("Player erfolgreich erstellt!");
       createSuccessfull.value = true;
       createdPlayer.value = res;
       stepIndex.value = 3;
+    } else {
+      toast.error("Fehler beim Erstellen des Players.");
+      return;
     }
 
     if (createAccount) {
@@ -245,6 +255,11 @@ const registerUser = async (player: {
           publicID: res.publicID,
         },
       });
+      if (result === "OK") {
+        toast.success("Account erfolgreich erstellt!");
+      } else {
+        toast.error("Fehler beim Erstellen des Accounts.");
+      }
     }
   } catch (error) {
     console.error(error);

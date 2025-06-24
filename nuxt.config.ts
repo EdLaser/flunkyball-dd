@@ -11,6 +11,7 @@ export default defineNuxtConfig({
     "@pinia/nuxt",
     "@nuxt/fonts",
     "nuxt-auth-utils",
+    "@formkit/auto-animate/nuxt",
   ],
 
   app: {
@@ -20,7 +21,7 @@ export default defineNuxtConfig({
   nitro: {
     compressPublicAssets: {
       brotli: true,
-    }
+    },
   },
 
   runtimeConfig: {

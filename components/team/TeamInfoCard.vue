@@ -1,7 +1,7 @@
 <template>
   <Card>
     <CardContent class="p-5 md:p-7">
-      <div class="grid grid-cols-2">
+      <div class="grid">
         <div class="pr-5">
           <div class="grid">
             <div class="flex flex-col">
@@ -14,7 +14,7 @@
                 </span>
                 <NuxtLink
                   v-if="props.team.publicID"
-                  :to="`/players/${encodeURIComponent(props.team.publicID)}`"
+                  :to="`/teams/${encodeURIComponent(props.team.publicID)}`"
                   class="text-sm font-light underline underline-offset-1 text-primary"
                   >{{ props.team.publicID }}
                 </NuxtLink>
@@ -69,7 +69,6 @@
 import { Trophy, Beer, Medal, Swords, Speech, IdCard } from "lucide-vue-next";
 import { Separator } from "../ui/separator";
 import type { Team } from "~/types/Team";
-import type { Player } from "~/types/Player";
 
 const props = defineProps<{
   team: Team;

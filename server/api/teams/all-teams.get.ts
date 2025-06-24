@@ -2,10 +2,29 @@ import { z } from "zod";
 
 const topSchema = z.object({
   top: z.coerce.number().optional(),
+  onlyIds: z
+    .string()
+    .optional()
+    .refine((val) => val === "true"),
 });
 
 export default defineEventHandler(async (event) => {
   const { data } = await getValidatedQuery(event, topSchema.safeParse);
+
+  if (data?.onlyIds) {
+    const teams = await usePrisma(event).teams.findMany({
+      select: {
+        public_id: true,
+        name: true,
+      },
+    });
+    return teams.map((team) => {
+      return {
+        publicID: team.public_id ?? "",
+        name: team.name ?? "",
+      };
+    });
+  }
   const allTeams = await usePrisma(event).teams.findMany({
     select: {
       name: true,
