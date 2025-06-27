@@ -11,7 +11,7 @@
         <ColorModeSwitch />
         <Button
           v-for="link in loggedIn
-            ? session.isStaff
+            ? session?.isStaff
               ? staffLinks
               : userLinks
             : userLinks.concat(loggedOutLinks)"

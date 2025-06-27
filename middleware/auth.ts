@@ -1,12 +1,8 @@
-export default defineNuxtRouteMiddleware((to, from) => {
+export default defineNuxtRouteMiddleware(() => {
   const { loggedIn, user, session } = useUserSession();
-
-  if (!user.value || !loggedIn || !session.value.isStaff) {
+  if (!user.value || !loggedIn || !session.value?.isStaff) {
     return navigateTo({
       path: "/login",
-      query: {
-        redirect: to.fullPath,
-      },
     });
   }
 });
