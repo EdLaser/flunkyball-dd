@@ -120,7 +120,7 @@
           <Card
             v-if="
               tournament?.tournamentDate &&
-              new Date(tournament.tournamentDate) > new Date()
+              new Date(tournament.tournamentDate) > new Date() && tournament.status === 'open'
             "
           >
             <CardContent class="pt-6">
