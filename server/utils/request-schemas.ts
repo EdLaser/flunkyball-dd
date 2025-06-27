@@ -7,6 +7,13 @@ export const tournamentTitleSchema = z.object({
     .transform((val) => decodeURIComponent(val)),
 });
 
+const teamIdSchema = z.object({
+  publicID: z
+    .string()
+    .min(1)
+    .transform((val) => decodeURIComponent(val)),
+});
+
 export const getStageSchema = z.object({
   stage: z.enum(["group", "finals"]).optional(),
 });
@@ -24,6 +31,20 @@ export const handleTournamentParameter = async (event: any) => {
     throw createError({
       statusCode: 400,
       statusMessage: "Invalid tournament title",
+    });
+  }
+  return data;
+};
+
+export const handleTeamIdParameter = async (event: any) => {
+  const { data, success } = await getValidatedRouterParams(
+    event,
+    teamIdSchema.safeParse
+  );
+  if (!success) {
+    throw createError({
+      statusCode: 400,
+      statusMessage: "Invalid team public ID",
     });
   }
   return data;

@@ -1,5 +1,19 @@
 <template>
-  <Card>
+  <Card v-auto-animate>
+    <PlayerRemovePlayerDialog
+      v-if="edit && props.playsIn && props.player.publicID"
+      :player-public-id="props.player.publicID"
+      :team-public-id="props.playsIn"
+      @removed="emit('removed', true)"
+    >
+      <Button
+        variant="outline"
+        class="absolute right-2 cursor-pointer top-2 tilt-shaking"
+        size="icon"
+      >
+        <Trash2 />
+      </Button>
+    </PlayerRemovePlayerDialog>
     <CardContent class="p-5 md:p-7">
       <div class="grid grid-cols-2">
         <div class="pr-5">
@@ -75,7 +89,7 @@
       v-if="
         !noUpload &&
         loggedIn &&
-        session.user?.publicID === props.player.publicID
+        session?.user?.publicID === props.player.publicID
       "
     >
       <UploadFileDialog />
@@ -85,7 +99,15 @@
 
 <script lang="ts" setup>
 import type { Player } from "~/types/Player";
-import { Trophy, Beer, Medal, Swords, Speech, IdCard } from "lucide-vue-next";
+import {
+  Trophy,
+  Beer,
+  Trash2,
+  Medal,
+  Swords,
+  Speech,
+  IdCard,
+} from "lucide-vue-next";
 import { Separator } from "../ui/separator";
 
 const { session, loggedIn } = useUserSession();
@@ -96,5 +118,33 @@ const props = defineProps<{
   playsIn?: string;
   wins?: number;
   noUpload?: boolean;
+  edit?: boolean;
+}>();
+
+const emit = defineEmits<{
+  (e: "removed", isRemoved: boolean): void;
 }>();
 </script>
+<style scoped>
+.tilt-shaking {
+  animation: tilt-shaking 0.4s ease-in-out infinite;
+}
+
+@keyframes tilt-shaking {
+  0% {
+    transform: rotate(0deg);
+  }
+  25% {
+    transform: rotate(3deg);
+  }
+  50% {
+    transform: rotate(0eg);
+  }
+  75% {
+    transform: rotate(-3deg);
+  }
+  100% {
+    transform: rotate(0deg);
+  }
+}
+</style>

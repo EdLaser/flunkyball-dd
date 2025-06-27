@@ -55,6 +55,23 @@
             <TeamCreateAndRegisterNewTeamForm v-if="createNewTeam" />
           </div>
         </CardContent>
+        <CardFooter>
+          <div class="flex w-full justify-center gap-2">
+            Als Spieler
+            <NuxtLink
+              to="/register"
+              class="underline decoration-primary underline-offset-4 decoration-2 text-muted-foreground"
+            >
+              registrieren
+            </NuxtLink>
+            /<NuxtLink
+              to="/login"
+              class="underline decoration-primary underline-offset-4 decoration-2 text-muted-foreground"
+            >
+              anmelden
+            </NuxtLink>
+          </div>
+        </CardFooter>
       </Card>
 
       <!-- Link to View Teams -->

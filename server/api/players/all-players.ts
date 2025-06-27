@@ -52,6 +52,7 @@ export default defineEventHandler(async (event) => {
     },
     orderBy: {
       first_name: "asc",
+      last_name: "asc",
     },
   });
 

@@ -2,8 +2,8 @@
   <form class="space-y-6" @submit="onSubmit">
     <FormField v-slot="{ componentField }" name="teamPublicId">
       <FormItem>
-        <FormLabel class="font-semibold">Team Public ID</FormLabel>
-        <Select v-bind="componentField">
+        <FormLabel class="font-semibold">Team</FormLabel>
+        <Select v-bind="componentField" :disabled="loadingTeams">
           <FormControl>
             <SelectTrigger>
               <SelectValue placeholder="Wähle ein Team aus!" />
@@ -33,8 +33,8 @@
         <span class="md:col-span-2 text-xl">Spieler 1</span>
         <FormField name="player1.publicID" v-slot="{ componentField }">
           <FormItem>
-            <FormLabel class="font-semibold">Public-ID</FormLabel>
-            <Select v-bind="componentField">
+            <FormLabel class="font-semibold">Spieler</FormLabel>
+            <Select v-bind="componentField" :disabled="loadingPlayers">
               <FormControl>
                 <SelectTrigger>
                   <SelectValue placeholder="Wähle einen Spieler aus!" />
@@ -62,8 +62,8 @@
         <span class="md:col-span-2 text-xl">Spieler 2</span>
         <FormField name="player2.publicID" v-slot="{ componentField }">
           <FormItem>
-            <FormLabel class="font-semibold">Public-ID</FormLabel>
-            <Select v-bind="componentField">
+            <FormLabel class="font-semibold">Spieler</FormLabel>
+            <Select v-bind="componentField" :disabled="loadingPlayers">
               <FormControl>
                 <SelectTrigger>
                   <SelectValue placeholder="Wähle einen Spieler aus!" />
@@ -90,7 +90,7 @@
     </div>
     <div class="flex justify-end">
       <Button type="submit" class="w-full md:w-auto">
-        Spieler erstellen <Users class="inline h-4 w-4 ml-2" />
+        Spieler zuweisen <Users class="inline h-4 w-4 ml-2" />
       </Button>
     </div>
   </form>
@@ -103,19 +103,14 @@ import { toTypedSchema } from "@vee-validate/zod";
 import { toast } from "vue-sonner";
 import { Users } from "lucide-vue-next";
 
-const { data: teams, status } = await useLazyFetch("/api/teams/all-teams", {
-  method: "GET",
-  query: {
-    onlyIds: true,
-  },
-});
+const teamStore = useTeamsStore();
+const { allTeamsWithIds: teams, loadingTeams } = storeToRefs(teamStore);
 
-const { data: players } = await useLazyFetch("/api/players/all-players", {
-  method: "GET",
-  query: {
-    onlyIds: true,
-  },
-});
+const playerStore = usePlayersStore();
+const { allPlayersWithIds: players, loadingPlayers } = storeToRefs(playerStore);
+
+await callOnce("teams", () => teamStore.fetchAllTeams());
+await callOnce("players", () => playerStore.fetchAllPlayers());
 
 const teamSchema = toTypedSchema(
   z
@@ -150,8 +145,8 @@ const onSubmit = form.handleSubmit(async (values) => {
       method: "POST",
       body: values,
     });
-    if (result.public_id) {
-      toast.success("SSpieler erfolgreich festgelegt!");
+    if (result === 2) {
+      toast.success("Spieler erfolgreich festgelegt!");
     } else {
       toast.error(
         "Fehler bei der Spielerregistrierung. Bitte versuche es erneut."

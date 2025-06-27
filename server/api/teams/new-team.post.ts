@@ -110,6 +110,7 @@ export default defineEventHandler(async (event) => {
       },
       select: {
         public_id: true,
+        id: true,
         _count: {
           select: {
             players: true,
@@ -126,20 +127,19 @@ export default defineEventHandler(async (event) => {
     }
 
     try {
-      const team = await usePrisma(event).teams.update({
+      const players = await usePrisma(event).players.updateManyAndReturn({
         where: {
-          public_id: data.teamPublicId,
+          public_id: {
+            in: [data.player1.publicID, data.player2.publicID],
+          },
         },
         data: {
-          players: {
-            connect: [
-              { public_id: data.player1.publicID },
-              { public_id: data.player2.publicID },
-            ],
+          plays_in: {
+            set: team.id,
           },
         },
       });
-      return team;
+      return players.length;
     } catch (error) {
       console.error("Error assigning players to team:", error);
       throw createError({

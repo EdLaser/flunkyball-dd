@@ -19,6 +19,7 @@ export default defineEventHandler(async (event) => {
           first_name: true,
           last_name: true,
           public_id: true,
+          slogan: true,
         },
       },
       _count: {
@@ -33,13 +34,14 @@ export default defineEventHandler(async (event) => {
       public_id: decodedId,
     },
   });
+
   if (!team) {
     throw createError({
       statusCode: 404,
       message: "Team not found.",
     });
   }
-  
+
   return {
     name: team?.name,
     slogan: team?.slogan,
@@ -52,6 +54,8 @@ export default defineEventHandler(async (event) => {
       firstName: player.first_name,
       lastName: player.last_name,
       publicID: player.public_id,
+      slogan: player.slogan ?? "",
+      playsIn: team?.public_id ?? "",
     })),
   };
 });
