@@ -73,21 +73,23 @@ export default defineEventHandler(async (event) => {
         data: {
           name: data.name,
           slogan: data.slogan,
-          players: {
-            create: [
-              {
-                first_name: data.member1.firstName,
-                last_name: data.member1.lastName,
-                slogan: data.member1.slogan,
-              },
-              {
-                first_name: data.member2.firstName,
-                last_name: data.member2.lastName,
-                slogan: data.member2.slogan,
-              },
-            ],
-          },
         },
+      });
+      await usePrisma(event).players.createMany({
+        data: [
+          {
+            first_name: data.member1.firstName,
+            last_name: data.member1.lastName,
+            slogan: data.member1.slogan,
+            plays_in: team.id,
+          },
+          {
+            first_name: data.member2.firstName,
+            last_name: data.member2.lastName,
+            slogan: data.member2.slogan,
+            plays_in: team.id,
+          },
+        ],
       });
       return team;
     } catch (error) {
