@@ -55,8 +55,6 @@ const props = defineProps<{
   top?: number;
 }>();
 
-const nuxtApp = useNuxtApp();
-
 const { data: teams } = await useLazyFetch("/api/teams/all-teams", {
   query: {
     top: props.top,
