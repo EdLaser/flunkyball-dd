@@ -8,7 +8,7 @@
     >
       <Button
         variant="outline"
-        class="absolute right-2 cursor-pointer top-2 tilt-shaking"
+        class="absolute right-2 cursor-pointer top-2 tilt-shaking z-50"
         size="icon"
       >
         <Trash2 />
@@ -62,12 +62,15 @@
           </div>
           <Separator class="my-4" label="Social" />
           <div class="grid gap-2">
-            <div class="flex items-center justify-between" v-if="props.playsIn">
+            <div
+              class="flex flex-col md:flex-row items-center justify-between"
+              v-if="props.playsIn"
+            >
               <span class="flex gap-2 font-semibold"><Medal /> Team:</span>
               <NuxtLink class="font-light"> {{ props.playsIn }}</NuxtLink>
             </div>
             <div class="flex items-center gap-5" v-if="props.player.slogan">
-              <div class="flex flex-col gap-1">
+              <div class="flex flex-col md:flex-row gap-1">
                 <span class="flex gap-2 font-semibold"><Speech />Slogan:</span>
                 <span class="font-light">{{ props.player.slogan }}</span>
               </div>
@@ -77,7 +80,7 @@
         <div class="flex justify-center">
           <InspiraFlipCard
             :title="player.firstName"
-            :subtitle="`Wer ist ${player.firstName}`"
+            :subtitle="`Wer ist ${player.firstName}?`"
             :description="player.slogan ?? ''"
             :image="player.avatarLink ?? undefined"
           />
