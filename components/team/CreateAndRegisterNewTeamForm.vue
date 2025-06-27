@@ -1,5 +1,5 @@
 <template>
-  <form @submit.prevent="onSubmit" class="space-y-6">
+  <form @submit="onSubmit" class="space-y-6">
     <FormField v-slot="{ componentField }" name="name">
       <FormItem>
         <FormLabel class="font-semibold">Team Name</FormLabel>
@@ -70,7 +70,7 @@
       </FormField>
       <FormField v-slot="{ componentField }" name="member1.slogan">
         <FormItem class="col-span-full">
-          <FormLabel class="font-semibold">Team Slogan</FormLabel>
+          <FormLabel class="font-semibold">Spieler Slogan</FormLabel>
           <FormControl>
             <Input
               placeholder="Spieler Slogan"
@@ -109,7 +109,7 @@
       </FormField>
       <FormField v-slot="{ componentField }" name="member2.slogan">
         <FormItem class="col-span-full">
-          <FormLabel class="font-semibold">Team Slogan</FormLabel>
+          <FormLabel class="font-semibold">Spieler Slogan</FormLabel>
           <FormControl>
             <Input
               placeholder="Spieler Slogan"
