@@ -18,6 +18,12 @@ export default defineNuxtConfig({
     pageTransition: { name: "page", mode: "out-in" },
   },
 
+  vite: {
+    define: {
+      global: 'globalThis'
+    }
+  },
+
   nitro: {
     compressPublicAssets: {
       brotli: true,
