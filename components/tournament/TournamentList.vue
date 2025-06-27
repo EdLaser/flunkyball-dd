@@ -12,7 +12,7 @@
         <TableCell>
           <NuxtLink
             :to="`${isOrga ? '/orga/tournaments/' : '/tournaments/'}${
-              tournament.title
+              encodeURIComponent(tournament.title)
             }`"
             class="text-primary hover:underline"
           >

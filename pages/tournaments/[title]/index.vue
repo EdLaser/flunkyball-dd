@@ -116,19 +116,15 @@
             </CardContent>
           </Card>
 
-          <!-- Register Button -->
-          <Card
-            v-if="
-              tournament?.tournamentDate &&
-              new Date(tournament.tournamentDate) > new Date() && tournament.status === 'open'
-            "
-          >
-            <CardContent class="pt-6">
-              <TeamRegisterTeamForTournamentDialog
-                :tournamentTitle="tournament?.title ?? ''"
-              />
-            </CardContent>
-          </Card>
+          <ClientOnly>
+            <Card v-if="isTournamentInFuture">
+              <CardContent class="pt-6">
+                <TeamRegisterTeamForTournamentDialog
+                  :tournamentTitle="tournament?.title ?? ''"
+                />
+              </CardContent>
+            </Card>
+          </ClientOnly>
         </div>
       </div>
     </main>
@@ -137,7 +133,7 @@
 
 <script setup lang="ts">
 // Import your Vue-compatible Lucide icons instead of 'lucide-react'
-import { Calendar, MapPin, Users, Swords } from "lucide-vue-next";
+import { Calendar, MapPin, Users } from "lucide-vue-next";
 
 // Import your UI components
 import { Button } from "@/components/ui/button";
@@ -174,7 +170,9 @@ const {
   refresh,
 } = await useFetch(() => `/api/tournament-details/${tournamentTitle}`);
 
-if (tournament.value == null) {
-  await refresh();
-}
+const isTournamentInFuture = computed(() => {
+  if (!tournament.value?.tournamentDate) return false;
+  console.log(new Date(tournament.value.tournamentDate), new Date());
+  return new Date(tournament.value.tournamentDate) > new Date();
+});
 </script>

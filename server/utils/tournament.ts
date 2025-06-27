@@ -90,9 +90,7 @@ export const getTournamentDetails = async (title: string, event: any) => {
     description: tournamentDetails?.description,
     status: tournamentDetails?.status,
     location: formatLocation(tournamentDetails?.locations ?? null),
-    tournamentDate: transfromTournamentDate(
-      tournamentDetails?.tournament_date ?? ""
-    ),
+    tournamentDate: tournamentDetails?.tournament_date ?? "",
     tournamentRegistrations:
       tournamentDetails?.tournament_registrations.map((registration) => {
         return {
