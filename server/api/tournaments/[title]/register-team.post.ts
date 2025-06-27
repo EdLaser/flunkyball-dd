@@ -30,7 +30,7 @@ export default defineEventHandler(async (event) => {
           },
           teams: {
             connect: {
-              id: data.teamId,
+              public_id: data.teamId,
             },
           },
         },

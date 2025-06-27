@@ -260,8 +260,6 @@ const form = useForm({
 });
 
 const onSubmit = form.handleSubmit(async (values) => {
-  console.log("Form submitted!", values);
-
   const result = await $fetch("/api/orga/new-location", {
     method: "POST",
     body: {
