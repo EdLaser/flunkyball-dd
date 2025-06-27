@@ -32,6 +32,7 @@
           v-if="isEditing && team.publicID"
           :team-name="team.name"
           :team-public-id="team.publicID"
+          @assigned="refresh()"
         />
       </div>
       <div class="grid gap-3 lg:grid-cols-2" v-if="team && team.players">

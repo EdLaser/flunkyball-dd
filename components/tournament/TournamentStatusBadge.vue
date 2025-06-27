@@ -1,19 +1,51 @@
 <template>
-  <Badge class="capitalize" :class="determineBadgeClass(status)">
-    {{
-      status === "finished"
-        ? "Vorbei"
-        : status === "open"
-        ? "Offen"
-        : status === "in_progress"
-        ? "In Progress"
-        : ""
-    }}
-  </Badge>
+  <Popover>
+    <PopoverTrigger as-child>
+      <Badge class="capitalize" :class="determineBadgeClass(status)">
+        {{
+          status === "finished"
+            ? "Vorbei"
+            : status === "open"
+            ? "Offen"
+            : status === "in_progress"
+            ? "In Progress"
+            : ""
+        }}
+      </Badge>
+    </PopoverTrigger>
+    <PopoverContent
+      class="w-fit backdrop-blur-sm bg-white/20 class flex flex-col gap-3"
+    >
+      <Badge
+        @click="$emit('update:status', newStatus as tournament_status)"
+        class="capitalize"
+        :class="determineBadgeClass(newStatus as tournament_status)"
+        v-for="newStatus in ['finished', 'open', 'in_progress'].filter(
+          (s) => s !== props.status
+        )"
+        :key="newStatus"
+      >
+        {{
+          newStatus === "finished"
+            ? "Das Turnier ist vorbei."
+            : newStatus === "open"
+            ? "Das Turnier ist offen für Anmeldungen."
+            : newStatus === "in_progress"
+            ? "Das Turnier läuft gerade."
+            : ""
+        }}
+      </Badge>
+    </PopoverContent>
+  </Popover>
 </template>
 
 <script lang="ts" setup>
+import { tournament_status } from "@prisma/client";
 const props = defineProps<{
-  status: "finished" | "in_progress" | "open";
+  status: tournament_status;
+}>();
+
+const updateStatus = defineEmits<{
+  (e: "update:status", status: tournament_status): void;
 }>();
 </script>

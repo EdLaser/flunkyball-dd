@@ -20,6 +20,7 @@
                 <TournamentStatusBadge
                   v-if="tournament?.status"
                   :status="tournament.status"
+                  @update:status="handleUpdateTournamentStatus"
                 />
               </CardTitle>
             </CardHeader>
@@ -91,6 +92,8 @@
 <script setup lang="ts">
 import { Calendar, MapPin, Users } from "lucide-vue-next";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import type { tournament_status } from "@prisma/client";
+import { toast } from "vue-sonner";
 
 const route = useRoute();
 
@@ -131,4 +134,28 @@ const amountGroupStageMatches = computed(() => {
   if (!groupStage) return -1;
   return groupStage.matches.length;
 });
+
+const handleUpdateTournamentStatus = async (status: tournament_status) => {
+  if (!tournament.value?.title) {
+    console.error("Tournament ID is not available");
+    return;
+  }
+  try {
+    const res = await $fetch(
+      `/api/orga/tournaments/${tournament.value.title}/status`,
+      {
+        method: "POST",
+        body: { status },
+      }
+    );
+    if (res.title && res.status === status) {
+      toast.success("Tournament status updated successfully");
+    } else {
+      toast.error("Failed to update tournament status");
+    }
+    refresh(); // Refresh the tournament data after updating status
+  } catch (error) {
+    toast.error("Failed to update tournament status");
+  }
+};
 </script>

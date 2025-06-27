@@ -53,7 +53,7 @@ const assignToTeam = async () => {
     <PopoverTrigger as-child>
       <Button variant="outline"> Spieler <UserPlus /> </Button>
     </PopoverTrigger>
-    <PopoverContent class="w-80 md:w-96">
+    <PopoverContent class="w-80 md:w-96 backdrop-blur-sm bg-white/40">
       <div class="grid space-y-4">
         <div class="flex flex-col items-center">
           <p class="text-lg text-center">

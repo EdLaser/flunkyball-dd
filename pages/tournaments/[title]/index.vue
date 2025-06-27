@@ -117,13 +117,14 @@
           </Card>
 
           <!-- Register Button -->
-          <Card>
+          <Card
+            v-if="
+              tournament?.tournamentDate &&
+              new Date(tournament.tournamentDate) > new Date()
+            "
+          >
             <CardContent class="pt-6">
               <TeamRegisterTeamForTournamentDialog
-                v-if="
-                  tournament?.tournamentDate &&
-                  new Date(tournament.tournamentDate) > new Date()
-                "
                 :tournamentTitle="tournament?.title ?? ''"
               />
             </CardContent>
