@@ -19,7 +19,7 @@ model players {
   public_id   String?  @unique
   phone       String?  @unique
   avatar_link String?  @unique
-  teams       teams?   @relation(fields: [plays_in], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  teams       teams?   @relation(fields: [plays_in], references: [id], onUpdate: NoAction)
   users       users[]
 }
 
@@ -36,8 +36,8 @@ model teams {
   matches_matches_match_winnerToteams matches[]                  @relation("matches_match_winnerToteams")
   players                             players[]
   pre_registrations                   pre_registrations[]
-  tournament_registrations            tournament_registrations[]
   stage_registrations                 stage_registrations[]
+  tournament_registrations            tournament_registrations[]
 }
 
 /// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
@@ -48,15 +48,15 @@ model tournaments {
   tournament_date          DateTime                   @db.Timestamp(6)
   price                    String
   created_at               DateTime                   @default(now()) @db.Timestamptz(6)
-  status                   tournament_status          @default(open)
   location_id              String?                    @db.Uuid
+  status                   tournament_status          @default(open)
   group_registrations      group_registrations[]
   groups                   groups[]
   pre_registrations        pre_registrations[]
+  stage_registrations      stage_registrations[]
   stages                   stages[]
   tournament_registrations tournament_registrations[]
   locations                locations?                 @relation(fields: [location_id], references: [location_id], onDelete: NoAction, onUpdate: NoAction)
-  stage_registrations      stage_registrations[]
 }
 
 /// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
@@ -98,8 +98,8 @@ model stages {
   tournament_id       String?               @db.Uuid
   groups              groups[]
   matches             matches[]
-  tournaments         tournaments?          @relation(fields: [tournament_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
   stage_registrations stage_registrations[]
+  tournaments         tournaments?          @relation(fields: [tournament_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
 }
 
 /// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
