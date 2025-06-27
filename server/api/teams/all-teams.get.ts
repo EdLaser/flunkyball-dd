@@ -1,11 +1,11 @@
 import { z } from "zod";
 
 const topSchema = z.object({
-  top: z.coerce.number().optional(),
   onlyIds: z
     .string()
     .optional()
     .refine((val) => val === "true"),
+  top: z.coerce.number().optional(),
 });
 
 export default defineEventHandler(async (event) => {

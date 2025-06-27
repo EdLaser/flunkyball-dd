@@ -135,11 +135,12 @@
           Melde dich jetzt für unser bevorstehendes Flunkyball-Turnier an und
           zeig deine Wurfkünste!
         </p>
-        <Button
-          class="p-6 md:p-8 flex items-center justify-center mx-auto text-2xl dark:text-white"
+        <NuxtLink
+          to="/teams/register"
+          class="text-2xl dark:text-white underline hover:text-primary dark:hover:text-primary"
         >
           Melde dein Team an
-        </Button>
+        </NuxtLink>
       </section>
     </main>
 
