@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 const createOrAssignTeamQuery = z.object({
-  "create-team": z.string().optional(),
+  "create-team": z.string().optional().refine((val) => {return val === 'true'}),
 });
 
 const newTeamSchema = z.object({
