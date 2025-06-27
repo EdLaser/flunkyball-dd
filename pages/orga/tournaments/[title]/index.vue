@@ -92,10 +92,11 @@
 <script setup lang="ts">
 import { Calendar, MapPin, Users } from "lucide-vue-next";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import type { tournament_status } from "@prisma/client";
 import { toast } from "vue-sonner";
 
 const route = useRoute();
+
+type TournamentStatus = "finished" | "open" | "in_progress";
 
 useHead({
   title: `Turnier Details: ${decodeURIComponent(route.params.title as string)}`,
@@ -135,7 +136,7 @@ const amountGroupStageMatches = computed(() => {
   return groupStage.matches.length;
 });
 
-const handleUpdateTournamentStatus = async (status: tournament_status) => {
+const handleUpdateTournamentStatus = async (status: TournamentStatus) => {
   if (!tournament.value?.title) {
     console.error("Tournament ID is not available");
     return;

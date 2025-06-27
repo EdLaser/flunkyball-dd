@@ -17,9 +17,9 @@
       class="w-fit backdrop-blur-sm bg-white/20 class flex flex-col gap-3"
     >
       <Badge
-        @click="$emit('update:status', newStatus as tournament_status)"
+        @click="$emit('update:status', newStatus as TournamentStatus)"
         class="capitalize"
-        :class="determineBadgeClass(newStatus as tournament_status)"
+        :class="determineBadgeClass(newStatus as TournamentStatus)"
         v-for="newStatus in ['finished', 'open', 'in_progress'].filter(
           (s) => s !== props.status
         )"
@@ -40,12 +40,13 @@
 </template>
 
 <script lang="ts" setup>
-import { tournament_status } from "@prisma/client";
+type TournamentStatus = "finished" | "open" | "in_progress";
+
 const props = defineProps<{
-  status: tournament_status;
+  status: TournamentStatus;
 }>();
 
 const updateStatus = defineEmits<{
-  (e: "update:status", status: tournament_status): void;
+  (e: "update:status", status: TournamentStatus): void;
 }>();
 </script>
