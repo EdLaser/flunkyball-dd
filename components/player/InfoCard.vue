@@ -62,15 +62,17 @@
           </div>
           <Separator class="my-4" label="Social" />
           <div class="grid gap-2">
-            <div
-              class="flex flex-col md:flex-row items-center justify-between"
-              v-if="props.playsIn"
-            >
-              <span class="flex gap-2 font-semibold"><Medal /> Team:</span>
-              <NuxtLink class="font-light"> {{ props.playsIn }}</NuxtLink>
+            <div class="flex items-center gap-5">
+              <div
+                class="flex flex-col md:flex-row gap-1 md:justify-between"
+                v-if="props.playsIn"
+              >
+                <span class="flex gap-2 font-semibold"> <Medal /> Team:</span>
+                <NuxtLink class="font-light"> {{ props.playsIn }}</NuxtLink>
+              </div>
             </div>
             <div class="flex items-center gap-5" v-if="props.player.slogan">
-              <div class="flex flex-col md:flex-row gap-1">
+              <div class="flex flex-col md:flex-row gap-1 md:justify-between">
                 <span class="flex gap-2 font-semibold"><Speech />Slogan:</span>
                 <span class="font-light">{{ props.player.slogan }}</span>
               </div>
