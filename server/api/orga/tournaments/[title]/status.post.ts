@@ -1,11 +1,10 @@
 import { z } from "zod";
-import { tournament_status } from "@prisma/client";
 
 const changeStatusSchema = z.object({
   status: z.enum([
-    tournament_status.open,
-    tournament_status.finished,
-    tournament_status.in_progress,
+    'open',
+    'finished',
+    'in_progress',
   ]),
 });
 
