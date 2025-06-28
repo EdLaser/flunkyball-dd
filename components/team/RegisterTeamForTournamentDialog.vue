@@ -27,7 +27,7 @@
                 <SelectContent>
                   <SelectGroup>
                     <SelectItem
-                      v-for="team in teams"
+                      v-for="team in allTeamsWithIds"
                       :key="team.publicID"
                       :value="team.publicID"
                     >
@@ -88,12 +88,9 @@ const props = defineProps<{
   tournamentTitle: string;
 }>();
 
-const { data: teams, status } = await useLazyFetch("/api/teams/all-teams", {
-  method: "GET",
-  query: {
-    onlyIds: true,
-  },
-});
+const teamStore = useTeamsStore();
+const { allTeamsWithIds } = storeToRefs(teamStore);
+callOnce("teasm", () => teamStore.fetchAllTeams());
 
 const { data: tournaments, error } = await useLazyFetch(
   "/api/tournaments/all-tournaments",
@@ -129,8 +126,12 @@ const onSubmit = form.handleSubmit(async (values) => {
     } else {
       toast.error("Registrierung fehlgeschlagen: " + response.message);
     }
-  } catch (error) {
-    console.error("Registration failed:", error);
+  } catch (error: any) {
+    if (error.data) {
+      toast.error("Registrierung fehlgeschlagen: " + error.data.message);
+    } else {
+      toast.error("Ein Fehler ist aufgetreten");
+    }
   }
 });
 </script>

@@ -15,7 +15,27 @@ export default defineEventHandler(async (event) => {
   if (!success) {
     throw createError({
       statusCode: 400,
-      data: "Ungültige Daten",
+      message: "Ungültige Daten",
+    });
+  }
+
+  const isRegistered = await usePrisma(
+    event
+  ).tournament_registrations.findFirst({
+    where: {
+      tournaments: {
+        title,
+      },
+      teams: {
+        public_id: data.teamId,
+      },
+    },
+  });
+
+  if (isRegistered) {
+    throw createError({
+      statusCode: 400,
+      message: "Das Team ist bereits für dieses Turnier registriert.",
     });
   }
 
@@ -46,7 +66,7 @@ export default defineEventHandler(async (event) => {
     console.error("Fehler bei der Registrierung des Teams:", error);
     throw createError({
       statusCode: 500,
-      data: "Fehler bei der Registrierung des Teams.",
+      message: "Fehler bei der Registrierung des Teams.",
     });
   }
 });

@@ -30,7 +30,18 @@
               <div class="flex flex-col space-y-2">
                 <div class="flex items-center">
                   <Calendar class="w-4 h-4 mr-2 text-primary" />
-                  <span>{{ tournament?.tournamentDate }}</span>
+                  <span>{{
+                    new Date(tournament?.tournamentDate?? '').toLocaleString(
+                      "de-DE",
+                      {
+                        year: "numeric",
+                        month: "long",
+                        day: "numeric",
+                        hour: "2-digit",
+                        minute: "2-digit",
+                      }
+                    )
+                  }}</span>
                 </div>
                 <div class="flex items-center">
                   <MapPin class="w-4 h-4 mr-2 text-primary" />

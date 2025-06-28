@@ -10,7 +10,15 @@
     <CardContent>
       <p class="text-lg mb-2 text-muted-foreground">
         <strong>Datum:</strong>
-        {{ tournament.tournamentDate }}
+        {{
+          new Date(tournament.tournamentDate).toLocaleString("de-DE", {
+            year: "numeric",
+            month: "long",
+            day: "numeric",
+            hour: "2-digit",
+            minute: "2-digit",
+          })
+        }}
       </p>
       <p class="text-lg mb-2 text-muted-foreground">
         <strong>Ort:</strong> {{ tournament.location }}

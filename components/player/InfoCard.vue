@@ -1,5 +1,5 @@
 <template>
-  <Card v-auto-animate>
+  <Card v-auto-animate class="relative">
     <PlayerRemovePlayerDialog
       v-if="edit && props.playsIn && props.player.publicID"
       :player-public-id="props.player.publicID"

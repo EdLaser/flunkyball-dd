@@ -38,7 +38,7 @@
         </Badge>
       </PopoverContent>
     </Popover>
-    <Badge class="capitalize" :class="determineBadgeClass(status)">
+    <Badge v-else class="capitalize" :class="determineBadgeClass(status)">
       {{
         status === "finished"
           ? "Vorbei"
@@ -48,7 +48,7 @@
           ? "In Progress"
           : ""
       }}
-    </Badge v-else>
+    </Badge >
   </div>
 </template>
 
