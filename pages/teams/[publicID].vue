@@ -29,7 +29,7 @@
           <Edit2 />
         </Button>
         <TeamPlayerToTeam
-          v-if="isEditing && team.publicID"
+          v-if="(isEditing && team.publicID) || !team.players || team.players.length === 0"
           :team-name="team.name"
           :team-public-id="team.publicID"
           @assigned="refresh()"

@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 const addPlayerSchema = z.object({
-  playerPublicID: z.string().min(5),
+  playerPublicID: z.array(z.string().min(5)),
 });
 
 export default defineEventHandler(async (event) => {
@@ -47,23 +47,20 @@ export default defineEventHandler(async (event) => {
   }
 
   try {
-    const player = await usePrisma(event).players.update({
+    const player = await usePrisma(event).players.updateMany({
       where: {
-        public_id: data.playerPublicID,
+        public_id: {
+          in: data.playerPublicID,
+        },
       },
       data: {
         plays_in: {
           set: team.id,
         },
       },
-      select: {
-        public_id: true,
-        first_name: true,
-        last_name: true,
-      },
     });
 
-    if (!player) {
+    if (!player.count || player.count === 0) {
       throw createError({
         statusCode: 404,
         statusMessage: "Player not found",
@@ -71,9 +68,8 @@ export default defineEventHandler(async (event) => {
     }
 
     return {
-      playerPublicID: player.public_id,
-      firstName: player.first_name ?? "",
-      lastName: player.last_name ?? "",
+      success: true,
+      count: player.count,
     };
   } catch (error) {
     throw createError({

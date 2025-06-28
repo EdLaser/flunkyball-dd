@@ -11,13 +11,7 @@
       <p class="text-lg mb-2 text-muted-foreground">
         <strong>Datum:</strong>
         {{
-          new Date(tournament.tournamentDate).toLocaleString("de-DE", {
-            year: "numeric",
-            month: "long",
-            day: "numeric",
-            hour: "2-digit",
-            minute: "2-digit",
-          })
+          tournament.tournamentDate 
         }}
       </p>
       <p class="text-lg mb-2 text-muted-foreground">

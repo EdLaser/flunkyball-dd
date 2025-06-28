@@ -3,7 +3,7 @@
     <h1 class="text-3xl font-bold text-primary mb-6">Teams</h1>
     <Card>
       <CardHeader>
-        <CardTitle>Alle Teams</CardTitle>
+        <CardTitle class="flex justify-between">Alle Teams <TeamCreateTeamDialog /></CardTitle>
         <CardDescription>Übersicht über alle FLunkyball Teams</CardDescription>
       </CardHeader>
       <CardContent>

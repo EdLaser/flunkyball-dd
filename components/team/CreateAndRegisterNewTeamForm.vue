@@ -195,9 +195,6 @@ const onSubmit = form.handleSubmit(async (values) => {
     const res = await $fetch("/api/teams/new-team", {
       method: "POST",
       body: values,
-      query: {
-        ["create-team"]: "true", // Ensure this is a string as expected by the server
-      },
     });
     if (!res.id) {
       throw new Error("Team registration failed");

@@ -28,11 +28,11 @@ const assignToTeam = async () => {
       `/api/teams/${encodeURIComponent(props.teamPublicId)}/player`,
       {
         method: "PUT",
-        body: { playerPublicID: selectedPlayer.value },
+        body: { playerPublicID: [selectedPlayer.value] },
       }
     );
 
-    if (response.playerPublicID) {
+    if (response.success) {
       emits("assigned", selectedPlayer.value);
       selectedPlayer.value = undefined; // Reset selection after assignment
     } else {

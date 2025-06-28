@@ -141,11 +141,11 @@ const form = useForm({
 
 const onSubmit = form.handleSubmit(async (values) => {
   try {
-    const result = await $fetch("/api/teams/new-team", {
-      method: "POST",
-      body: values,
+    const result = await $fetch(`/api/teams/${values.teamPublicId}/player`, {
+      method: "PUT",
+      body: [values.player1.publicID, values.player2.publicID],
     });
-    if (result === 2) {
+    if (result.count === 2) {
       toast.success("Spieler erfolgreich festgelegt!");
     } else {
       toast.error(
