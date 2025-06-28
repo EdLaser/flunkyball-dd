@@ -7,11 +7,15 @@
       <DialogContent>
         <DialogHeader>
           <DialogTitle>
-            Für {{ props.tournamentTitle }} registrieren!</DialogTitle
+            Für
+            {{ props.tournamentTitle ?? "Turnier" }} registrieren!</DialogTitle
           >
           <DialogDescription>
-            Registriere dich für das Turnier "{{ props.tournamentTitle }}".
-            Wähle dein Team und registriere dich für die Teilnahme.
+            Registriere dich für {{
+              props.tournamentTitle
+                ? `das Turnier ${props.tournamentTitle}`
+                : 'ein Turnier'
+            }}. Wähle dein Team und registriere dich für die Teilnahme.
           </DialogDescription>
         </DialogHeader>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -85,7 +89,8 @@ const registerTeamForTournamentSchema = z.object({
 });
 
 const props = defineProps<{
-  tournamentTitle: string;
+  tournamentTitle?: string;
+  teamId?: string;
 }>();
 
 const teamStore = useTeamsStore();
@@ -102,8 +107,8 @@ const { data: tournaments, error } = await useLazyFetch(
 const form = useForm({
   validationSchema: toTypedSchema(registerTeamForTournamentSchema),
   initialValues: {
-    teamId: "",
-    tournamentTitle: props.tournamentTitle,
+    teamId: props.teamId ?? "",
+    tournamentTitle: props.tournamentTitle ?? undefined,
   },
 });
 

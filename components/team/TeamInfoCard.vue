@@ -62,6 +62,11 @@
         </div>
       </div>
     </CardContent>
+    <CardFooter class="flex justify-end">
+      <TeamRegisterTeamForTournamentDialog
+        :team-id="props.team.publicID ?? ''"
+      />
+    </CardFooter>
   </Card>
 </template>
 
