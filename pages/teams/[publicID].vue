@@ -15,6 +15,7 @@
         :team="team"
         :games-played="team.totalMatches"
         :wins="team.wins"
+        :is-editing="isEditing"
       />
       <div
         class="text-xl md:text-2xl font-semibold text-foreground flex items-center gap-2"
