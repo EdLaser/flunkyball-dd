@@ -4,12 +4,12 @@
     <AlertDialogContent>
       <AlertDialogHeader>
         <AlertDialogTitle>
-          Spieler aus {{ props.teamPublicId }} entfernen?</AlertDialogTitle
+          Team
+          <strong>{{ props.teamPublicId }}</strong> löschen?</AlertDialogTitle
         >
         <AlertDialogDescription>
-          Du bist dabei den Spieler
-          <strong>{{ props.playerPublicId }}</strong> aus dem Team
-          <strong>{{ props.teamPublicId }}</strong> zu entfernen.
+          Du bist dabei das Team
+          <strong>{{ props.teamPublicId }}</strong> zu löschen.
           <br />
           Bist du dir sicher, dass du fortfahren möchtest? Diese Aktion kann
           nicht rückgängig gemacht werden.
@@ -18,7 +18,7 @@
       <AlertDialogFooter>
         <AlertDialogCancel>Abbrechen</AlertDialogCancel>
         <AlertDialogAction
-          @click="removePlayerFromTeam"
+          @click="deleteTeam"
           class="bg-red-500 hover:bg-red-600"
         >
           Fortfahren
@@ -31,29 +31,26 @@
 <script lang="ts" setup>
 import { toast } from "vue-sonner";
 const props = defineProps<{
-  playerPublicId: string;
   teamPublicId: string;
 }>();
 
-const removePlayerFromTeam = async () => {
+const deleteTeam = async () => {
   try {
     const response = await $fetch(
-      `/api/teams/${encodeURIComponent(props.teamPublicId)}/player`,
+      `/api/teams/${encodeURIComponent(props.teamPublicId)}`,
       {
         method: "DELETE",
-        body: { playerPublicID: props.playerPublicId },
       }
     );
     if (response.success) {
-      // Emit an event or handle the success case
-      toast.success("Spieler erfolgreich entfernt!");
+      toast.success("Team erfolgreich gelöscht!");
       emit("removed", true);
     } else {
-      toast.error("Fehler beim Entfernen des Spielers");
+      toast.error("Fehler beim Entfernen des Teams");
     }
   } catch (error: any) {
     if (error.data) {
-      toast.error(error.data.message);
+      toast.error("Fehler beim löschen des Teams: " + error.data.message);
     } else {
       toast.error("Ein Fehler ist aufgetreten");
     }

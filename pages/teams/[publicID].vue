@@ -65,7 +65,7 @@ useHead({
 });
 
 const { data: team, refresh } = await useFetch(
-  `/api/teams/${encodeURIComponent(route.params.publicID as string)}`
+  () => `/api/teams/${encodeURIComponent(route.params.publicID as string)}`
 );
 
 const toggleRemove = (removed: boolean) => {

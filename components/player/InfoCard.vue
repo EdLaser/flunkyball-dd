@@ -70,7 +70,7 @@
               <NuxtLink :to="`/teams/${encodeURIComponent(props.playsIn)}`" class="font-light"> {{ props.playsIn }}</NuxtLink>
             </div>
             <div
-              class="flex flex-col md:flex-row gap-1 md:justify-between"
+              class="flex flex-col md:flex-row gap-1 md:justify-between md:text-right"
               v-if="props.player.slogan"
             >
               <span class="flex gap-2 font-semibold"><Speech />Slogan:</span>

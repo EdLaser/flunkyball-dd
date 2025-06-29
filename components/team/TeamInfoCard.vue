@@ -1,5 +1,18 @@
 <template>
-  <Card>
+  <Card class="relative">
+    <TeamDeleteTeamDialog
+      v-if="isEditing && props.team.publicID"
+      :team-public-id="props.team.publicID"
+      @deleted="$emit('deleted', true)"
+    >
+      <Button
+        variant="outline"
+        class="absolute right-2 cursor-pointer top-2 tilt-shaking z-50"
+        size="icon"
+      >
+        <Trash2 />
+      </Button>
+    </TeamDeleteTeamDialog>
     <CardContent class="p-5 md:p-7">
       <div class="grid">
         <div class="pr-5">
@@ -80,5 +93,6 @@ const props = defineProps<{
   gamesPlayed?: number;
   playsIn?: string;
   wins?: number;
+  isEditing?: boolean;
 }>();
 </script>
