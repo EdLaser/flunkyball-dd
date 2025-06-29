@@ -11,10 +11,11 @@
             {{ props.tournamentTitle ?? "Turnier" }} registrieren!</DialogTitle
           >
           <DialogDescription>
-            Registriere dich für {{
+            Registriere dich für
+            {{
               props.tournamentTitle
                 ? `das Turnier ${props.tournamentTitle}`
-                : 'ein Turnier'
+                : "ein Turnier"
             }}. Wähle dein Team und registriere dich für die Teilnahme.
           </DialogDescription>
         </DialogHeader>
@@ -104,6 +105,10 @@ const { data: tournaments, error } = await useLazyFetch(
   }
 );
 
+const emits = defineEmits<{
+  (e: "registered", isRegistered: boolean): void;
+}>();
+
 const form = useForm({
   validationSchema: toTypedSchema(registerTeamForTournamentSchema),
   initialValues: {
@@ -128,6 +133,7 @@ const onSubmit = form.handleSubmit(async (values) => {
     if (response.success) {
       toast.success("Erfolgreich für das Turnier registriert!");
       form.resetForm();
+      emits("registered", true);
     } else {
       toast.error("Registrierung fehlgeschlagen: " + response.message);
     }

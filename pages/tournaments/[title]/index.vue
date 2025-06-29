@@ -132,6 +132,7 @@
               <CardContent class="pt-6">
                 <TeamRegisterTeamForTournamentDialog
                   :tournamentTitle="tournament?.title ?? ''"
+                  @registered="refresh()"
                 />
               </CardContent>
             </Card>
