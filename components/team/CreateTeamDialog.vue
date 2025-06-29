@@ -75,6 +75,7 @@ const onSubmit = form.handleSubmit(async (values) => {
       body: values,
     });
     toast.success("Team erfolgreich erstellt!");
+    form.resetForm();
   } catch (error: any) {
     if (error.data) {
       toast.error("Failed to create team: " + error.data.message);

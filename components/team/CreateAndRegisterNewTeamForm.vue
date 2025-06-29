@@ -202,6 +202,7 @@ const onSubmit = form.handleSubmit(async (values) => {
     toast.success("Team registered successfully!", {
       description: "PublicID: " + res.public_id,
     });
+    form.resetForm();
   } catch (error) {
     toast.error("Error registering team");
     console.error("Error registering team:", error);

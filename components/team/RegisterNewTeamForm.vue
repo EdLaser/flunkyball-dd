@@ -147,6 +147,7 @@ const onSubmit = form.handleSubmit(async (values) => {
     });
     if (result.count === 2) {
       toast.success("Spieler erfolgreich festgelegt!");
+      form.resetForm();
     } else {
       toast.error(
         "Fehler bei der Spielerregistrierung. Bitte versuche es erneut."
