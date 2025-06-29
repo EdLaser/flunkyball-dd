@@ -84,7 +84,7 @@
 </template>
 
 <script lang="ts" setup>
-import { Trophy, Beer, Medal, Swords, Speech, IdCard } from "lucide-vue-next";
+import { Trophy, Beer, Medal, Swords, Speech, IdCard, Trash2 } from "lucide-vue-next";
 import { Separator } from "../ui/separator";
 import type { Team } from "~/types/Team";
 
