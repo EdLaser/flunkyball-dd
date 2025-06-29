@@ -105,21 +105,6 @@
         >
           Antretende Teams
         </h2>
-        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          <Card :key="`${index}-${team.name}`" v-for="(team, index) in teams">
-            <CardHeader>
-              <CardTitle class="flex items-center text-primary">
-                <Users class="mr-2" />
-                {{ team.name }}
-              </CardTitle>
-            </CardHeader>
-            <CardContent>
-              <p class="">
-                <strong>Mitglieder:</strong> {{ team.members.join(", ") }}
-              </p>
-            </CardContent>
-          </Card>
-        </div>
       </section>
 
       <section>
@@ -172,13 +157,4 @@ const {
   status: pastStatus,
   error: pastError,
 } = useFetch("/api/past-tournaments");
-
-const teams = ref([
-  { name: "Bottle Bashers", members: ["Alice", "Bob"] },
-  { name: "Flunky Fanatics", members: ["Charlie", "Diana"] },
-  { name: "Tipsy Tossers", members: ["Eve", "Frank"] },
-  { name: "Sling Kings", members: ["Grace", "Henry"] },
-  { name: "Bottle Battlers", members: ["Ivy", "Jack"] },
-  { name: "Chaos Crew", members: ["Kate", "Liam"] },
-]);
 </script>
