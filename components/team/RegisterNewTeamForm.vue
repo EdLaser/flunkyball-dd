@@ -28,12 +28,51 @@
       </FormItem>
     </FormField>
 
+    <FormField
+      v-slot="{ value, handleChange }"
+      v-if="nextUpcomingTournament"
+      name="registerForUpcomingTournament"
+    >
+      <FormItem
+        class="flex flex-row items-start gap-x-3 space-y-0 p-4 border-gray-200 border rounded-md bg-background"
+      >
+        <FormControl>
+          <Checkbox
+            class="h-5 w-5"
+            :model-value="value"
+            @update:model-value="handleChange"
+          />
+        </FormControl>
+        <div class="space-y-1 leading-none">
+          <FormLabel class="font-semibold">
+            Für das nächste Turnier anmelden
+          </FormLabel>
+          <FormDescription>
+            <strong>Turnier:</strong> {{ nextUpcomingTournament.title }}, am
+            {{
+              new Date(nextUpcomingTournament.tournamentDate).toLocaleString(
+                "de-DE",
+                {
+                  dateStyle: "long",
+                  timeStyle: "short",
+                }
+              )
+            }}
+            <br />
+            <strong>Ort:</strong>
+            {{ nextUpcomingTournament.location }}
+            <br />
+            <strong>Details: </strong>{{ nextUpcomingTournament.description }}
+          </FormDescription>
+        </div>
+      </FormItem>
+    </FormField>
+
     <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
       <div class="grid grid-cols-1 gap-3">
         <span class="md:col-span-2 text-xl">Spieler 1</span>
         <FormField name="player1.publicID" v-slot="{ componentField }">
           <FormItem>
-            <FormLabel class="font-semibold">Spieler</FormLabel>
             <Select v-bind="componentField" :disabled="loadingPlayers">
               <FormControl>
                 <SelectTrigger>
@@ -62,7 +101,6 @@
         <span class="md:col-span-2 text-xl">Spieler 2</span>
         <FormField name="player2.publicID" v-slot="{ componentField }">
           <FormItem>
-            <FormLabel class="font-semibold">Spieler</FormLabel>
             <Select v-bind="componentField" :disabled="loadingPlayers">
               <FormControl>
                 <SelectTrigger>
@@ -100,16 +138,21 @@ import { z } from "zod";
 import { useForm } from "vee-validate";
 import { toTypedSchema } from "@vee-validate/zod";
 import { toast } from "vue-sonner";
+import { Checkbox } from "@/components/ui/checkbox";
 import { Users } from "lucide-vue-next";
 
 const teamStore = useTeamsStore();
 const { allTeamsWithIds: teams, loadingTeams } = storeToRefs(teamStore);
+
+const tournamentsStore = useTournamentsStore();
+const { nextUpcomingTournament } = storeToRefs(tournamentsStore);
 
 const playerStore = usePlayersStore();
 const { allPlayersWithIds: players, loadingPlayers } = storeToRefs(playerStore);
 
 await callOnce("teams", () => teamStore.fetchAllTeams());
 await callOnce("players", () => playerStore.fetchAllPlayers());
+await callOnce("tournaments", () => tournamentsStore.fetchAllTournaments());
 
 const teamSchema = toTypedSchema(
   z
@@ -121,6 +164,7 @@ const teamSchema = toTypedSchema(
       player2: z.object({
         publicID: z.string().min(4),
       }),
+      registerForUpcomingTournament: z.boolean().optional(),
     })
     .refine((data) => {
       if (data.player1.publicID && data.player2.publicID) {
@@ -138,6 +182,28 @@ const form = useForm({
   validationSchema: teamSchema,
 });
 
+const registerForTournament = async (title: string, teamId: string) => {
+  try {
+    const res = await $fetch(`/api/tournaments/${title}/register-team`, {
+      method: "POST",
+      body: { teamId },
+    });
+    if (res.success) {
+      toast.success("Erfolgreich für das Turnier angemeldet!");
+    } else {
+      toast.error("Fehler beim Anmelden für das Turnier");
+    }
+  } catch (error: any) {
+    if (error.data.message) {
+      toast.error(
+        "Fehler beim Anmelden für das Turnier: " + error.data.message
+      );
+    } else {
+      toast.error("Ein unbekannter Fehler ist aufgetreten.");
+    }
+  }
+};
+
 const onSubmit = form.handleSubmit(async (values) => {
   try {
     const result = await $fetch(`/api/teams/${values.teamPublicId}/player`, {
@@ -147,6 +213,15 @@ const onSubmit = form.handleSubmit(async (values) => {
     if (result.count === 2) {
       toast.success("Spieler erfolgreich festgelegt!");
       form.resetForm();
+      if (
+        values.registerForUpcomingTournament &&
+        nextUpcomingTournament.value
+      ) {
+        await registerForTournament(
+          nextUpcomingTournament.value.title,
+          values.teamPublicId
+        );
+      }
     } else {
       toast.error(
         "Fehler bei der Spielerregistrierung. Bitte versuche es erneut."
