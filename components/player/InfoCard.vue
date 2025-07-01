@@ -22,7 +22,13 @@
               <span class="font-semibold text-xl">
                 {{ props.player.firstName }} {{ props.player.lastName }}
               </span>
-              <div class="flex justify-between gap-2">
+              <div
+                class="flex justify-between gap-2"
+                :class="{
+                  'flex-col':
+                    props.player.publicID && props.player.publicID.length > 20,
+                }"
+              >
                 <span class="flex gap-2 items-center text-sm font-semibold">
                   <IdCard />ID:
                 </span>
@@ -60,23 +66,6 @@
               {{ gamesPlayed ? gamesPlayed * 0.5 : 0.0 }} L
             </div>
           </div>
-          <Separator class="my-4" label="Social" v-if="props.playsIn || props.player.slogan" />
-          <div class="grid gap-2" v-if="props.playsIn || props.player.slogan">
-            <div
-              class="flex flex-col md:flex-row gap-1 md:justify-between"
-              v-if="props.playsIn"
-            >
-              <span class="flex gap-2 font-semibold"> <Medal /> Team:</span>
-              <NuxtLink :to="`/teams/${encodeURIComponent(props.playsIn)}`" class="font-light"> {{ props.playsIn }}</NuxtLink>
-            </div>
-            <div
-              class="flex flex-col md:flex-row gap-1 md:justify-between md:text-right"
-              v-if="props.player.slogan"
-            >
-              <span class="flex gap-2 font-semibold"><Speech />Slogan:</span>
-              <span class="font-light">{{ props.player.slogan }}</span>
-            </div>
-          </div>
         </div>
         <div class="flex justify-center">
           <InspiraFlipCard
@@ -85,6 +74,32 @@
             :description="player.slogan ?? ''"
             :image="player.avatarLink ?? undefined"
           />
+        </div>
+        <div class="pr-5 col-span-full md:col-span-1">
+          <Separator
+            class="my-4"
+            label="Social"
+            v-if="props.playsIn || props.player.slogan"
+          />
+          <div class="grid gap-2" v-if="props.playsIn || props.player.slogan">
+            <div class="flex gap-1 justify-between" v-if="props.playsIn">
+              <span class="flex gap-2 font-semibold"> <Medal /> Team:</span>
+              <NuxtLink
+                :to="`/teams/${encodeURIComponent(props.playsIn)}`"
+                class="font-light"
+              >
+                {{ props.playsIn }}</NuxtLink
+              >
+            </div>
+            <div
+              class="flex gap-1 justify-between"
+              :class="{ 'flex-col': props.player.slogan.length > 50 }"
+              v-if="props.player.slogan"
+            >
+              <span class="flex gap-2 font-semibold"><Speech />Slogan:</span>
+              <span class="font-light">{{ props.player.slogan }}</span>
+            </div>
+          </div>
         </div>
       </div>
     </CardContent>

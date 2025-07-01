@@ -98,14 +98,14 @@ const userLinks = [
     to: "/players",
   },
   {
-    title: "Turniere",
-    icon: Trophy,
-    to: "/tournaments",
-  },
-  {
     title: "Teams",
     icon: Users,
     to: "/teams",
+  },
+  {
+    title: "Turniere",
+    icon: Trophy,
+    to: "/tournaments",
   },
 ];
 

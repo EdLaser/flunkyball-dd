@@ -7,7 +7,7 @@
           <div class="grid grid-cols-5 gap-6">
             <Input
               placeholder="Dein Team Name"
-              class="border-primary/60 focus:border-primary/80 col-span-4"
+              class="col-span-4"
               v-bind="componentField"
             />
             <Button
@@ -30,11 +30,7 @@
       <FormItem>
         <FormLabel class="font-semibold">Team Slogan</FormLabel>
         <FormControl>
-          <Input
-            placeholder="Dein Team Slogan"
-            class="border-primary/60 focus:border-primary/80"
-            v-bind="componentField"
-          />
+          <Input placeholder="Dein Team Slogan" v-bind="componentField" />
         </FormControl>
         <FormDescription class="text-secondary-foreground">
           Ein toller und motivierender Slogan.
@@ -48,7 +44,7 @@
       name="registerForUpcomingTournament"
     >
       <FormItem
-        class="flex flex-row items-start gap-x-3 space-y-0 p-4 border-primary border rounded-md bg-gray-50"
+        class="flex flex-row items-start gap-x-3 space-y-0 p-4 border rounded-md bg-gray-50"
       >
         <FormControl>
           <Checkbox
@@ -88,11 +84,7 @@
         <FormItem>
           <FormLabel class="font-semibold">Vorname</FormLabel>
           <FormControl>
-            <Input
-              placeholder="Vorname Spieler 1"
-              class="border-primary/60 focus:border-primary/80"
-              v-bind="componentField"
-            />
+            <Input placeholder="Vorname Spieler 1" v-bind="componentField" />
           </FormControl>
         </FormItem>
       </FormField>
@@ -100,23 +92,15 @@
         <FormItem>
           <FormLabel class="font-semibold">Nachname</FormLabel>
           <FormControl>
-            <Input
-              placeholder="Nachname Spieler 1"
-              class="border-primary/60 focus:border-primary/80"
-              v-bind="componentField"
-            />
+            <Input placeholder="Nachname Spieler 1" v-bind="componentField" />
           </FormControl>
         </FormItem>
       </FormField>
       <FormField v-slot="{ componentField }" name="member1.slogan">
         <FormItem class="col-span-full">
-          <FormLabel class="font-semibold">Spieler Slogan</FormLabel>
+          <FormLabel class="font-semibold">Spieler Slogan <small class="font-normal">(optional)</small></FormLabel>
           <FormControl>
-            <Input
-              placeholder="Spieler Slogan"
-              class="border-primary/60 focus:border-primary/80"
-              v-bind="componentField"
-            />
+            <Input placeholder="Spieler Slogan" v-bind="componentField" />
           </FormControl>
         </FormItem>
       </FormField>
@@ -127,11 +111,7 @@
         <FormItem>
           <FormLabel class="font-semibold">Vorname</FormLabel>
           <FormControl>
-            <Input
-              placeholder="Vorname Spieler 2"
-              class="border-primary/60 focus:border-primary/80"
-              v-bind="componentField"
-            />
+            <Input placeholder="Vorname Spieler 2" v-bind="componentField" />
           </FormControl>
         </FormItem>
       </FormField>
@@ -139,23 +119,15 @@
         <FormItem>
           <FormLabel class="font-semibold">Nachname</FormLabel>
           <FormControl>
-            <Input
-              placeholder="Nachname Spieler 2"
-              class="border-primary/60 focus:border-primary/80"
-              v-bind="componentField"
-            />
+            <Input placeholder="Nachname Spieler 2" v-bind="componentField" />
           </FormControl>
         </FormItem>
       </FormField>
       <FormField v-slot="{ componentField }" name="member2.slogan">
         <FormItem class="col-span-full">
-          <FormLabel class="font-semibold">Spieler Slogan</FormLabel>
+          <FormLabel class="font-semibold">Spieler Slogan <small class="font-normal">(optional)</small></FormLabel>
           <FormControl>
-            <Input
-              placeholder="Spieler Slogan"
-              class="border-primary/60 focus:border-primary/80"
-              v-bind="componentField"
-            />
+            <Input placeholder="Spieler Slogan" v-bind="componentField" />
           </FormControl>
         </FormItem>
       </FormField>
@@ -214,9 +186,12 @@ const teamSchema = toTypedSchema(
       lastName: z.string().min(2, {
         message: "Member name must be at least 2 characters.",
       }),
-      slogan: z.string().max(100, {
-        message: "Member Slogan must be less than 100 characters.",
-      }),
+      slogan: z
+        .string()
+        .max(100, {
+          message: "Member Slogan must be less than 100 characters.",
+        })
+        .optional(),
     }),
     member2: z.object({
       firstName: z.string().min(2, {
@@ -225,9 +200,12 @@ const teamSchema = toTypedSchema(
       lastName: z.string().min(2, {
         message: "Member name must be at least 2 characters.",
       }),
-      slogan: z.string().max(100, {
-        message: "Member Slogan must be less than 100 characters.",
-      }),
+      slogan: z
+        .string()
+        .max(100, {
+          message: "Member Slogan must be less than 100 characters.",
+        })
+        .optional(),
     }),
     registerForUpcomingTournament: z.boolean().optional(),
   })

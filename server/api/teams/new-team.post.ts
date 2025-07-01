@@ -15,9 +15,12 @@ const newTeamSchema = z.object({
       lastName: z.string().min(2, {
         message: "Member name must be at least 2 characters.",
       }),
-      slogan: z.string().max(100, {
-        message: "Member Slogan must be less than 100 characters.",
-      }),
+      slogan: z
+        .string()
+        .max(100, {
+          message: "Member Slogan must be less than 100 characters.",
+        })
+        .optional(),
     })
     .optional(),
   member2: z
@@ -28,9 +31,12 @@ const newTeamSchema = z.object({
       lastName: z.string().min(2, {
         message: "Member name must be at least 2 characters.",
       }),
-      slogan: z.string().max(100, {
-        message: "Member Slogan must be less than 100 characters.",
-      }),
+      slogan: z
+        .string()
+        .max(100, {
+          message: "Member Slogan must be less than 100 characters.",
+        })
+        .optional(),
     })
     .optional(),
   registerForUpcomingTournament: z.string().optional(),
