@@ -42,6 +42,46 @@
       </FormItem>
     </FormField>
 
+    <FormField
+      v-slot="{ value, handleChange }"
+      v-if="nextUpcomingTournament"
+      name="registerForUpcomingTournament"
+    >
+      <FormItem
+        class="flex flex-row items-start gap-x-3 space-y-0 p-4 border-primary border rounded-md bg-gray-50"
+      >
+        <FormControl>
+          <Checkbox
+            class="h-5 w-5"
+            :model-value="value"
+            @update:model-value="handleChange"
+          />
+        </FormControl>
+        <div class="space-y-1 leading-none">
+          <FormLabel class="font-semibold">
+            Für das nächste Turnier anmelden
+          </FormLabel>
+          <FormDescription>
+            <strong>Turnier:</strong> {{ nextUpcomingTournament.title }}, am
+            {{
+              new Date(nextUpcomingTournament.tournamentDate).toLocaleString(
+                "de-DE",
+                {
+                  dateStyle: "long",
+                  timeStyle: "short",
+                }
+              )
+            }}
+            <br />
+            <strong>Ort:</strong>
+            {{ nextUpcomingTournament.location }}
+            <br />
+            <strong>Details: </strong>{{ nextUpcomingTournament.description }}
+          </FormDescription>
+        </div>
+      </FormItem>
+    </FormField>
+
     <div class="grid grid-cols-1 md:grid-cols-2 gap-3">
       <span class="md:col-span-2 text-xl">Spieler 1</span>
       <FormField name="member1.firstName" v-slot="{ componentField }">
@@ -143,11 +183,17 @@ import { toTypedSchema } from "@vee-validate/zod";
 import { Dices, Beer } from "lucide-vue-next";
 import { toast } from "vue-sonner";
 import { useWindowSize } from "@vueuse/core";
+import { Checkbox } from "@/components/ui/checkbox";
 
 const isSubmitting = ref(false);
 
 const { width } = useWindowSize();
 const isMobile = computed(() => width.value < 768);
+
+const tournamentsStore = useTournamentsStore();
+callOnce("tournaments", () => tournamentsStore.fetchAllTournaments());
+
+const { nextUpcomingTournament } = storeToRefs(tournamentsStore);
 
 const getRandomTeamName = () => {
   return capitalize(randomName());
@@ -183,6 +229,7 @@ const teamSchema = toTypedSchema(
         message: "Member Slogan must be less than 100 characters.",
       }),
     }),
+    registerForUpcomingTournament: z.boolean().optional(),
   })
 );
 
@@ -194,7 +241,12 @@ const onSubmit = form.handleSubmit(async (values) => {
   try {
     const res = await $fetch("/api/teams/new-team", {
       method: "POST",
-      body: values,
+      body: {
+        ...values,
+        registerForUpcomingTournament: values.registerForUpcomingTournament
+          ? nextUpcomingTournament.value?.id
+          : undefined,
+      },
     });
     if (!res.id) {
       throw new Error("Team registration failed");
@@ -203,9 +255,12 @@ const onSubmit = form.handleSubmit(async (values) => {
       description: "PublicID: " + res.public_id,
     });
     form.resetForm();
-  } catch (error) {
-    toast.error("Error registering team");
-    console.error("Error registering team:", error);
+  } catch (error: any) {
+    if (error.data && error.data.message) {
+      toast.error("Error registering team: " + error.data.message);
+    } else {
+      toast.error("Error registering team");
+    }
     return;
   } finally {
     isSubmitting.value = false;

@@ -39,7 +39,7 @@ export default defineEventHandler(async (event) => {
     await setUserSession(event, {
       user: {
         firstName: newUser.players.first_name,
-        publicID: newUser.players.public_id,
+        publicID: newUser.players.public_id || "",
       },
     });
     return "OK"

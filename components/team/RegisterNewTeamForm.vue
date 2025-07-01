@@ -84,7 +84,6 @@
               </SelectContent>
             </Select>
           </FormItem>
-          <FormMessage />
         </FormField>
       </div>
     </div>

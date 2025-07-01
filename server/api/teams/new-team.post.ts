@@ -33,6 +33,7 @@ const newTeamSchema = z.object({
       }),
     })
     .optional(),
+  registerForUpcomingTournament: z.string().optional(),
 });
 
 export default defineEventHandler(async (event) => {
@@ -54,6 +55,22 @@ export default defineEventHandler(async (event) => {
         slogan: data.slogan,
       },
     });
+    try {
+      if (data.registerForUpcomingTournament) {
+        await usePrisma(event).tournament_registrations.create({
+          data: {
+            team_id: team.id,
+            tournament_id: data.registerForUpcomingTournament,
+          },
+        });
+      }
+    } catch (error) {
+      console.error("Error registering team for tournament:", error);
+      throw createError({
+        statusCode: 500,
+        message: "Failed to register team for tournament",
+      });
+    }
 
     if (data.member1 && data.member2) {
       await usePrisma(event).players.createMany({
