@@ -98,7 +98,10 @@
       </FormField>
       <FormField v-slot="{ componentField }" name="member1.slogan">
         <FormItem class="col-span-full">
-          <FormLabel class="font-semibold">Spieler Slogan <small class="font-normal">(optional)</small></FormLabel>
+          <FormLabel class="font-semibold"
+            >Spieler Slogan
+            <small class="font-normal">(optional)</small></FormLabel
+          >
           <FormControl>
             <Input placeholder="Spieler Slogan" v-bind="componentField" />
           </FormControl>
@@ -125,7 +128,10 @@
       </FormField>
       <FormField v-slot="{ componentField }" name="member2.slogan">
         <FormItem class="col-span-full">
-          <FormLabel class="font-semibold">Spieler Slogan <small class="font-normal">(optional)</small></FormLabel>
+          <FormLabel class="font-semibold"
+            >Spieler Slogan
+            <small class="font-normal">(optional)</small></FormLabel
+          >
           <FormControl>
             <Input placeholder="Spieler Slogan" v-bind="componentField" />
           </FormControl>
@@ -233,6 +239,9 @@ const onSubmit = form.handleSubmit(async (values) => {
       description: "PublicID: " + res.public_id,
     });
     form.resetForm();
+    setTimeout(() => {
+      return navigateTo({ path: "/teams" });
+    }, 1000);
   } catch (error: any) {
     if (error.data && error.data.message) {
       toast.error("Error registering team: " + error.data.message);
