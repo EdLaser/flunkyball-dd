@@ -115,6 +115,7 @@
                 </li>
                 <li>
                   <Button
+                  v-if="tournament.tournamentRegistrations.length > 8"
                     class="text-sm text-primary hover:underline"
                     variant="link"
                     @click="toggleShowMoreTeams()"
