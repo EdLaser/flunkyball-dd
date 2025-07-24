@@ -35,7 +35,10 @@ export class TournamentSerice {
     group: string;
     teams: number;
   }[] {
-    const groupPhase = [];
+    const groupPhase: Array<{
+      group: string;
+      teams: number;
+    }> = [];
     const groupCount = groupAmount[teams] || 0;
 
     for (let i = 0; i < groupCount; i++) {
@@ -46,8 +49,9 @@ export class TournamentSerice {
     }
 
     if (needsDvision > 0) {
-      const lastGroupIndex = groupPhase.length - 1;
-      groupPhase[lastGroupIndex].teams += needsDvision;
+      for (let i = 0; i < needsDvision; i++) {
+        groupPhase[i % groupCount].teams += 1;
+      }
     }
 
     return groupPhase;
