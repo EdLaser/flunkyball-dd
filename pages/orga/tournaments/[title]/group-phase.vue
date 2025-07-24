@@ -6,10 +6,19 @@
         <h1 class="text-3xl font-bold">Gruppenphase {{ title }}</h1>
       </div>
     </header>
-    <div>
-      <Button @click="generateFinals"> Finalspiele generieren </Button>
-    </div>
     <main class="container px-4 py-8 mx-auto space-y-4">
+      <div class="flex gap-2 overflow-x-auto">
+        <Button variant="outline" @click="generateFinals">
+          Finalspiele generieren
+        </Button>
+        <Button
+          variant="outline"
+          v-if="!matches?.some((group) => group.matches.length)"
+          @click="generateMatches"
+        >
+          Spiele generieren <Hammer />
+        </Button>
+      </div>
       <Tabs default-value="matches">
         <TabsList class="w-full">
           <TabsTrigger class="text-2xl font-bold" value="matches">
@@ -31,11 +40,6 @@
               v-for="group in matches"
               :key="group.groupName"
             />
-          </div>
-          <div v-else>
-            <Button @click="generateMatches">
-              Spiele generieren <Hammer />
-            </Button>
           </div>
         </TabsContent>
         <TabsContent value="ranking">
