@@ -1,5 +1,5 @@
 import { z } from "zod";
-import { handleTeamIdParameter } from "~/server/utils/request-schemas";
+import { handleTeamIdParameter } from "@@/server/utils/request-schemas";
 
 const removePlayerSchema = z.object({
   playerPublicID: z.string().min(5),

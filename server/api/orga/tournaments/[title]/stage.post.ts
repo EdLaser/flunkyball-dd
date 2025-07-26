@@ -1,4 +1,4 @@
-import { stageSchema } from "~/server/utils/request-schemas";
+import { stageSchema } from "@@/server/utils/request-schemas";
 
 export default defineEventHandler(async (event) => {
   const { title } = await handleTournamentParameter(event);

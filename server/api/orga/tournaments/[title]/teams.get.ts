@@ -1,5 +1,5 @@
-import { TournamentSerice } from "~/server/services/TournamentService";
-import { tournamentTitleSchema } from "~/server/utils/request-schemas";
+import { TournamentSerice } from "@@/server/services/TournamentService";
+import { tournamentTitleSchema } from "@@/server/utils/request-schemas";
 
 export default defineEventHandler(async (event) => {
   const { data, success } = await getValidatedRouterParams(

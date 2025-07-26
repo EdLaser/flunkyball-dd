@@ -1,4 +1,4 @@
-import { transfromTournamentDate } from "~/server/utils/tournament";
+import { transfromTournamentDate } from "@@/server/utils/tournament";
 
 export default defineEventHandler(async (event) => {
   const recentTournaments = await usePrisma(event).tournaments.findMany({

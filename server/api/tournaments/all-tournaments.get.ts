@@ -1,4 +1,4 @@
-import { formatLocation } from "~/server/utils/locations";
+import { formatLocation } from "@@/server/utils/locations";
 // import { z } from "zod";
 
 // const returnOnlyFields = z.object({

@@ -1,5 +1,5 @@
-import { GroupService } from "~/server/services/GroupService";
-import { handleTournamentParameter } from "~/server/utils/request-schemas";
+import { GroupService } from "@@/server/services/GroupService";
+import { handleTournamentParameter } from "@@/server/utils/request-schemas";
 
 export default defineEventHandler(async (event) => {
   const { title } = await handleTournamentParameter(event);

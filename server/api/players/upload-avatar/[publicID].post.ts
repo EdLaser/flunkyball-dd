@@ -1,4 +1,4 @@
-import { getImagePublicLink, uploadToSupabase } from "~/server/utils/files";
+import { getImagePublicLink, uploadToSupabase } from "@@/server/utils/files";
 import { FileObject } from "~/types/FileUploads";
 
 export default defineEventHandler(async (event) => {
