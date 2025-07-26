@@ -1,6 +1,6 @@
 <template>
   <nav
-    class="flex items-center justify-between px-3 pt-3 pb-3 space-y-2 bg-background-secondary md:items-end h-fit md:h-16 md:px-8"
+    class="flex items-center justify-between px-3 pt-3 pb-3 space-y-2 bg-background-secondary md:items-end h-fit md:h-16 md:px-8 border-b"
     v-auto-animate
   >
     <ClientOnly>
