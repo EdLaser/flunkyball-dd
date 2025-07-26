@@ -39,7 +39,7 @@
         >
           <Avatar
             v-if="loggedIn"
-            class="p-2 rounded-full shadow-sm cursor-pointer w-9 h-9 bg-background text-primary hover:bg-accent hover:text-accent-foreground"
+            class="p-2 rounded-full shadow-xs cursor-pointer w-9 h-9 bg-background text-primary hover:bg-accent hover:text-accent-foreground"
           >
             <AvatarFallback>
               {{ user?.firstName.slice(0, 2).toUpperCase() }}

@@ -3,7 +3,7 @@
     <h1 class="text-3xl font-bold mb-8 text-primary">Flunkyball Overview</h1>
 
     <div class="flex flex-col lg:flex-row gap-8">
-      <main class="flex-grow">
+      <main class="grow">
         <div class="mb-6">
           <Select v-model="selectedTournament">
             <SelectTrigger class="w-full md:w-[300px]">
@@ -129,7 +129,7 @@
         </div>
       </main>
 
-      <aside class="lg:w-64 flex-shrink-0">
+      <aside class="lg:w-64 shrink-0">
         <OverviewSidebar />
       </aside>
     </div>

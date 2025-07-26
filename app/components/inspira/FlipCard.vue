@@ -1,15 +1,15 @@
 <template>
-  <div :class="cn('group h-72 w-56 [perspective:1000px]', props.class)">
+  <div :class="cn('group h-72 w-56 perspective-[1000px]', props.class)">
     <div
       :class="
         cn(
-          'relative h-full rounded-2xl transition-all duration-500 [transform-style:preserve-3d]',
+          'relative h-full rounded-2xl transition-all duration-500 transform-3d',
           rotation[0]
         )
       "
     >
       <!-- Front -->
-      <div class="absolute size-full [backface-visibility:hidden]">
+      <div class="absolute size-full backface-hidden">
         <NuxtImg
           :src="props.image"
           v-if="props.image"
@@ -18,7 +18,7 @@
         />
         <div
           v-else
-          class="bg-gradient-to-br from-blue-500 to-pink-500 size-full rounded-2xl object-cover shadow-2xl shadow-black/40"
+          class="bg-linear-to-br from-blue-500 to-pink-500 size-full rounded-2xl object-cover shadow-2xl shadow-black/40"
         />
         <div class="absolute bottom-4 left-4 text-xl font-bold text-white">
           {{ props.title }}
@@ -29,7 +29,7 @@
       <div
         :class="
           cn(
-            'absolute h-full w-full rounded-2xl bg-black/80 p-4 text-slate-200 [backface-visibility:hidden]',
+            'absolute h-full w-full rounded-2xl bg-black/80 p-4 text-slate-200 backface-hidden',
             rotation[1]
           )
         "

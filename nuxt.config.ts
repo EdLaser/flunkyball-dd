@@ -1,9 +1,9 @@
-// https://nuxt.com/docs/api/configuration/nuxt-config
+import tailwindcss from "@tailwindcss/vite";
+
 export default defineNuxtConfig({
   compatibilityDate: "2024-11-01",
   devtools: { enabled: false },
   modules: [
-    "@nuxtjs/tailwindcss",
     "shadcn-nuxt",
     "@nuxtjs/color-mode",
     "@nuxt/image",
@@ -19,10 +19,12 @@ export default defineNuxtConfig({
   },
 
   vite: {
+    plugins: [tailwindcss()],
     define: {
-      global: 'globalThis'
-    }
+      global: "globalThis",
+    },
   },
+  css: ["~/assets/css/tailwind.css"],
 
   nitro: {
     compressPublicAssets: {

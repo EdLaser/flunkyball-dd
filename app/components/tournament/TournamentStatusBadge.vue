@@ -15,7 +15,7 @@
         </Badge>
       </PopoverTrigger>
       <PopoverContent
-        class="w-fit backdrop-blur-sm bg-white/20 class flex flex-col gap-3"
+        class="w-fit backdrop-blur-xs bg-white/20 class flex flex-col gap-3"
       >
         <Badge
           @click="$emit('update:status', newStatus as TournamentStatus)"
