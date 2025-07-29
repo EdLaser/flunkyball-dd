@@ -1,6 +1,6 @@
 <template>
   <div
-    class="transition-colors duration-300 bg-background transition-transform"
+    class="transition-all duration-300 bg-background"
     :class="colorMode.preference"
     style="font-family: 'Fustat', sans-serif"
   >
@@ -11,6 +11,7 @@
   </div>
 </template>
 <script setup lang="ts">
+import "vue-sonner/style.css";
 import { Toaster } from "@/components/ui/sonner";
 const router = useRouter();
 const route = useRoute();

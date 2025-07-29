@@ -1,10 +1,24 @@
 <template>
   <div class="min-h-screen bg-background">
     <header>
-      <div class="container mx-auto py-6">
+      <div class="container mx-auto py-6 space-y-4">
         <h1 class="text-4xl font-bold text-center text-primary">
           Flunkyball-Turniere Dresden
         </h1>
+        <div class="flex text-center">
+          <div class="mx-auto max-w-md">
+            <small>Hinweis:</small>
+            <small>
+              Diese Webseite dient lediglich der Planung und ist privat.
+            </small>
+            <small>
+              Jede Anmeldung findet zuvor bei uns privat statt und darf dann
+              erst auf dieser Website erstellt werden. Jede Anmeldung ohne diese
+              vorherige Absprache wird gelöscht und von der Webiste genommen!
+              Erscheinen der betroffenen bei Events ist damit untersagt!
+            </small>
+          </div>
+        </div>
       </div>
     </header>
 
