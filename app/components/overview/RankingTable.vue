@@ -53,7 +53,7 @@ import {
   type SortingState,
   type ColumnDef,
 } from "@tanstack/vue-table";
-import { valueUpdater } from "~/lib/utils";
+import { valueUpdater } from "@/components/ui/table/utils";
 import { Crown } from "lucide-vue-next";
 
 interface Team {

@@ -17,7 +17,7 @@ import {
   getFilteredRowModel,
   getSortedRowModel,
 } from "@tanstack/vue-table";
-import { valueUpdater } from "~/lib/utils";
+import { valueUpdater } from "@/components/ui/table/utils";
 import { Button } from "../ui/button";
 import {
   ArrowDownAZ,
