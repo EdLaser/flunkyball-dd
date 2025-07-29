@@ -17,7 +17,7 @@ import {
   getFilteredRowModel,
 } from "@tanstack/vue-table";
 import type { SortingState, ColumnFiltersState } from "@tanstack/vue-table";
-import { valueUpdater } from "~/lib/utils";
+import { valueUpdater } from "@/components/ui/table/utils";
 import { Button } from "../ui/button";
 import { ArrowUpAZ, ArrowDownAZ } from "lucide-vue-next";
 import { NuxtLink } from "#components";
@@ -47,12 +47,16 @@ const columns: ColumnDef<Team>[] = [
     accessorKey: "name",
     cell: ({ row }) => {
       return h("div", { class: "flex items-center" }, [
-        h(Avatar, { class: "h-8 w-8 mr-2 dark:bg-white/70 dark:text-black" }, () => [
-          h(AvatarFallback, null, () => {
-            const name = row.getValue("name") as string;
-            return name.slice(0, 2).toUpperCase();
-          }),
-        ]),
+        h(
+          Avatar,
+          { class: "h-8 w-8 mr-2 dark:bg-white/70 dark:text-black" },
+          () => [
+            h(AvatarFallback, null, () => {
+              const name = row.getValue("name") as string;
+              return name.slice(0, 2).toUpperCase();
+            }),
+          ]
+        ),
         h(
           NuxtLink,
           {
