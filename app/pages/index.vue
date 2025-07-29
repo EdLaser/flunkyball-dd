@@ -71,6 +71,12 @@
               </li>
               <li>Das Team, das zuerst alle Biere geleert hat, gewinnt!</li>
             </ul>
+            <NuxtLink to="/Flunky-Regeln 2023.pdf" target="_blank">
+              <Button class="mt-6" variant="ghost">
+                Regelwerk anzeigen
+                <FileText />
+              </Button>
+            </NuxtLink>
           </div>
           <div class="relative h-64 md:h-full">
             <NuxtImg
@@ -152,7 +158,7 @@
 </template>
 
 <script setup lang="ts">
-import { BeerIcon, Users, Trophy } from "lucide-vue-next";
+import { BeerIcon, Users, Trophy, FileText } from "lucide-vue-next";
 import RainbowButton from "~/components/inspira/RainbowButton.vue";
 import PastTournamenCard from "~/components/tournament/PastTournamenCard.vue";
 
