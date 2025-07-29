@@ -1,6 +1,6 @@
 import { TournamentSerice } from "@@/server/services/TournamentService";
 import { handleTournamentParameter } from "@@/server/utils/request-schemas";
-import { GroupWithTeams } from "~/types/Stages";
+import { GroupWithTeams } from "@@/shared/types/Stages";
 
 export default defineEventHandler(async (event) => {
   const { title } = await handleTournamentParameter(event);

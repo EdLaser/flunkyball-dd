@@ -162,7 +162,7 @@ import {
   BarChart,
   RefreshCcw,
 } from "lucide-vue-next";
-import NewTournamentDialog from "~/components/tournament/NewTournamentDialog.vue";
+import NewTournamentDialog from "@/components/tournament/NewTournamentDialog.vue";
 
 import {
   Card,
@@ -171,8 +171,8 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import TournamentList from "~/components/tournament/TournamentList.vue";
-import TeamList from "~/components/team/TeamList.vue";
+import TournamentList from "@/components/tournament/TournamentList.vue";
+import TeamList from "@/components/team/TeamList.vue";
 import StatCard from "@/components/StatCard.vue";
 
 const sideBarStore = useSideBarStore();

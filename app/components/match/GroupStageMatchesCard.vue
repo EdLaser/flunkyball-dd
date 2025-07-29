@@ -31,7 +31,7 @@
 </template>
 
 <script lang="ts" setup>
-import type { Match } from "~/types/Matches";
+import type { Match } from "@@/shared/types/Matches";
 import { PartyPopper } from "lucide-vue-next";
 
 const props = defineProps<{

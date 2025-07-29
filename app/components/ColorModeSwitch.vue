@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { SunMedium, Moon } from "lucide-vue-next";
 import { vAutoAnimate } from "@formkit/auto-animate";
-import { cn } from "~/lib/utils";
+import { cn } from "@/lib/utils";
 
 const colorMode = useColorMode();
 

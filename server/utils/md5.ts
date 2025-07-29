@@ -84,11 +84,11 @@ function cmn(q, a, b, x, s, t) {
 }
 
 function ff(a, b, c, d, x, s, t) {
-  return cmn((b & c) | (~b & d), a, b, x, s, t);
+  return cmn((b & c) | (@b & d), a, b, x, s, t);
 }
 
 function gg(a, b, c, d, x, s, t) {
-  return cmn((b & d) | (c & ~d), a, b, x, s, t);
+  return cmn((b & d) | (c & @d), a, b, x, s, t);
 }
 
 function hh(a, b, c, d, x, s, t) {
@@ -96,7 +96,7 @@ function hh(a, b, c, d, x, s, t) {
 }
 
 function ii(a, b, c, d, x, s, t) {
-  return cmn(c ^ (b | ~d), a, b, x, s, t);
+  return cmn(c ^ (b | @d), a, b, x, s, t);
 }
 
 function md51(s) {

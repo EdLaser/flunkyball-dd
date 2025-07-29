@@ -1,5 +1,5 @@
 import { serverSupabaseClient } from "#supabase/server";
-import { FileObject, UploadResult } from "~/types/FileUploads";
+import { FileObject, UploadResult } from "@@/shared/types/FileUploads";
 import { createHash } from "crypto";
 const config = useRuntimeConfig();
 

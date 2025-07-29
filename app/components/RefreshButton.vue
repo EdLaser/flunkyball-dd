@@ -10,7 +10,7 @@
 
 <script lang="ts" setup>
 import { RefreshCcw } from "lucide-vue-next";
-import { cn } from "~/lib/utils";
+import { cn } from "@/lib/utils";
 
 const props = defineProps<{
   onClick: () => void;

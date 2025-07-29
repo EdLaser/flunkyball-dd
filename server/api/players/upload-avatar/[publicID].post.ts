@@ -1,5 +1,5 @@
 import { getImagePublicLink, uploadToSupabase } from "@@/server/utils/files";
-import { FileObject } from "~/types/FileUploads";
+import { FileObject } from "@@/shared/types/FileUploads";
 
 export default defineEventHandler(async (event) => {
   const publicID = getRouterParam(event, "publicID");

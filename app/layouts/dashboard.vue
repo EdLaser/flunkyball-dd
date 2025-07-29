@@ -126,7 +126,7 @@ import {
   PanelLeftOpen,
   PanelLeftClose,
 } from "lucide-vue-next";
-import { useSideBarStore } from "~/stores/SideBar";
+import { useSideBarStore } from "@/stores/SideBar";
 
 const sideBarStore = useSideBarStore();
 

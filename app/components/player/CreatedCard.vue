@@ -70,7 +70,7 @@
 </template>
 
 <script lang="ts" setup>
-import type { Player } from "~/types/Player";
+import type { Player } from "@@/shared/types/Player";
 import { ClipboardCopy, ClipboardCheck } from "lucide-vue-next";
 import { useClipboard } from "@vueuse/core";
 import { toast } from "vue-sonner";

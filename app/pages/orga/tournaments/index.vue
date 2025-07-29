@@ -25,8 +25,8 @@
 </template>
 
 <script setup lang="ts">
-import NewTournamentDialog from "~/components/tournament/NewTournamentDialog.vue";
-import TournamentTable from "~/components/tournament/TournamentTable.vue";
+import NewTournamentDialog from "@/components/tournament/NewTournamentDialog.vue";
+import TournamentTable from "@/components/tournament/TournamentTable.vue";
 import {
   Card,
   CardHeader,

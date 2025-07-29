@@ -86,7 +86,7 @@
 <script lang="ts" setup>
 import { Trophy, Beer, Medal, Swords, Speech, IdCard, Trash2 } from "lucide-vue-next";
 import { Separator } from "../ui/separator";
-import type { Team } from "~/types/Team";
+import type { Team } from "@@/shared/types/Team";
 
 const props = defineProps<{
   team: Team;

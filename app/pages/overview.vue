@@ -147,8 +147,8 @@ import {
   ArrowRight,
   Beer,
 } from "lucide-vue-next";
-import NumberTicker from "~/components/inspira/NumberTicker.vue";
-import { LineChart } from "~/components/ui/chart-line";
+import NumberTicker from "@/components/inspira/NumberTicker.vue";
+import { LineChart } from "@/components/ui/chart-line";
 
 useHead({
   title: "Übersicht",

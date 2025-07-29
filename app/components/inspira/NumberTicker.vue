@@ -19,7 +19,7 @@ import {
   useElementVisibility,
   useTransition,
 } from "@vueuse/core";
-import { cn } from "~/lib/utils";
+import { cn } from "@/lib/utils";
 
 type TransitionsPresetsKeys = keyof typeof TransitionPresets;
 

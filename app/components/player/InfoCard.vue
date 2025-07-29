@@ -117,7 +117,7 @@
 </template>
 
 <script lang="ts" setup>
-import type { Player } from "~/types/Player";
+import type { Player } from "@@/shared/types/Player";
 import {
   Trophy,
   Beer,

@@ -1,4 +1,4 @@
-import { InternalGroupWithTeams } from "~/types/Groups";
+import { InternalGroupWithTeams } from "@@/shared/types/Groups";
 
 export class GroupService {
   static generateMatches(groupsWithTeams: InternalGroupWithTeams[]) {

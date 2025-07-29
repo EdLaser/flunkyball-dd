@@ -1,5 +1,5 @@
 import { defineStore } from "pinia";
-import type { GroupWithTeams } from "~/types/Stages";
+import type { GroupWithTeams } from "@@/shared/types/Stages";
 
 export const useGroupStageStore = defineStore("GroupStage", () => {
   const route = useRoute();
