@@ -9,7 +9,7 @@
     <main class="container px-4 py-8 mx-auto space-y-4">
       <div class="flex gap-2 overflow-x-auto">
         <Button variant="outline" @click="generateFinals">
-          Finalspiele generieren
+          Finalspiele generieren <Crown />
         </Button>
         <Button
           variant="outline"
@@ -51,7 +51,7 @@
 </template>
 
 <script lang="ts" setup>
-import { Swords, Trophy, Hammer } from "lucide-vue-next";
+import { Swords, Trophy, Hammer, Crown } from "lucide-vue-next";
 
 interface Team {
   name: string;

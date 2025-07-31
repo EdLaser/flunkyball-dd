@@ -21,7 +21,7 @@
     </CardContent>
     <CardFooter
       class="flex justify-end"
-      v-if="matches.every((match) => match.winnerTeam) && session.isStaff"
+      v-if="matches.every((match) => match.winnerTeam) && session?.isStaff"
     >
       <Button @click="finishGroup(props.groupId)">
         Abschließen <PartyPopper class="inline h-4 w-4 ml-1" />

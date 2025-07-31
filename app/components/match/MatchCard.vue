@@ -2,11 +2,15 @@
   <Card>
     <CardContent>
       <div class="flex justify-between items-center mt-4">
-        <div class="flex-1 text-left text-sm md:text-base lg:text-lg font-semibold">
+        <div
+          class="flex-1 text-left text-sm md:text-base lg:text-lg font-semibold"
+        >
           {{ awayTeamName.name }}
         </div>
         <div class="mx-2 text-lg">vs</div>
-        <div class="flex-1 text-right text-sm md:text-base lg:text-lg font-semibold">
+        <div
+          class="flex-1 text-right text-sm md:text-base lg:text-lg font-semibold"
+        >
           {{ homeTeamName.name }}
         </div>
       </div>
@@ -17,7 +21,7 @@
         <Crown class="mr-2" />
         Winner: {{ winnerTeamName.name }}
         <Button
-          v-if="session.isStaff"
+          v-if="session?.isStaff"
           variant="outline"
           size="icon"
           @click="toggleEditWinner()"
@@ -25,10 +29,7 @@
           <Pencil />
         </Button>
       </div>
-      <div
-        v-else-if="session.isStaff && editWinner"
-        class="mt-4 flex items-center gap-4"
-      >
+      <div v-else-if="session?.isStaff" class="mt-4 flex items-center gap-4">
         <Select v-model="selectedWinnerId">
           <SelectTrigger
             class="w-full rounded-full"
@@ -89,6 +90,19 @@ interface MatchProps {
 
 const showSuccess = ref(false);
 
+const channelA = useSupabaseClient()
+  .channel("match-updates")
+  .on(
+    "postgres_changes",
+    {
+      event: "UPDATE",
+      schema: "public",
+      table: "matches",
+    },
+    (payload) => console.log(payload)
+  )
+  .subscribe();
+
 const crownWinner = async (matchId: string) => {
   try {
     const result = await $fetch(
@@ -113,7 +127,7 @@ const crownWinner = async (matchId: string) => {
 </script>
 <style scoped>
 .success-ring {
-  border-color: hsl(var(--primary));
+  border-color: var(--primary);
   border-width: 2px;
   transition: border 0.3s ease-in-out;
 }
