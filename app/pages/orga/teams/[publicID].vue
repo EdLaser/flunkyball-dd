@@ -27,7 +27,6 @@
 </template>
 <script setup lang="ts">
 const route = useRoute();
-const nuxtApp = useNuxtApp();
 
 useHead({
   title: `Team ${decodeURIComponent(route.params.publicID as string)}`,
@@ -38,12 +37,6 @@ definePageMeta({
 });
 
 const { data: team } = await useLazyFetch(
-  () => `/api/teams/${encodeURIComponent(route.params.publicID as string)}`,
-  {
-    getCachedData(key) {
-      // TODO: Fix this to displayed the time when the data was cached
-      return getCachedDataOrFetch(key, nuxtApp);
-    },
-  }
+  () => `/api/teams/${encodeURIComponent(route.params.publicID as string)}`
 );
 </script>
