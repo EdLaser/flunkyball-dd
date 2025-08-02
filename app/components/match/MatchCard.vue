@@ -69,7 +69,6 @@ import { Crown, Pencil } from "lucide-vue-next";
 const { session } = useUserSession();
 
 const props = defineProps<MatchProps>();
-
 const title = useRoute().params.title as string;
 
 const selectedWinnerId = ref(props.winnerTeamName?.id || "");
@@ -89,19 +88,6 @@ interface MatchProps {
 }
 
 const showSuccess = ref(false);
-
-const channelA = useSupabaseClient()
-  .channel("match-updates")
-  .on(
-    "postgres_changes",
-    {
-      event: "UPDATE",
-      schema: "public",
-      table: "matches",
-    },
-    (payload) => console.log(payload)
-  )
-  .subscribe();
 
 const crownWinner = async (matchId: string) => {
   try {

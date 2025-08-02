@@ -52,6 +52,7 @@
 
 <script lang="ts" setup>
 import { Swords, Trophy, Hammer, Crown } from "lucide-vue-next";
+import type { RealtimeChannel } from "@supabase/supabase-js";
 
 interface Team {
   name: string;
@@ -77,6 +78,30 @@ const {
   error,
   refresh,
 } = await useFetch(() => `/api/orga/tournaments/${title}/groups/matches`);
+
+const supabaseClient = useSupabaseClient();
+const realtimeChannel = ref<null | RealtimeChannel>(null);
+
+onMounted(() => {
+  // Real time listener for new workouts
+  realtimeChannel.value = supabaseClient
+    .channel("public:collaborators")
+    .on(
+      "postgres_changes",
+      { event: "UPDATE", schema: "public", table: "matches" },
+      (payload) => {
+        refresh();
+      }
+    );
+
+  realtimeChannel.value.subscribe();
+});
+
+onBeforeUnmount(() => {
+  if (realtimeChannel.value) {
+    realtimeChannel.value.unsubscribe();
+  }
+});
 
 const rankedTeams = computed(() => {
   if (!matches.value) return [];

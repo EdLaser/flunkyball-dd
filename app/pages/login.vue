@@ -105,8 +105,6 @@ const loginEmail = ref("");
 const loginPassword = ref("");
 const loginAsStaff = ref(false);
 
-const route = useRoute();
-
 const toggleLoginAsStaff = () => {
   loginAsStaff.value = !loginAsStaff.value;
 };
