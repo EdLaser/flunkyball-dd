@@ -95,9 +95,7 @@ export default defineEventHandler(async (event) => {
     }
     return calculatedGroups;
   } else if (stage === "finals") {
-    const groupStage = await $fetch(
-      `/api/orga/tournaments/${title}/groups`
-    );
+    const groupStage = await $fetch(`/api/orga/tournaments/${title}/groups`);
 
     if (!groupStage || groupStage.length === 0) {
       throw createError({
@@ -114,6 +112,16 @@ export default defineEventHandler(async (event) => {
       advancingTeamsPerGroup
     );
 
-    return finalStages
+    let results = [];
+    for (const finalStage of finalStages) {
+      const result = await usePrisma(event).stages.create({
+        data: {
+          sequence: finalStage.sequence,
+          stage_name: finalStage.stage,
+        },
+      });
+      results.push(result);
+    }
+    return results;
   }
 });

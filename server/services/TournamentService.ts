@@ -60,10 +60,7 @@ export class TournamentSerice {
   static calculateFinalStages(
     amountOfGroups: number,
     advancingTeamsPerGroup: number
-  ): {
-    stage: string;
-    teams: number;
-  }[] {
+  ) {
     const finalStages = [];
     const amountOfFinalTeams = amountOfGroups * advancingTeamsPerGroup;
     const amountOfFinalStages = Math.log2(amountOfFinalTeams);

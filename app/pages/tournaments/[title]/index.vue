@@ -31,7 +31,7 @@
                 <div class="flex items-center">
                   <Calendar class="w-4 h-4 mr-2 text-primary" />
                   <span>{{
-                    new Date(tournament?.tournamentDate?? '').toLocaleString(
+                    new Date(tournament?.tournamentDate ?? "").toLocaleString(
                       "de-DE",
                       {
                         year: "numeric",
@@ -59,6 +59,12 @@
               </div>
             </CardContent>
           </Card>
+          <NuxtLink
+            :to="`/tournaments/${tournament?.title}/finals`"
+            class="mb-4"
+          >
+            <Button variant="outline" class="mb-4">Zu den Finalspielen <Crown /></Button>
+          </NuxtLink>
 
           <StagesGroupStageCard />
         </div>
@@ -115,7 +121,7 @@
                 </li>
                 <li>
                   <Button
-                  v-if="tournament.tournamentRegistrations.length > 8"
+                    v-if="tournament.tournamentRegistrations.length > 8"
                     class="text-sm text-primary hover:underline"
                     variant="link"
                     @click="toggleShowMoreTeams()"
@@ -146,7 +152,7 @@
 
 <script setup lang="ts">
 // Import your Vue-compatible Lucide icons instead of 'lucide-react'
-import { Calendar, MapPin, Users } from "lucide-vue-next";
+import { Calendar, MapPin, Users, Crown } from "lucide-vue-next";
 
 // Import your UI components
 import { Button } from "@/components/ui/button";

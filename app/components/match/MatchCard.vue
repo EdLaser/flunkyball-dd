@@ -85,6 +85,7 @@ interface MatchProps {
   awayTeamName: TeamInfo;
   homeTeamName: TeamInfo;
   winnerTeamName?: TeamInfo | null;
+  isFinal?: boolean;
 }
 
 const showSuccess = ref(false);
@@ -92,7 +93,9 @@ const showSuccess = ref(false);
 const crownWinner = async (matchId: string) => {
   try {
     const result = await $fetch(
-      `/api/orga/tournaments/${title}/groups/match-winner`,
+      `/api/orga/tournaments/${title}/${
+        props.isFinal ? "finals" : "groups"
+      }/match-winner`,
       {
         method: "POST",
         body: {
