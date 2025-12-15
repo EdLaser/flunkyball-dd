@@ -60,7 +60,7 @@
 </template>
 
 <script lang="ts" setup>
-import { Swords } from "lucide-vue-next";
+import { Swords, Crown } from "lucide-vue-next";
 const title = useRoute().params.title as string;
 
 useHead({
