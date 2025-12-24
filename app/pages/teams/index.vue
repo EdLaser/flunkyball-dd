@@ -4,7 +4,7 @@
     <Card>
       <CardHeader>
         <CardTitle class="flex justify-between">Alle Teams <TeamCreateTeamDialog /></CardTitle>
-        <CardDescription>Übersicht über alle FLunkyball Teams</CardDescription>
+        <CardDescription>Übersicht über alle Flunkyball Teams</CardDescription>
       </CardHeader>
       <CardContent>
         <TeamList />
