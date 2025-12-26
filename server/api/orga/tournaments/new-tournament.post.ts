@@ -1,7 +1,7 @@
 export default defineEventHandler(async (event) => {
   const body = await readBody(event);
 
-  const tournmanet = await usePrisma(event).tournaments.create({
+  const tournmanet = await usePrisma().tournaments.create({
     data: {
       title: body.title,
       description: body.description,

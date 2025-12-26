@@ -14,6 +14,7 @@
         :plays-in="playerDetails.team ?? ''"
         :wins="playerDetails?.wins ?? 0"
         @do-refresh="refresh()"
+        no-upload
       />
     </main>
   </div>

@@ -10,7 +10,7 @@ export default defineEventHandler(async (event) => {
   // const fields = data?.fields;
 
   // if (fields && fields.length > 0) {
-  //   const tournaments = await usePrisma(event).tournaments.findMany({
+  //   const tournaments = await usePrisma().tournaments.findMany({
   //     select: fields.reduce((acc: Record<string, boolean>, field) => {
   //       acc[field] = true;
   //       return acc;
@@ -20,7 +20,7 @@ export default defineEventHandler(async (event) => {
   //   return tournaments ?? [];
   // }
 
-  const tournaments = await usePrisma(event).tournaments.findMany({
+  const tournaments = await usePrisma().tournaments.findMany({
     select: {
       id: true,
       title: true,

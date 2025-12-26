@@ -1,7 +1,7 @@
 import { transfromTournamentDate } from "@@/server/utils/tournament";
 
 export default defineEventHandler(async (event) => {
-  const recentTournaments = await usePrisma(event).tournaments.findMany({
+  const recentTournaments = await usePrisma().tournaments.findMany({
     select: {
       title: true,
       tournament_date: true,

@@ -12,7 +12,7 @@ export default defineEventHandler(async (event) => {
   const { data } = await getValidatedQuery(event, topSchema.safeParse);
 
   if (data?.onlyIds) {
-    const teams = await usePrisma(event).teams.findMany({
+    const teams = await usePrisma().teams.findMany({
       select: {
         public_id: true,
         name: true,
@@ -25,7 +25,7 @@ export default defineEventHandler(async (event) => {
       };
     });
   } else {
-    const allTeams = await usePrisma(event).teams.findMany({
+    const allTeams = await usePrisma().teams.findMany({
       select: {
         name: true,
         slogan: true,

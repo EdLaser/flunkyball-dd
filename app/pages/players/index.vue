@@ -44,7 +44,6 @@
 </template>
 
 <script lang="ts" setup>
-import PlayerInfoCard from "@/components/player/InfoCard.vue";
 import { vAutoAnimate } from "@formkit/auto-animate";
 import { ArrowUp10, ArrowDown10 } from "lucide-vue-next";
 

@@ -1,7 +1,7 @@
 export default defineEventHandler(async (event) => {
   const { title } = await handleTournamentParameter(event);
 
-  const tournament = await usePrisma(event).tournaments.findUnique({
+  const tournament = await usePrisma().tournaments.findUnique({
     where: {
       title: title,
     },

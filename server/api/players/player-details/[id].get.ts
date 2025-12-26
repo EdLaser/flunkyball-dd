@@ -3,7 +3,7 @@ export default defineEventHandler(async (event) => {
 
   const decodedId = decodeURIComponent(publicID ?? "");
 
-  const playerDetails = await usePrisma(event).players.findUnique({
+  const playerDetails = await usePrisma().players.findUnique({
     select: {
       first_name: true,
       last_name: true,

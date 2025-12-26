@@ -10,7 +10,7 @@ export default defineEventHandler(async (event) => {
 
   const { location } = body;
 
-  const newLocation = await usePrisma(event).locations.create({
+  const newLocation = await usePrisma().locations.create({
     data: {
       name: location.name,
       street: location.street,

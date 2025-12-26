@@ -1,7 +1,7 @@
 export default defineEventHandler(async (event) => {
   const { title } = await handleTournamentParameter(event);
 
-  const deletedTournament = await usePrisma(event).tournaments.delete({
+  const deletedTournament = await usePrisma().tournaments.delete({
     where: {
       title: title,
     },

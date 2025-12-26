@@ -38,7 +38,7 @@ export default defineEventHandler(async (event) => {
       `/api/orga/tournaments/${title}/registrations`
     );
 
-    const finalized = await usePrisma(event).groups.updateMany({
+    const finalized = await usePrisma().groups.updateMany({
       where: {
         tournament_id: tournamentId,
       },
@@ -102,7 +102,7 @@ export default defineEventHandler(async (event) => {
     for (let i = 0; i < body.length; i++) {
       const group = body[i];
 
-      const createdGroup = await usePrisma(event).groups.create({
+      const createdGroup = await usePrisma().groups.create({
         data: {
           group_name: group.group,
           stage_id: groupStageId,

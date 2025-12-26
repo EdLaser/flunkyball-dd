@@ -58,7 +58,7 @@ export default defineEventHandler(async (event) => {
     const result = await uploadToSupabase(file, event, session.user?.publicID);
 
     if (result.success && result.link) {
-      await usePrisma(event).players.update({
+      await usePrisma().players.update({
         data: {
           avatar_link: result.link,
         },
@@ -68,7 +68,7 @@ export default defineEventHandler(async (event) => {
       });
     } else if (result.success && !result.link) {
       const link = await getImagePublicLink(result.data?.path, event);
-      await usePrisma(event).players.update({
+      await usePrisma().players.update({
         data: {
           avatar_link: link,
         },

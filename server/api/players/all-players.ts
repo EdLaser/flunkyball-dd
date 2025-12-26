@@ -11,7 +11,7 @@ const getPlayersQuery = z.object({
 export default defineEventHandler(async (event) => {
   const { data } = await getValidatedQuery(event, getPlayersQuery.safeParse);
   if (data?.onlyIds) {
-    const players = await usePrisma(event).players.findMany({
+    const players = await usePrisma().players.findMany({
       select: {
         public_id: true,
         first_name: true,
@@ -25,7 +25,7 @@ export default defineEventHandler(async (event) => {
     }));
   }
 
-  const players = await usePrisma(event).players.findMany({
+  const players = await usePrisma().players.findMany({
     select: {
       first_name: true,
       last_name: true,

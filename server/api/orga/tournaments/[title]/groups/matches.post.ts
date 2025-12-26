@@ -4,7 +4,7 @@ import { handleTournamentParameter } from "@@/server/utils/request-schemas";
 export default defineEventHandler(async (event) => {
   const { title } = await handleTournamentParameter(event);
 
-  const groupStage = await usePrisma(event).groups.findMany({
+  const groupStage = await usePrisma().groups.findMany({
     where: {
       tournaments: {
         title,
@@ -66,7 +66,7 @@ export default defineEventHandler(async (event) => {
       statusMessage: "Invalid match data",
     });
   }
-  const batch = await usePrisma(event).matches.createMany({
+  const batch = await usePrisma().matches.createMany({
     data: calculatedGroupMatches.map((match) => ({
       home_team_id: match.homeTeam.id,
       away_team_id: match.awayTeam.id,

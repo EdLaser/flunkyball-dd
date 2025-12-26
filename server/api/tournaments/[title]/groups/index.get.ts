@@ -1,7 +1,7 @@
 export default defineEventHandler(async (event) => {
   const { title } = await handleTournamentParameter(event);
 
-  const groupStage = await usePrisma(event).groups.findMany({
+  const groupStage = await usePrisma().groups.findMany({
     where: {
       tournaments: {
         title,

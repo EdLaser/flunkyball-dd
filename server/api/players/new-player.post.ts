@@ -5,7 +5,7 @@ export default defineEventHandler(async (event) => {
     throw createError({ statusCode: 400, message: "Missing required fields" });
   }
 
-  const player = await usePrisma(event).players.create({
+  const player = await usePrisma().players.create({
     data: {
       first_name: body.firstName,
       last_name: body.lastName,
@@ -14,7 +14,7 @@ export default defineEventHandler(async (event) => {
   });
 
   if (player) {
-    const details = await usePrisma(event).players.findUnique({
+    const details = await usePrisma().players.findUnique({
       select: {
         first_name: true,
         last_name: true,

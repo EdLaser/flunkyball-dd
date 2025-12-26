@@ -2,7 +2,7 @@ export default defineEventHandler(async (event) => {
   const { publicID } = await handleTeamIdParameter(event);
 
   try {
-    const res = await usePrisma(event).teams.delete({
+    const res = await usePrisma().teams.delete({
       where: {
         public_id: publicID,
       },

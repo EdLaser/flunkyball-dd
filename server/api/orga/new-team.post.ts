@@ -8,7 +8,7 @@ export default defineEventHandler(async (event) => {
     });
   }
 
-  const team = await usePrisma(event).teams.create({
+  const team = await usePrisma().teams.create({
     data: {
       name: body.name,
       slogan: body.slogan,

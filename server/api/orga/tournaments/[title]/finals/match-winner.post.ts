@@ -22,7 +22,7 @@ export default defineEventHandler(async (event) => {
 
   const { matchId, teamId } = data;
 
-  const updated = await usePrisma(event).matches.update({
+  const updated = await usePrisma().matches.update({
     where: {
       match_id: matchId,
     },

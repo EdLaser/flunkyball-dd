@@ -25,7 +25,7 @@ export default defineEventHandler(async (event) => {
   }
 
   try {
-    const updated = await usePrisma(event).tournaments.update({
+    const updated = await usePrisma().tournaments.update({
       where: { title },
       data: {
         status: data.status,

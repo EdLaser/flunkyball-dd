@@ -1,5 +1,5 @@
 export const getUserForLogin = async (email: string, event: any) => {
-  const possibleUser = await usePrisma(event).users.findUnique({
+  const possibleUser = await usePrisma().users.findUnique({
     select: {
       hashed_password: true,
       players: {
@@ -18,7 +18,7 @@ export const getUserForLogin = async (email: string, event: any) => {
 };
 
 export const getSatffForLogin = async (email: string, event: any) => {
-  const possibleStaff = await usePrisma(event).staff.findUnique({
+  const possibleStaff = await usePrisma().staff.findUnique({
     select: {
       hashed_password: true,
       first_name: true,

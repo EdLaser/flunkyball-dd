@@ -11,7 +11,7 @@ export const transfromTournamentDate = (tournamentDate: string | Date) => {
 };
 
 export const getTournamentDetails = async (title: string, event: any) => {
-  const tournamentDetails = await usePrisma(event).tournaments.findUnique({
+  const tournamentDetails = await usePrisma().tournaments.findUnique({
     select: {
       title: true,
       description: true,
@@ -126,7 +126,7 @@ export const getTournamentDetails = async (title: string, event: any) => {
 };
 
 export const getUpcomingTournaments = async (event: any) => {
-  const tournaments = await usePrisma(event).tournaments.findMany({
+  const tournaments = await usePrisma().tournaments.findMany({
     select: {
       title: true,
       description: true,
@@ -165,7 +165,7 @@ export const getUpcomingTournaments = async (event: any) => {
 };
 
 export const getPastTournaments = async (event: any) => {
-  const pastTournamentWinners = await usePrisma(event).tournaments.findMany({
+  const pastTournamentWinners = await usePrisma().tournaments.findMany({
     select: {
       title: true,
       tournament_date: true,

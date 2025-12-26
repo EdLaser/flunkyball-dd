@@ -8,7 +8,7 @@ export default defineEventHandler(async (event) => {
   );
 
   if (data?.stage) {
-    const stage = await usePrisma(event).tournaments.findUnique({
+    const stage = await usePrisma().tournaments.findUnique({
       where: {
         title: title,
       },
@@ -34,7 +34,7 @@ export default defineEventHandler(async (event) => {
 
     return stage;
   } else {
-    const stages = await usePrisma(event).tournaments.findUnique({
+    const stages = await usePrisma().tournaments.findUnique({
       where: {
         title: title,
       },

@@ -19,7 +19,7 @@ export default defineEventHandler(async (event) => {
     });
   }
 
-  const res = await usePrisma(event).teams.findUnique({
+  const res = await usePrisma().teams.findUnique({
     where: {
       public_id: publicID,
     },
@@ -51,7 +51,7 @@ export default defineEventHandler(async (event) => {
   }
 
   try {
-    const res = await usePrisma(event).players.update({
+    const res = await usePrisma().players.update({
       where: {
         public_id: data.playerPublicID,
       },

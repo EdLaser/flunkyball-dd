@@ -20,7 +20,7 @@ export default defineEventHandler(async (event) => {
 
   const { groupId } = data;
 
-  const groupPhase = await usePrisma(event).matches.groupBy({
+  const groupPhase = await usePrisma().matches.groupBy({
     by: ["match_winner"],
     where: {
       groups: {

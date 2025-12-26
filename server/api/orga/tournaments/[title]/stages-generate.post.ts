@@ -32,7 +32,7 @@ export default defineEventHandler(async (event) => {
     let groupStage = stages.find((stage) => stage.stage_name === "group");
 
     if (!groupStage) {
-      groupStage = await usePrisma(event).stages.create({
+      groupStage = await usePrisma().stages.create({
         data: {
           stage_name: "group",
           sequence: 1,
@@ -114,7 +114,7 @@ export default defineEventHandler(async (event) => {
 
     let results = [];
     for (const finalStage of finalStages) {
-      const result = await usePrisma(event).stages.create({
+      const result = await usePrisma().stages.create({
         data: {
           sequence: finalStage.sequence,
           stage_name: finalStage.stage,

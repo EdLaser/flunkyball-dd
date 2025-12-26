@@ -17,7 +17,7 @@ export default defineEventHandler(async (event) => {
       statusMessage: "Invalid player public ID",
     });
   }
-  const team = await usePrisma(event).teams.findUnique({
+  const team = await usePrisma().teams.findUnique({
     where: {
       public_id: publicID,
     },
@@ -47,7 +47,7 @@ export default defineEventHandler(async (event) => {
   }
 
   try {
-    const player = await usePrisma(event).players.updateMany({
+    const player = await usePrisma().players.updateMany({
       where: {
         public_id: {
           in: data.playerPublicID,

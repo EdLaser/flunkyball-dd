@@ -1,5 +1,5 @@
 export default defineEventHandler(async (event) => {
-  const tournamentRegistrations = await usePrisma(event).tournaments.findMany({
+  const tournamentRegistrations = await usePrisma().tournaments.findMany({
     select: {
       title: true,
       _count: {

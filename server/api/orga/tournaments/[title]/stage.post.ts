@@ -14,7 +14,7 @@ export default defineEventHandler(async (event) => {
     });
   }
 
-  const tourament = await usePrisma(event).tournaments.findUnique({
+  const tourament = await usePrisma().tournaments.findUnique({
     where: {
       title,
     },
@@ -31,7 +31,7 @@ export default defineEventHandler(async (event) => {
   }
   const { stage } = data;
 
-  const createdStage = await usePrisma(event).stages.create({
+  const createdStage = await usePrisma().stages.create({
     data: {
       stage_name: stage,
       sequence: stage === "group" ? 1 : 2,

@@ -20,6 +20,7 @@
           :games-played="player?.gamesPlayed ?? 0"
           :plays-in="player.team ?? ''"
           :wins="player?.wins ?? 0"
+          no-upload
         />
       </div>
     </main>

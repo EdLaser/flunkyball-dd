@@ -55,7 +55,7 @@ export default defineEventHandler(async (event) => {
     });
   }
   try {
-    const team = await usePrisma(event).teams.create({
+    const team = await usePrisma().teams.create({
       data: {
         name: data.name,
         slogan: data.slogan,
@@ -63,7 +63,7 @@ export default defineEventHandler(async (event) => {
     });
     try {
       if (data.registerForUpcomingTournament) {
-        await usePrisma(event).tournament_registrations.create({
+        await usePrisma().tournament_registrations.create({
           data: {
             team_id: team.id,
             tournament_id: data.registerForUpcomingTournament,
@@ -79,7 +79,7 @@ export default defineEventHandler(async (event) => {
     }
 
     if (data.member1 && data.member2) {
-      await usePrisma(event).players.createMany({
+      await usePrisma().players.createMany({
         data: [
           {
             first_name: data.member1.firstName,

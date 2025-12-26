@@ -1,3 +1,3 @@
 export default defineEventHandler(async (event) => {
-  return (await usePrisma(event).players.count()) ?? 0;
+  return (await usePrisma().players.count()) ?? 0;
 });

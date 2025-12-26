@@ -40,7 +40,7 @@ export default defineEventHandler(async (event) => {
   }
 
   try {
-    const registration = await usePrisma(event).tournament_registrations.create(
+    const registration = await usePrisma().tournament_registrations.create(
       {
         data: {
           tournaments: {

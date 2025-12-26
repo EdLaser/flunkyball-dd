@@ -9,7 +9,7 @@ export default defineEventHandler(async (event) => {
     });
   }
 
-  const team = await usePrisma(event).teams.findUnique({
+  const team = await usePrisma().teams.findUnique({
     select: {
       name: true,
       slogan: true,

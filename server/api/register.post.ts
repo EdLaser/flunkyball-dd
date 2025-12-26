@@ -16,7 +16,7 @@ export default defineEventHandler(async (event) => {
 
     const hashedPassword = await hashPassword(password);
 
-    const newUser = await usePrisma(event).users.create({
+    const newUser = await usePrisma().users.create({
       data: {
         email: email,
         hashed_password: hashedPassword,
