@@ -37,6 +37,7 @@ model teams {
   pre_registrations                   pre_registrations[]
   stage_registrations                 stage_registrations[]
   tournament_registrations            tournament_registrations[]
+  bets                                bets[]
 }
 
 /// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
@@ -74,18 +75,21 @@ model groups {
 
 /// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
 model matches {
-  match_id                          String    @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  created_at                        DateTime? @default(now()) @db.Timestamptz(6)
-  stage_id                          String    @db.Uuid
-  group_id                          String?   @db.Uuid
-  home_team_id                      String    @db.Uuid
-  away_team_id                      String    @db.Uuid
-  match_winner                      String?   @db.Uuid
-  teams_matches_away_team_idToteams teams     @relation("matches_away_team_idToteams", fields: [away_team_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  groups                            groups?   @relation(fields: [group_id], references: [group_id], onDelete: NoAction, onUpdate: NoAction)
-  teams_matches_home_team_idToteams teams     @relation("matches_home_team_idToteams", fields: [home_team_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  teams_matches_match_winnerToteams teams?    @relation("matches_match_winnerToteams", fields: [match_winner], references: [id], onDelete: NoAction, onUpdate: NoAction)
-  stages                            stages    @relation(fields: [stage_id], references: [stage_id], onDelete: NoAction, onUpdate: NoAction)
+  match_id                          String       @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  created_at                        DateTime?    @default(now()) @db.Timestamptz(6)
+  stage_id                          String       @db.Uuid
+  group_id                          String?      @db.Uuid
+  home_team_id                      String       @db.Uuid
+  away_team_id                      String       @db.Uuid
+  match_winner                      String?      @db.Uuid
+  match_status                      match_status @default(scheduled)
+  teams_matches_away_team_idToteams teams        @relation("matches_away_team_idToteams", fields: [away_team_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  groups                            groups?      @relation(fields: [group_id], references: [group_id], onDelete: NoAction, onUpdate: NoAction)
+  teams_matches_home_team_idToteams teams        @relation("matches_home_team_idToteams", fields: [home_team_id], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  teams_matches_match_winnerToteams teams?       @relation("matches_match_winnerToteams", fields: [match_winner], references: [id], onDelete: NoAction, onUpdate: NoAction)
+  stages                            stages       @relation(fields: [stage_id], references: [stage_id], onDelete: NoAction, onUpdate: NoAction)
+  bets                              bets[]
+  match_odds                        match_odds?
 }
 
 /// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
@@ -148,12 +152,14 @@ model staff {
 
 /// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
 model users {
-  user_id         String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
-  created_at      DateTime @default(now()) @db.Timestamptz(6)
-  email           String   @unique
+  user_id         String        @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  created_at      DateTime      @default(now()) @db.Timestamptz(6)
+  email           String        @unique
   hashed_password String
-  player_id       String   @db.Uuid
-  players         players  @relation(fields: [player_id], references: [id], onDelete: Cascade)
+  player_id       String        @db.Uuid
+  players         players       @relation(fields: [player_id], references: [id], onDelete: Cascade)
+  bets            bets[]
+  user_balance    user_balance?
 }
 
 /// This model contains row level security and requires additional setup for migrations. Visit https://pris.ly/d/row-level-security for more info.
@@ -183,4 +189,62 @@ enum tournament_status {
   open
   finished
   in_progress
+}
+
+enum match_status {
+  scheduled
+  in_progress
+  finished
+  cancelled
+}
+
+enum bet_status {
+  pending
+  won
+  lost
+  cancelled
+}
+
+/// Stores individual user bets on matches
+model bets {
+  bet_id           String     @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  created_at       DateTime   @default(now()) @db.Timestamptz(6)
+  user_id          String     @db.Uuid
+  match_id         String     @db.Uuid
+  predicted_winner String     @db.Uuid
+  bet_amount       Decimal    @db.Decimal(10, 2)
+  odds_at_bet_time Decimal    @db.Decimal(10, 2)
+  potential_payout Decimal    @db.Decimal(10, 2)
+  status           bet_status @default(pending)
+  settled_at       DateTime?  @db.Timestamptz(6)
+  users            users      @relation(fields: [user_id], references: [user_id], onDelete: Cascade, onUpdate: NoAction)
+  matches          matches    @relation(fields: [match_id], references: [match_id], onDelete: NoAction, onUpdate: NoAction)
+  teams            teams      @relation(fields: [predicted_winner], references: [id], onDelete: NoAction, onUpdate: NoAction)
+
+  @@index([user_id])
+  @@index([match_id])
+  @@index([status])
+}
+
+/// Tracks fake money balance for each user
+model user_balance {
+  balance_id String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  user_id    String   @unique @db.Uuid
+  balance    Decimal  @default(1000.00) @db.Decimal(10, 2)
+  updated_at DateTime @default(now()) @updatedAt @db.Timestamptz(6)
+  users      users    @relation(fields: [user_id], references: [user_id], onDelete: Cascade, onUpdate: NoAction)
+}
+
+/// Stores betting odds/quotes for each match
+model match_odds {
+  odds_id         String   @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  match_id        String   @unique @db.Uuid
+  home_team_odds  Decimal  @db.Decimal(10, 2)
+  away_team_odds  Decimal  @db.Decimal(10, 2)
+  total_bets_home Int      @default(0)
+  total_bets_away Int      @default(0)
+  total_amount    Decimal  @default(0.00) @db.Decimal(10, 2)
+  created_at      DateTime @default(now()) @db.Timestamptz(6)
+  updated_at      DateTime @default(now()) @updatedAt @db.Timestamptz(6)
+  matches         matches  @relation(fields: [match_id], references: [match_id], onDelete: Cascade, onUpdate: NoAction)
 }
