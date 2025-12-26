@@ -28,6 +28,7 @@
     "lucide-vue-next": "^0.562.0",
     "nuxt": "^4.2.2",
     "nuxt-auth-utils": "0.5.26",
+    "papaparse": "^5.5.3",
     "pinia": "^3.0.4",
     "radix-vue": "^1.9.17",
     "reka-ui": "^2.7.0",
@@ -44,11 +45,13 @@
   "devDependencies": {
     "@inspira-ui/plugins": "^0.0.1",
     "@prisma/client": "^7.2.0",
+    "@types/papaparse": "^5.5.2",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "prisma": "7.2.0",
     "tailwind-merge": "^3.4.0",
     "tailwindcss-animate": "^1.0.7",
+    "tsx": "^4.21.0",
     "typescript": "^5.9.3"
   }
 }
